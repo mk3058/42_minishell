@@ -7,11 +7,7 @@
 # include <errno.h>
 # include <unistd.h>
 # include <fcntl.h> //open close
-# include <sys/wait.h> //wait
-# include <signal.h> // sigaction
-# include <dirent.h>
-# include <sys/stat.h> //stat
-# include <sys/ioctl.h> // ioctl
+
 # include "../libft/libft.h"
 
 # define STDIN 0
