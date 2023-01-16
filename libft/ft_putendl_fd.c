@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bojung <bojung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/11 11:28:57 by bojung            #+#    #+#             */
+/*   Updated: 2022/07/11 15:59:52 by bojung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	size_t	len;
+	size_t	idx;
+
+	if (!s || fd < 0)
+		return ;
+	idx = 0;
+	len = ft_strlen(s);
+	while (idx < len)
+	{
+		write(fd, &s[idx], 1);
+		idx++;
+	}
+	write(fd, "\n", 1);
+}
