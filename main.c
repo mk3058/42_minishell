@@ -1,39 +1,25 @@
 #include "includes/minishell.h"
 
-void	signal_handler(int sig);
-
 int main()
 {
 	char	*line;
 
-	signal(SIGINT, signal_handler);
+	set_signal(HAN, IGN);
 	while (1)
 	{
 		line = readline("minishell> ");
 		if (line)
 		{
-			add_history(line);
+			if (line[0] != '\0')
+				add_history(line);
 			//파싱?
 			free(line);
 			line = NULL;
 		}
 		else
 		{
+			printf("\x1b[1A\033[11Cexit\n");
 			break ;
 		}
 	}
-}
-
-void	signal_handler(int sig)
-{
-	struct termios term;
-    tcgetattr(STDIN, &term);
-    term.c_lflag &= ~(ECHOCTL);
-    tcsetattr(STDIN, TCSANOW, &term);
-
-	(void)sig;
-	printf("\n");
-    rl_on_new_line();
-    rl_replace_line("", 1);
-    rl_redisplay();
 }

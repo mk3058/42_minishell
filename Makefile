@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bojung <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/13 16:17:34 by bojung            #+#    #+#              #
-#    Updated: 2023/01/16 12:21:17 by bojung           ###   ########.fr        #
+#    Updated: 2023/01/16 15:44:37 by minkyuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCFILES	= get_next_line.c
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_MAIN		= main.c
+SRCS_MAIN		= main.c signal.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c

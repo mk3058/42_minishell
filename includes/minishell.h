@@ -12,15 +12,18 @@
 # include <fcntl.h> //open close
 # include <termios.h>
 
-
 # include "../libft/libft.h"
 
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
 
-char	*get_next_line(int fd);
+# define DFL 0
+# define IGN 1
+# define HAN 2
 
+char	*get_next_line(int fd);
+void	set_signal(int sigint, int sigquit);
+void	signal_handler(int sig);
 
 #endif
-
