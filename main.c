@@ -26,6 +26,12 @@ int main()
 
 void	signal_handler(int sig)
 {
+	struct termios term;
+    tcgetattr(STDIN, &term);
+    term.c_lflag &= ~(ECHOCTL);
+    tcsetattr(STDIN, TCSANOW, &term);
+
+	(void)sig;
 	printf("\n");
     rl_on_new_line();
     rl_replace_line("", 1);

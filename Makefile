@@ -12,8 +12,8 @@
 
 CC			= cc
 CCFLAGS		= -Wall -Wextra -Werror
-
-RLFLAG		= -lreadline
+RLFLAG		= -lreadline -L${HOME}/.brew/opt/readline/lib
+COMPILEFLAG	= -I${HOME}/.brew/opt/readline/include
 NAME		= minishell
 
 RM			= rm -rf
@@ -33,7 +33,7 @@ SRCS_MAIN		= main.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c
-	$(CC) -c $(CCFLAGS) -I$(HEADDIR) $< -o $@
+	$(CC) -c $(CCFLAGS) -I$(HEADDIR) $(COMPILEFLAG) $< -o $@
 
 $(NAME): $(OBJS_MAIN) $(OBJS)
 	$(MAKE) all -C $(LIBFTDIR)

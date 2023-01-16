@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
@@ -9,6 +10,8 @@
 # include <errno.h>
 # include <unistd.h>
 # include <fcntl.h> //open close
+# include <termios.h>
+
 
 # include "../libft/libft.h"
 
