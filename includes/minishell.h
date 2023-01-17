@@ -26,4 +26,14 @@ char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);
 void	signal_handler(int sig);
 
+enum	e_str_type {word, pipeline, redirect};
+
+typedef struct s_cmd
+{
+	char			**input;
+	int				type;
+	int				unit_cnt;
+	struct s_cmd	*next;
+}	t_cmd;
+
 #endif
