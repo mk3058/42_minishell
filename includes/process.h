@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 15:52:44 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:53:19 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void	close_fd(int **fd, int proc_cnt, int child_num);
 //util.c
 int		is_equal(char *str1, char *str2);
 void	exit_err(char *err_message, char *prefix, char *postfix);
+
+//command.c
+void	execute_cmd(t_cmd *cmd, char **envp, int child_num, int **fd);
 
 #endif

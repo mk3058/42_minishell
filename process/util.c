@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:01:30 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 15:21:52 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:29:50 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	is_equal(char *str1, char *str2)
 	}
 	return (1);
 }
+// 두 string이 동일한지 확인하는 함수입니다
 
 void	exit_err(char *err_message, char *prefix, char *postfix)
 {
@@ -39,3 +40,5 @@ void	exit_err(char *err_message, char *prefix, char *postfix)
 	ft_printf("\n");
 	exit(EXIT_FAILURE);
 }
+// error 상황에서 호출하는 함수입니다.
+// prefix와 postfix로 앞, 뒤에 메시지를 추가할 수 있으며 필요하지 않을경우 NULL을 입력합니다
