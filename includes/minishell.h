@@ -32,6 +32,7 @@ typedef struct s_cmd
 {
 	char			**input;
 	int				type;
+	int				pipe_cnt;
 	int				unit_cnt;
 	struct s_cmd	*next;
 }	t_cmd;
