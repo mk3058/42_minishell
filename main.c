@@ -12,7 +12,7 @@ int main()
 		{
 			if (line[0] != '\0')
 				add_history(line);
-			//파싱?
+			parsing(line);
 			free(line);
 			line = NULL;
 		}

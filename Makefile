@@ -29,7 +29,7 @@ SRCFILES	= get_next_line.c
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_MAIN		= main.c signal.c
+SRCS_MAIN		= main.c signal.c parser.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c
