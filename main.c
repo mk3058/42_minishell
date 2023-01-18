@@ -12,7 +12,8 @@ int main()
 		{
 			if (line[0] != '\0')
 				add_history(line);
-			parsing(line);
+			//parsing
+			get_input(line);
 			free(line);
 			line = NULL;
 		}

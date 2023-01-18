@@ -12,6 +12,10 @@
 # include <fcntl.h>
 # include <termios.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 # include "../libft/libft.h"
 
 # define STDIN 0
@@ -25,6 +29,8 @@
 char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);
 void	signal_handler(int sig);
+
+char	**get_input(char *line);
 
 enum	e_str_type {word, pipeline, redirect};
 

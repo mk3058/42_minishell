@@ -24,12 +24,12 @@ LIBNAME		= libft.a
 HEADDIR		= ./includes
 
 SRCDIR		= ./srcs
-SRCFILES	= get_next_line.c
+SRCFILES	= get_next_line.c signal.c parser.c
 
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_MAIN		= main.c signal.c parser.c
+SRCS_MAIN		= main.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c
