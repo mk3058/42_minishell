@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:01:30 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/17 16:25:26 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:50:32 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,3 @@ int	is_equal(char *str1, char *str2)
 	return (1);
 }
 
-int	cnt_pipe(t_cmd *cmd)
-{
-	int	cnt;
-
-	cnt = 0;
-	while (cmd)
-	{
-		if (cmd->type == pipeline)
-			cnt++;
-		cmd = cmd->next;
-	}
-	return (cnt);
-}

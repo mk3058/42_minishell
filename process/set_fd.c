@@ -6,43 +6,99 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/17 18:12:21 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:49:36 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/process.h"
 
+static void	set_redirect(int unit_num, int **fd, int *redir_fd);
+
 int	**make_pipe(t_cmd *cmd)
 {
-	int		pipeline_cnt;
 	int		**fd;
 	int		i;
 	t_cmd	*tmp;
 
-	pipeline_cnt = cnt_pipe(cmd);
 	i = -1;
 	tmp = cmd;
-	fd = malloc(sizeof(int *) * pipeline_cnt + 1);
-	while (++i < pipeline_cnt + 1)
+	fd = malloc(sizeof(int *) * ((cmd->pipe_cnt) + 2));
+	while (++i < (cmd->pipe_cnt) + 2)
 	{
 		fd[i] = malloc(sizeof(int) * 2);
 		pipe(fd[i]);
-		set_redirect(fd[i], get_redirect_fd(cmd, i));
+		if (i == 0)
+		{
+			close(fd[i][0]);
+			fd[i][0] = STDIN_FILENO;
+		}
+		else if (i == (cmd->pipe_cnt) + 1)
+		{
+			close(fd[i][1]);
+			fd[i][1] = STDOUT_FILENO;
+		}
+		set_redirect(i, fd, get_redirect_fd(cmd, i));
 	}
 	return (fd);
 }
+// 프로세스간 통신을 위한 pipe를 개설합니다
+// 이후 해당 프로세스에 redirection 이 있는경우 해당 파일로 입/출력을 변경합니다
+// fd 배열의 첫번째와 마지막번째는 첫번째와 마지막 프로세스의 입력, 출력을 저장하기 위해서 사용하므로
+// fd[0][0], fd[last_ind][1] 만 사용합니다.
 
-static void	set_redirect(int *fd, int *redir_fd)
+static void	set_redirect(int unit_num, int **fd, int *redir_fd)
 {
 	if (redir_fd[0] > 0)
 	{
-		close(fd[0]);
-		fd[0] = redir_fd[0];
+		if (fd[unit_num][0] != STDIN_FILENO)
+			close(fd[unit_num][0]);
+		fd[unit_num][0] = redir_fd[0];
 	}
 	if (redir_fd[1] > 0)
 	{
-		close(fd[1]);
-		fd[1] = redir_fd[1];
+		if (fd[unit_num][1] != STDOUT_FILENO)
+			close(fd[unit_num][1]);
+		fd[unit_num][1] = redir_fd[1];
 	}
 }
+// 인자로 주어진 redir_fd가 0 초과인경우(redirection 존재)
+// pipe에 존재하는 기존 fd를 close하고 redir_fd로 변경합니다
+// 기존 fd의 값이 STDIN, STDOUT인 경우 close 하지 않습니다
+
+void	close_fd(int **fd, int proc_cnt, int child_num)
+{
+	int	i;
+
+	i = -1;
+	while (++i < proc_cnt - 1)
+	{
+		if (i == child_num)
+			if (fd[i][1] != STDOUT_FILENO)
+				close(fd[i][1]);
+		else if (i == child_num + 1)
+			if (fd[i][0] != STDIN_FILENO)
+				close(fd[i][0]);
+		else
+		{
+			if (fd[i][1] != STDOUT_FILENO)
+				close(fd[i][1]);
+			if (fd[i][0] != STDIN_FILENO)
+				close(fd[i][0]);
+		}
+	}
+}
+// 해당 프로세스에서 사용하는 fd를 제외한 불필요한 fd를 close 합니다
+
+void	set_fd(int **fd, int proc_cnt, int child_num)
+{
+	int	stdout_backup;
+
+	stdout_backup = dup(STDOUT_FILENO);
+	close_fd(fd, proc_cnt, child_num);
+	dup2(fd[child_num][0], STDIN_FILENO);
+	dup2(fd[child_num + 1][1], STDOUT_FILENO);
+	return (stdout_backup);
+}
+// 해당 프로세스의 입출력 fd를 설정합니다
+// STDOUT을 반환합니다
