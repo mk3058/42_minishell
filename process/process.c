@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 15:38:27 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:53:20 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	dealloc(int **fd, t_cmd *cmd)
 // 	cmd4.unit_cnt = 2;
 // 	cmd4.next = &cmd5;
 
-// 	cmd5.input = ft_split("> outfile", ' ');
+// 	cmd5.input = ft_split("<< EOF", ' ');
 // 	cmd5.type = redirect;
 // 	cmd5.pipe_cnt = 1;
 // 	cmd5.unit_cnt = 2;

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 13:51:51 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:52:44 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
 
 //set_fd.c
 int		**make_pipe(t_cmd *cmd);
-void	set_fd(int **fd, int proc_cnt, int child_num);
+int		set_fd(int **fd, int proc_cnt, int child_num);
 void	close_fd(int **fd, int proc_cnt, int child_num);
 
 //util.c
 int		is_equal(char *str1, char *str2);
+void	exit_err(char *err_message, char *prefix, char *postfix);
 
 #endif
