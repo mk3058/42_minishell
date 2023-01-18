@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:48:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 13:16:16 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:28:03 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,24 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 static void	set_input(t_cmd *cmd, int *fd, int unit_cnt)
 {
 	char	*file_name;
-	char	*unit_cnt;
+	char	*unit_cnt_tmp;
 
 	if (is_equal(cmd->input[0], "<<"))
 	{
-		unit_cnt = ft_itoa(cmd->unit_cnt);
-		file_name = ft_strjoin("here_doc", unit_cnt);
+		unit_cnt_tmp = ft_itoa(cmd->unit_cnt);
+		file_name = ft_strjoin(".heredoc_tmp", unit_cnt_tmp);
 		fd[0] = open(file_name, O_RDONLY);
-		free(unit_cnt);
+		if (fd[0] < 0)
+			exit_err(NULL, file_name, NULL);
+		free(unit_cnt_tmp);
 		free(file_name);
 	}
 	else if (is_equal(cmd->input[0], "<"))
+	{
 		fd[0] = open(cmd->input[1], O_RDONLY);
+		if (fd[0] < 0)
+			exit_err(NULL, cmd->input[1], NULL);
+	}
 }
 
 static void	set_output(t_cmd *cmd, int *fd, int unit_cnt)
@@ -60,4 +66,6 @@ static void	set_output(t_cmd *cmd, int *fd, int unit_cnt)
 		fd[1] = open(cmd->input[1], O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (is_equal(cmd->input[0], ">"))
 		fd[1] = open(cmd->input[1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (fd[1] < 0)
+		exit_err(NULL, cmd->input[1], NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 13:49:36 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:52:31 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,22 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 	i = -1;
 	while (++i < proc_cnt - 1)
 	{
+		if (fd[i][1] == STDOUT_FILENO || fd[i][0] == STDIN_FILENO)
+			continue ;
 		if (i == child_num)
-			if (fd[i][1] != STDOUT_FILENO)
-				close(fd[i][1]);
+			close(fd[i][1]);
 		else if (i == child_num + 1)
-			if (fd[i][0] != STDIN_FILENO)
-				close(fd[i][0]);
+			close(fd[i][0]);
 		else
 		{
-			if (fd[i][1] != STDOUT_FILENO)
-				close(fd[i][1]);
-			if (fd[i][0] != STDIN_FILENO)
-				close(fd[i][0]);
+			close(fd[i][1]);
+			close(fd[i][0]);
 		}
 	}
 }
 // 해당 프로세스에서 사용하는 fd를 제외한 불필요한 fd를 close 합니다
 
-void	set_fd(int **fd, int proc_cnt, int child_num)
+int	set_fd(int **fd, int proc_cnt, int child_num)
 {
 	int	stdout_backup;
 

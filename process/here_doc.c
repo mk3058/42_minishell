@@ -6,11 +6,13 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/17 16:22:37 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:35:32 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/process.h"
+
+static void	get_input(int fd, char *limiter);
 
 void	heredoc(t_cmd *cmd)
 {
@@ -24,7 +26,9 @@ void	heredoc(t_cmd *cmd)
 		{
 			unit_cnt = ft_itoa(cmd->unit_cnt);
 			file_name = ft_strjoin(".heredoc_tmp", unit_cnt);
-			fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 777);
+			fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0777);
+			if (fd < 0)
+				exit_err(NULL, file_name, NULL);
 			get_input(fd, cmd->input[1]);
 			close(fd);
 		}
@@ -40,7 +44,7 @@ static void	get_input(int fd, char *limiter)
 	limiter_tmp = ft_strjoin(limiter, "\n");
 	while (1)
 	{
-		printf("heredoc> ");
+		ft_putstr_fd("heredoc> ", STDOUT_FILENO);
 		input = get_next_line(STDIN_FILENO);
 		if (is_equal(limiter_tmp, input))
 		{
