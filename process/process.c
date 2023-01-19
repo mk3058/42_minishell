@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 17:25:29 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:26:30 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	process(t_cmd *cmd)
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
 	{
-		close_fd(fd, cmd->pipe_cnt, -1);
+		close_fd(fd, cmd->pipe_cnt + 1, -1);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
 		dealloc(fd, cmd);
 		return (WEXITSTATUS(statloc));
