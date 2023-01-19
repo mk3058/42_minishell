@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 15:09:22 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:17:59 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	add_env(char *env)
 	tmp->str = ft_strdup(env);
 	tmp->next = g_env;
 	g_env = tmp;
+	return (0);
 }
 // '=' 없는경우 추가X -> -1 반환
 // 여러개인 경우 가장 첫번째 '=' 전까지 단어가 key, 이후로는 value로 취급
