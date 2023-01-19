@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 16:17:14 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:40:34 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	path = find_path(cur_cmd);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
-	//stdout_backup = set_fd(fd, cmd->pipe_cnt + 1, child_num);
+	stdout_backup = set_fd(fd, cmd->pipe_cnt + 1, child_num);
 	if (execve(path, cur_cmd->input, env_to_array()) == -1)
 	{
 		dup2(stdout_backup, STDOUT_FILENO);

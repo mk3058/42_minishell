@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 16:15:48 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:41:31 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	set_fd(int **fd, int proc_cnt, int child_num)
 
 	stdout_backup = dup(STDOUT_FILENO);
 	close_fd(fd, proc_cnt, child_num);
-	printf("input fd : %d \n output fd : %d\n", fd[child_num][0], fd[child_num + 1][1]);
 	dup2(fd[child_num][0], STDIN_FILENO);
 	dup2(fd[child_num + 1][1], STDOUT_FILENO);
 	return (stdout_backup);

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 16:17:30 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:45:54 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	process(t_cmd *cmd)
 	{
 		close_fd(fd, cmd->pipe_cnt, child_num);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
-		//dealloc(fd, cmd);
+		dealloc(fd, cmd);
 		return (WEXITSTATUS(statloc));
 	}
 	else
@@ -72,19 +72,19 @@ static void	dealloc(int **fd, t_cmd *cmd)
 	cnt = cmd->pipe_cnt + 1;
 	i = -1;
 	unlink_file(cmd);
-	while (++i < cnt + 2)
+	while (++i < cnt + 1)
 		free(fd[i]);
 	free(fd);
-	i = -1;
-	while (cmd->input[i])
-		free(cmd->input[i]);
-	free(cmd->input);
-	while (cmd)
-	{
-		next = cmd->next;
-		free(cmd);
-		cmd = next;
-	}
+	// i = -1;
+	// while (cmd->input[i])
+	// 	free(cmd->input[i]);
+	// free(cmd->input);
+	// while (cmd)
+	// {
+	// 	next = cmd->next;
+	// 	free(cmd);
+	// 	cmd = next;
+	// }
 }
 // 사용한 메모리를 정리하고 임시파일을 unlink 합니다
 
@@ -118,19 +118,19 @@ int main(int argc, char **argv, char **envp)
 	
 	cmd1.input = ft_split("> outfile1", ' ');
 	cmd1.type = redirect;
-	cmd1.pipe_cnt = 1;
+	cmd1.pipe_cnt = 0;
 	cmd1.unit_cnt = 0;
 	cmd1.next = &cmd2;
 
 	cmd2.input = ft_split("<< EOF", ' ');
 	cmd2.type = redirect;
-	cmd2.pipe_cnt = 1;
+	cmd2.pipe_cnt = 0;
 	cmd2.unit_cnt = 0;
 	cmd2.next = &cmd3;
 
 	cmd3.input = ft_split("grep test", ' ');
 	cmd3.type = word;
-	cmd3.pipe_cnt = 1;
+	cmd3.pipe_cnt = 0;
 	cmd3.unit_cnt = 0;
 	cmd3.next = NULL; //&cmd3;
 
