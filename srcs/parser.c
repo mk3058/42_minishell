@@ -1,4 +1,8 @@
 #include "../includes/minishell.h"
+
+# define NONE	0
+# define DQUOTE 1
+# define SQUOTE 2
 /*
  * cmd 구조체 : [0] input commands, [1] command type, [2] count redirect units, [3] count pipes, [4] next commnad addr.
  * cmd 구조체의 input에 적절히 파싱한 2차원배열 문자열을 저장해야 한다.
@@ -10,7 +14,6 @@
 			3. 따옴표 안쪽이 아닌 스페이스로 명령 구분
 			4. 쌍따옴표 안에서 이스케이프로 작동한 \ 제거
 			5. 환경변수($) 고려
-			6. CMD 단위 구분 : |, EOF 	
 */
 
 static void free_all(char *cmd_path, char **token)
@@ -51,87 +54,120 @@ char	*parsing_word(char *line)
 	return (cmd_path);
 }
 
-/*
- * cmd 구조체의 input에 적절히 파싱한 명령어 토큰들을 2차원배열 문자열로 저장해야 한다.
- *
- * @param	: 
- * @return	:
-*/
+// 사용하고 남은 2차원 배열 처리
+void	free_2d_arr(char **arr)
+{
+	int	i;
 
-int	count_space(char *line)
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
+}
+
+// 환경변수때문에 squote dquote 구분함
+int	is_in_quote(char *line, int idx)
+{
+	int	i;
+	int	quote_flag;
+
+	quote_flag = NONE;
+	i = -1;
+	while (++i < idx)
+	{
+		if (line[i] == '"')
+		{
+			if (quote_flag == NONE)
+				quote_flag = DQUOTE;
+			else
+				quote_flag = NONE;
+		}
+		if (line[i] == '\'')
+		{
+			if (quote_flag == NONE)
+				quote_flag = SQUOTE;
+			else
+				quote_flag = NONE;
+		}
+	}
+	return (quote_flag);
+}
+
+int	cnt_space(char *line)
 {
 	int	cnt;
+	int	i;
 
 	cnt = 0;
-	while (*line)
+	i = 0;
+	while (line[i])
 	{
-		if (*line == ' ')
+		if (!is_in_quote(line, i) && line[i] == ' ')
 		{
-			while (*line != ' ')
-				line++;
-			if (*line != '\0') //마지막에 space가 오는 경우 카운트하지 않음
+			while (line[i] == ' ')
+				i++;
+			if (line[i] != '\0') //마지막에 space가 오는 경우 카운트하지 않음
 				cnt++;
 		}
-		line++;
+		i++;
 	}
 	return (cnt);
 }
 
-int	count_pipe(char *line)
+// space 단위로 자른 토큰을 2d arr로 반환
+char	**get_space_token(char *line)
 {
-	int	cnt;
+	char	**token;
+	int		i;
+	int		start;
+	int		idx;
 
-	cnt = 0;
-	while (*line)
+	start = 0;
+	i = 0;
+	idx = 0;
+	token = (char **)malloc(sizeof(char *) * (cnt_space(line) + 2));
+	while (line[i])
 	{
-		if (*line == '|')
+		if (!is_in_quote(line, i) && line[i] == ' ')
 		{
-			while (*line == ' ')
-				line++;
-			if (*line == '|')
-				return (-1); // pipe 에러처리
-			cnt++;
+			token[idx] = ft_substr(line, start, i - start);
+			while (line[i] == ' ')
+				i++;
+			if (line[i] == '\0')
+				break ;
+			start = i;
+			idx++;
 		}
+		i++;
 	}
-	return (cnt);
+	if (i > 0)
+		token[idx++] = ft_substr(line, start, i - start);
+	token[idx] = NULL;
+	return (token);
 }
 
-char	**get_cmd_token(char *line)
+/* 
+ * 먼저 따옴표를 확인하며 공백으로 토큰을 나누고, <<, <, >, | 등을 라인별로 확인 후 처리
+ * 1. 공백 개수, " ' 고려하여 확인
+ * 2. redirect, pipe 토큰화
+ * @return **unit_token
+ * 개발중
+*/
+char	**get_unit_token(char *line)
 {
-	char	**cmds;
-	int		cnt_pipe;
+	char	**token;
+	int	i = 0;
 
-	cnt_pipe = count_pipe(line);
-	cmds = (char **)malloc(sizeof(char *) * (cnt_pipe + 2)); // num of pipe = (num of pipe + 1) ,NULL
-	if (!cmd)
-		return (0);
-	//CMD, BUILTIN, REDIRECTION 구분
-	while (line[++i])
+	// test용 임시 코드
+	token = get_space_token(line);
+	while (token[i])
 	{
-		if ()
+		printf("token[%d] = %s\n", i, token[i]);
+		i++;
 	}
-	
-}
-
-// quote 홀수이면 -1 반환, 짝수면 1 반환
-int	check_quote(char *line)
-{
-	int	cnt_quote_s;
-	int cnt_quote_b;
-
-	cnt_quote_s = 0;
-	cnt_quote_b = 0;
-	while (*line)
-	{
-		if (*line == '\'')
-			cnt_quote_s++;
-		if (*line == '"')
-			cnt_quote_b++;
-		else if (*line == '|')
-		{
-			if (cnt_quote_s % 2 == 1 || cnt_quote_b % 2 == 1)
-				return (-1);
-			cnt_quote = 0;
-		}
-	}
+	return (0);
 }

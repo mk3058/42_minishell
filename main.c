@@ -13,7 +13,7 @@ int main()
 			if (line[0] != '\0')
 				add_history(line);
 			//parsing
-			get_input(line);
+			//get_unit_token(line);
 			free(line);
 			line = NULL;
 		}

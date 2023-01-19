@@ -24,7 +24,7 @@ LIBNAME		= libft.a
 HEADDIR		= ./includes
 
 SRCDIR		= ./srcs
-SRCFILES	= get_next_line.c signal.c parser.c
+SRCFILES	= signal.c parser.c
 
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS	= $(SRCS:.c=.o)

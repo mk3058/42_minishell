@@ -30,7 +30,11 @@ char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);
 void	signal_handler(int sig);
 
-char	**get_input(char *line);
+char	**get_space_token(char *line);
+int		cnt_space(char *line);
+int		is_in_quote(char *line, int idx);
+char	**get_unit_token(char *line);
+
 
 enum	e_str_type {word, pipeline, redirect};
 
