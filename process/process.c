@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 16:45:54 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:22:18 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ static void	dealloc(int **fd, t_cmd *cmd)
 	while (++i < cnt + 1)
 		free(fd[i]);
 	free(fd);
-	// i = -1;
-	// while (cmd->input[i])
-	// 	free(cmd->input[i]);
-	// free(cmd->input);
-	// while (cmd)
-	// {
-	// 	next = cmd->next;
-	// 	free(cmd);
-	// 	cmd = next;
-	// }
+	i = -1;
+	while (cmd->input[i])
+		free(cmd->input[i]);
+	free(cmd->input);
+	while (cmd)
+	{
+		next = cmd->next;
+		free(cmd);
+		cmd = next;
+	}
 }
 // 사용한 메모리를 정리하고 임시파일을 unlink 합니다
 
@@ -108,49 +108,51 @@ static void	unlink_file(t_cmd *cmd)
 }
 // 생성한 임시파일을 unlink 합니다.
 
-t_env *g_env;
 
-int main(int argc, char **argv, char **envp)
-{
-	t_cmd cmd1, cmd2, cmd3, cmd4, cmd5;
+// ********** 테스트를 위한 main입니다 *******************
+// t_env *g_env;
 
-	set_envlist(envp);
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
+
+// 	set_envlist(envp);
 	
-	cmd1.input = ft_split("> outfile1", ' ');
-	cmd1.type = redirect;
-	cmd1.pipe_cnt = 0;
-	cmd1.unit_cnt = 0;
-	cmd1.next = &cmd2;
+// 	cmd1.input = ft_split("> outfile1", ' ');
+// 	cmd1.type = redirect;
+// 	cmd1.pipe_cnt = 0;
+// 	cmd1.unit_cnt = 0;
+// 	cmd1.next = &cmd2;
 
-	cmd2.input = ft_split("<< EOF", ' ');
-	cmd2.type = redirect;
-	cmd2.pipe_cnt = 0;
-	cmd2.unit_cnt = 0;
-	cmd2.next = &cmd3;
+// 	cmd2.input = ft_split("<< EOF", ' ');
+// 	cmd2.type = redirect;
+// 	cmd2.pipe_cnt = 0;
+// 	cmd2.unit_cnt = 0;
+// 	cmd2.next = &cmd3;
 
-	cmd3.input = ft_split("grep test", ' ');
-	cmd3.type = word;
-	cmd3.pipe_cnt = 0;
-	cmd3.unit_cnt = 0;
-	cmd3.next = NULL; //&cmd3;
+// 	cmd3.input = ft_split("grep test", ' ');
+// 	cmd3.type = word;
+// 	cmd3.pipe_cnt = 0;
+// 	cmd3.unit_cnt = 0;
+// 	cmd3.next = NULL;
 
-	// cmd3.input = ft_split("|", ' ');
-	// cmd3.type = pipeline;
-	// cmd3.pipe_cnt = 1;
-	// cmd3.unit_cnt = 1;
-	// cmd3.next = &cmd4;
+// 	// cmd4.input = ft_split("|", ' ');
+// 	// cmd4.type = pipeline;
+// 	// cmd4.pipe_cnt = 1;
+// 	// cmd4.unit_cnt = 1;
+// 	// cmd4.next = &cmd5;
 
-	// cmd4.input = ft_split("ls -al", ' ');
-	// cmd4.type = word;
-	// cmd4.pipe_cnt = 1;
-	// cmd4.unit_cnt = 2;
-	// cmd4.next = &cmd5;
+// 	// cmd5.input = ft_split("ls -al", ' ');
+// 	// cmd5.type = word;
+// 	// cmd5.pipe_cnt = 1;
+// 	// cmd5.unit_cnt = 1;
+// 	// cmd5.next = &cmd6;
 
-	// cmd5.input = ft_split("> outfile2", ' ');
-	// cmd5.type = redirect;
-	// cmd5.pipe_cnt = 1;
-	// cmd5.unit_cnt = 2;
-	// cmd5.next = NULL;
+// 	// cmd6.input = ft_split("> outfile2", ' ');
+// 	// cmd6.type = redirect;
+// 	// cmd6.pipe_cnt = 1;
+// 	// cmd6.unit_cnt = 1;
+// 	// cmd6.next = NULL;
 
-	process(&cmd1);
-}
+// 	process(&cmd1);
+// }
