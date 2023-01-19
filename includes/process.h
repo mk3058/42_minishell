@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 17:53:19 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:44:58 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include "../includes/minishell.h"
 # include "../includes/malloc_ctl.h"
+# include "../includes/environment.h"
 
 //here_doc.c
 void	heredoc(t_cmd *cmd);
@@ -35,6 +36,6 @@ int		is_equal(char *str1, char *str2);
 void	exit_err(char *err_message, char *prefix, char *postfix);
 
 //command.c
-void	execute_cmd(t_cmd *cmd, char **envp, int child_num, int **fd);
+void	execute_cmd(t_cmd *cmd, int child_num, int **fd);
 
 #endif
