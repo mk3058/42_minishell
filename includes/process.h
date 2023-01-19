@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 15:44:58 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:56:20 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ void	exit_err(char *err_message, char *prefix, char *postfix);
 
 //command.c
 void	execute_cmd(t_cmd *cmd, int child_num, int **fd);
+
+//process.c
+int		process(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 17:26:30 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:59:32 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,52 +107,3 @@ static void	unlink_file(t_cmd *cmd)
 	}
 }
 // 생성한 임시파일을 unlink 합니다.
-
-
-// ********** 테스트를 위한 main입니다 *******************
-// t_env *g_env;
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
-
-// 	set_envlist(envp);
-	
-// 	cmd1.input = ft_split("> outfile1", ' ');
-// 	cmd1.type = redirect;
-// 	cmd1.pipe_cnt = 0;
-// 	cmd1.unit_cnt = 0;
-// 	cmd1.next = &cmd2;
-
-// 	cmd2.input = ft_split("<< EOF", ' ');
-// 	cmd2.type = redirect;
-// 	cmd2.pipe_cnt = 0;
-// 	cmd2.unit_cnt = 0;
-// 	cmd2.next = &cmd3;
-
-// 	cmd3.input = ft_split("grep test", ' ');
-// 	cmd3.type = word;
-// 	cmd3.pipe_cnt = 0;
-// 	cmd3.unit_cnt = 0;
-// 	cmd3.next = NULL;
-
-// 	// cmd4.input = ft_split("|", ' ');
-// 	// cmd4.type = pipeline;
-// 	// cmd4.pipe_cnt = 1;
-// 	// cmd4.unit_cnt = 1;
-// 	// cmd4.next = &cmd5;
-
-// 	// cmd5.input = ft_split("ls -al", ' ');
-// 	// cmd5.type = word;
-// 	// cmd5.pipe_cnt = 1;
-// 	// cmd5.unit_cnt = 1;
-// 	// cmd5.next = &cmd6;
-
-// 	// cmd6.input = ft_split("> outfile2", ' ');
-// 	// cmd6.type = redirect;
-// 	// cmd6.pipe_cnt = 1;
-// 	// cmd6.unit_cnt = 1;
-// 	// cmd6.next = NULL;
-
-// 	process(&cmd1);
-// }
