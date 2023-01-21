@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 15:17:59 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:29:07 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	add_env(char *env)
 	int		key_length;
 
 	key_length = cnt_key_length(env);
-	if (key_length < 0)
+	if (key_length == 0)
 		return (-1);
-	if (g_env)
+	if (key_length > 0)
 	{
 		tmp = g_env;
 		while (tmp)
@@ -46,14 +46,15 @@ int	add_env(char *env)
 			}
 			tmp = tmp->next;
 		}
+		tmp = malloc(sizeof(t_env));
+		tmp->str = ft_strdup(env);
+		tmp->next = g_env;
+		g_env = tmp;
 	}
-	tmp = malloc(sizeof(t_env));
-	tmp->str = ft_strdup(env);
-	tmp->next = g_env;
-	g_env = tmp;
 	return (0);
 }
-// '=' 없는경우 추가X -> -1 반환
+// key가 없는 경우(=으로 시작하는 경우) 오류 처리 -> -1 반환
+// '=' 없는경우 추가X -> 0반환
 // 여러개인 경우 가장 첫번째 '=' 전까지 단어가 key, 이후로는 value로 취급
 // 리스트에 동일한 key가 존재하는 경우 기존 내용을 삭제하고 새로운 변수 할당
 // 존재하지 않는 key일경우 새로운 노드를 생성함
