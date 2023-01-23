@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:56:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 15:10:20 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:17:22 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int		add_env(char *env);
 char	*get_env(char *key);
 char	**env_to_array(void);
 void	print_env(void);
+
+int		is_equal(char *str1, char *str2);
 
 #endif
