@@ -6,16 +6,18 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:47:03 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/21 13:51:48 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:37:05 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtin.h"
 
+static int	is_option(char *str);
 // echo -n test         => test%
 // echo -nnnnnnnnn test => test%
 // echo -nnnnnnnnm test => -nnnnnnnnm test
 // echo -m test         => -m test
+
 int	echo(t_cmd *cmd)
 {
 	int	flag;

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:50:47 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/21 13:33:32 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:44:05 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	export(t_cmd *cmd)
 	{
 		if (add_env(str) < 0)
 		{
-			printf("export: '%s':  not a valid identifier\n", str);
+			printf("export: '%s': not a valid identifier\n", str);
 			return (1);
 		}
 	}

@@ -22,7 +22,7 @@ int main()
 	export(&cmd);
 	printf("\n-------------------------\n");
 
-	cmd.input = ft_split("export", ' ');
+	cmd.input = ft_split("export ======tres", ' ');
 	export(&cmd);
 	printf("\n-------------------------\n");
 
