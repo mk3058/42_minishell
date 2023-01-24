@@ -19,19 +19,23 @@
 
 # include "../includes/minishell.h"
 
-typedef struct s_prs
+typedef struct s_plist
 {
-	int	quote_flag;
-}	t_prs;
+	char	*str;
+	int		quote_flag;
+}	t_plist;
 
+//get_token.c
 char	**get_space_token(char *line);
 int		cnt_space(char *line);
+char	**get_cmd_token(char **line);
 int		cnt_cmd(char **line);
 
+//parser.c
 char	**get_unit_token(char *line);
 
+//parse_util.c
 int		is_in_quote(char *line, int idx);
 char	*get_substr(char const *s, unsigned int start, size_t len);
-
 
 #endif
