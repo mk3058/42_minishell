@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:07:44 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/20 22:22:35 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/24 14:10:11 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	pwd(void)
 	if (!dir)
 	{
 		perror(NULL);
-		return (errno);
+		return (1);
 	}
 	printf("%s\n", dir);
 	free(dir);

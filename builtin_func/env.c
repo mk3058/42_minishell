@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:46:24 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/20 22:46:17 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/24 14:11:05 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 int	env(void)
 {
-	print_env();
+	t_env	*tmp;
+
+	tmp = g_env;
+	while (tmp)
+	{
+		if (tmp->value)
+			printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
 	return (0);
 }
