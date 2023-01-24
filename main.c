@@ -1,6 +1,6 @@
 #include "includes/minishell.h"
 
-t_env *env;
+t_env *g_env;
 
 int main()
 {
