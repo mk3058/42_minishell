@@ -1,5 +1,7 @@
 #include "includes/minishell.h"
 
+t_env *env;
+
 int main()
 {
 	char	*line;
