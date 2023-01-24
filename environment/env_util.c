@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:49:27 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/24 12:51:15 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:25:54 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ static char	*node_to_line(t_env *node)
 	i = -1;
 	size = ft_strlen(node->key) + ft_strlen(node->value) + 1;
 	line = malloc(sizeof(char) * (size + 1));
-	ft_strlcpy(line, node->key, size);
-	ft_strlcpy(line, "=", size);
-	ft_strlcpy(line, node->value, size);
+	line[0] = '\0';
+	ft_strlcat(line, node->key, size + 1);
+	ft_strlcat(line, "=", size + 1);
+	ft_strlcat(line, node->value, size + 1);
 	return (line);
 }
 // node에 저장된 환경변수를 key = value 형태로 바꿔서 반환

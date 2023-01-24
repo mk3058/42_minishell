@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/24 12:51:10 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:25:27 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 static int	cnt_key_length(char *env);
 static void	env_add_back(char *env, int key_length);
-int			is_equal(char *str1, char *str2);;
+int			is_equal(char *str1, char *str2);
 
-int	set_envlist(void)
+int	set_envlist(char **envp)
 {
 	int			i;
-	extern char	**environ;
 
 	i = 0;
-	while (environ[i])
-		add_env(environ[i]);
+	while (envp[i])
+	{
+		add_env(envp[i]);
+		i++;
+	}
 	return (0);
 }
-//environ을 통해 환경변수를 받아 리스트 형태로 만듦
+//환경변수를 받아 리스트 형태로 만듦
 
 int	add_env(char *env)
 {
@@ -53,10 +55,12 @@ int	add_env(char *env)
 		tmp = tmp->next;
 	}
 	env_add_back(env, key_length);
+	return (0);
 }
 // '='로 시작하는 경우 오류처리 -> -1 반환
 // 리스트에 동일한 key가 존재하는 경우 기존 내용을 삭제하고 새로운 내용 추가
 // 존재하지 않는 key일경우, 리스트가 비어있을 경우 새로운 노드를 생성함
+// ****** 인자로 주어지는 env는 수정 가능해야 합니다!! *******
 
 static void	env_add_back(char *env, int key_length)
 {
@@ -75,7 +79,7 @@ static void	env_add_back(char *env, int key_length)
 		tmp->next = new;
 	}
 	else
-		tmp = new;
+		g_env = new;
 }
 // 리스트 마지막에 환경변수를 추가함
 
