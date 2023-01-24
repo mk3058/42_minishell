@@ -26,7 +26,10 @@ HEADDIR		= ./includes
 SRCDIR		= ./srcs
 SRCFILES	= signal.c parser.c parser_util.c
 
-SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
+SRCDIR		= ./environment
+SRCFILES	= env.c print_list.c
+
+SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES)) $(addprefix $(ENVSRCDIR)/, $(ENVSRCFILES))
 OBJS	= $(SRCS:.c=.o)
 
 SRCS_MAIN		= main.c

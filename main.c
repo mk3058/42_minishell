@@ -13,7 +13,8 @@ int main()
 			if (line[0] != '\0')
 				add_history(line);
 			//parsing
-			get_unit_token(line);
+			//get_unit_token(line);
+			printf("%s\n", get_env("PATH"));
 			free(line);
 			line = NULL;
 		}
