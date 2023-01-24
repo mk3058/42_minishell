@@ -19,6 +19,7 @@
 # include "../libft/libft.h"
 # include "../includes/parser.h"
 # include "../includes/environment.h"
+# include "../includes/process.h"
 
 # define STDIN 0
 # define STDOUT 1
