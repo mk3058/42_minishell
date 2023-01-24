@@ -24,7 +24,7 @@ LIBNAME		= libft.a
 HEADDIR		= ./includes
 
 SRCDIR		= ./srcs
-SRCFILES	= signal.c parser.c
+SRCFILES	= signal.c parser.c parser_util.c
 
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS	= $(SRCS:.c=.o)
@@ -53,7 +53,5 @@ fclean:
 	$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all
-
-bonus: $(NAME) $(NAME2)
 
 .PHONY : all clean fclean re

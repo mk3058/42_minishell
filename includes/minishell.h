@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 # include "../libft/libft.h"
+# include "../includes/parser.h"
 
 # define STDIN 0
 # define STDOUT 1
@@ -29,11 +30,6 @@
 char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);
 void	signal_handler(int sig);
-
-char	**get_space_token(char *line);
-int		cnt_space(char *line);
-int		is_in_quote(char *line, int idx);
-char	**get_unit_token(char *line);
 
 
 enum	e_str_type {word, pipeline, redirect};

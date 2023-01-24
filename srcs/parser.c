@@ -1,8 +1,15 @@
-#include "../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/24 10:58:34 by bojung            #+#    #+#             */
+/*   Updated: 2023/01/24 10:58:36 by bojung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# define NONE	0
-# define DQUOTE 1
-# define SQUOTE 2
 /*
  * cmd 구조체 : [0] input commands, [1] command type, [2] count redirect units, [3] count pipes, [4] next commnad addr.
  * cmd 구조체의 input에 적절히 파싱한 2차원배열 문자열을 저장해야 한다.
@@ -10,92 +17,14 @@
  * cmd 구조체에 전체 pipe 개수를 저장한다.
  * 파싱 단계 :
  			1. 한줄 읽기
+			1-1. 따옴표 기준 토큰 나누기
 			2. 문법 검사 (에러처리) (ex. ;, 리다이렉트 인자가 없는 경우)
 			3. 따옴표 안쪽이 아닌 스페이스로 명령 구분
 			4. 쌍따옴표 안에서 이스케이프로 작동한 \ 제거
 			5. 환경변수($) 고려
 */
 
-static void free_all(char *cmd_path, char **token)
-{
-	int	i;
-
-	i = 0;
-	while(token[i])
-	{
-		free(token[i]);
-		i++;
-	}
-	free(token);
-	free(cmd_path);
-}
-
-char	*parsing_word(char *line)
-{
-	struct stat	stat_buf;
-	char		**token;
-	char		*tmp;
-	char		*cmd_path;
-	int			i;
-
-	i = -1;
-	token = ft_split(getenv("PATH"), ':');
-	while (token[++i])
-	{
-		tmp = ft_strjoin(token[i], "/");
-		cmd_path = ft_strjoin(tmp, line);
-		free(tmp);
-		if (!stat(cmd_path, &stat_buf))
-			break ;
-		free(cmd_path);
-		cmd_path = NULL;
-	}
-	free_all(cmd_path, token);
-	return (cmd_path);
-}
-
-// 사용하고 남은 2차원 배열 처리
-void	free_2d_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
-	}
-	free(arr);
-}
-
-// 환경변수때문에 squote dquote 구분함
-int	is_in_quote(char *line, int idx)
-{
-	int	i;
-	int	quote_flag;
-
-	quote_flag = NONE;
-	i = -1;
-	while (++i < idx)
-	{
-		if (line[i] == '"')
-		{
-			if (quote_flag == NONE)
-				quote_flag = DQUOTE;
-			else
-				quote_flag = NONE;
-		}
-		if (line[i] == '\'')
-		{
-			if (quote_flag == NONE)
-				quote_flag = SQUOTE;
-			else
-				quote_flag = NONE;
-		}
-	}
-	return (quote_flag);
-}
+#include "../includes/parser.h"
 
 int	cnt_space(char *line)
 {
@@ -134,36 +63,94 @@ char	**get_space_token(char *line)
 	{
 		if (!is_in_quote(line, i) && line[i] == ' ')
 		{
-			token[idx] = ft_substr(line, start, i - start);
+			token[idx] = get_substr(line, start, i - start);
 			while (line[i] == ' ')
+			{
 				i++;
-			if (line[i] == '\0')
-				break ;
+				if (line[i] == '\0')
+					break ;
+			}
 			start = i;
 			idx++;
 		}
 		i++;
 	}
 	if (i > 0)
-		token[idx++] = ft_substr(line, start, i - start);
+		token[idx++] = get_substr(line, start, i - start);
 	token[idx] = NULL;
 	return (token);
 }
 
+// redirection, pipe를 추가로 나눈 토큰의 개수를 반환
+int	cnt_cmd(char **line)
+{
+	int	i;
+	int	cnt;
+
+	cnt = 0;
+	while (*line)
+	{
+		i = 0;
+		cnt++;
+		while ((*line)[i] != '\0')
+		{
+			if(!ft_strncmp(*(line) + i, ">>", 2) || !ft_strncmp(*(line) + i, "<<", 2))
+			{
+				if (i > 0) // 이전 문자가 존재하면 토큰 개수는 +1
+					cnt++;
+				if ((*line)[i + 2] != '\0') // 다음 문자가 존재하면 + 1
+					cnt++;
+				i++;
+			}
+			else if ((*line)[i] == '>' || (*line)[i] == '<' || (*line)[i] == '|')
+			{
+				if (i > 0) // 이전 문자가 존재하면 토큰 개수는 +1
+					cnt++;
+				if ((*line)[i + 1] != '\0') // 다음 문자가 존재하면 + 1
+					cnt++;
+			}
+			i++;
+		}
+		line++;
+	}
+	printf("cnt = %d\n", cnt);
+	return (cnt);
+}
+
+// redirection, pipe를 추가로 나눈 토큰을 반환
+// char	**get_cmd_token(char **line)
+// {
+// 	char	**token;
+
+// 	token = (char **)malloc(sizeof(char *) * cnt_cmd(line) + 1);
+
+// 	return (token);
+// }
+
 /* 
- * 먼저 따옴표를 확인하며 공백으로 토큰을 나누고, <<, <, >, | 등을 라인별로 확인 후 처리
- * 1. 공백 개수, " ' 고려하여 확인
- * 2. redirect, pipe 토큰화
- * @return **unit_token
+ * 먼저 따옴표를 확인하며 공백으로 토큰을 나누고 <<, <, >, | 등을 라인별로 확인 후 처리
+ * 1. 따옴표를 고려한 공백 기준 토큰화
+ * 2. redirect, pipe 기준 토큰화
+ * @return	: **unit_token (final)
  * 개발중
 */
 char	**get_unit_token(char *line)
 {
 	char	**token;
+	char	**temp;
 	int	i = 0;
 
 	// test용 임시 코드
+	while (*line == ' ')
+		line++;
+	// space 기준 토큰화
 	token = get_space_token(line);
+	temp = token;
+
+	// redir, | 기준 토큰화
+	cnt_cmd(temp);
+	//token = get_cmd_token(temp);
+	//free_2d_arr(temp);
 	while (token[i])
 	{
 		printf("token[%d] = %s\n", i, token[i]);
