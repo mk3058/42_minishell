@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:56:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 15:10:20 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:59:37 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 typedef struct s_env
 {
-	char			*str;
+	char			*key;
+	char			*value;
 	struct s_env	*next;
 }	t_env;
 
@@ -28,6 +29,5 @@ int		set_envlist(char **envp);
 int		add_env(char *env);
 char	*get_env(char *key);
 char	**env_to_array(void);
-void	print_env(void);
 
 #endif

@@ -6,107 +6,82 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 15:09:22 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:25:27 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/environment.h"
 
 static int	cnt_key_length(char *env);
+static void	env_add_back(char *env, int key_length);
+int			is_equal(char *str1, char *str2);
 
 int	set_envlist(char **envp)
 {
-	int	i;
+	int			i;
 
 	i = 0;
 	while (envp[i])
-		add_env(envp[i++]);
+	{
+		add_env(envp[i]);
+		i++;
+	}
 	return (0);
 }
-//char **형 환경변수를 받아 리스트 형태로 만듦
+//환경변수를 받아 리스트 형태로 만듦
 
 int	add_env(char *env)
 {
 	t_env	*tmp;
 	int		key_length;
 
+	tmp = g_env;
 	key_length = cnt_key_length(env);
-	if (key_length < 0)
+	if (key_length == 0)
 		return (-1);
-	if (g_env)
+	else if (key_length > 0)
+		env[key_length] = '\0';
+	while (tmp)
 	{
-		tmp = g_env;
-		while (tmp)
+		if (is_equal(tmp->key, env))
 		{
-			if (!ft_strncmp(tmp->str, env, key_length + 1))
+			if (key_length > 0)
 			{
-				free(tmp->str);
-				tmp->str = ft_strdup(env);
-				return (0);
+				free(tmp->value);
+				tmp->value = ft_strdup(env + key_length + 1);
 			}
+			return (0);
+		}
+		tmp = tmp->next;
+	}
+	env_add_back(env, key_length);
+	return (0);
+}
+// '='로 시작하는 경우 오류처리 -> -1 반환
+// 리스트에 동일한 key가 존재하는 경우 기존 내용을 삭제하고 새로운 내용 추가
+// 존재하지 않는 key일경우, 리스트가 비어있을 경우 새로운 노드를 생성함
+// ****** 인자로 주어지는 env는 수정 가능해야 합니다!! *******
+
+static void	env_add_back(char *env, int key_length)
+{
+	t_env	*new;
+	t_env	*tmp;
+
+	new = ft_calloc(1, sizeof(t_env));
+	new->key = ft_strdup(env);
+	if (key_length > 0)
+		new->value = ft_strdup(env + key_length + 1);
+	tmp = g_env;
+	if (tmp)
+	{
+		while (tmp->next)
 			tmp = tmp->next;
-		}
+		tmp->next = new;
 	}
-	tmp = malloc(sizeof(t_env));
-	tmp->str = ft_strdup(env);
-	tmp->next = g_env;
-	g_env = tmp;
+	else
+		g_env = new;
 }
-// '=' 없는경우 추가X -> -1 반환
-// 여러개인 경우 가장 첫번째 '=' 전까지 단어가 key, 이후로는 value로 취급
-// 리스트에 동일한 key가 존재하는 경우 기존 내용을 삭제하고 새로운 변수 할당
-// 존재하지 않는 key일경우 새로운 노드를 생성함
-// head가 NULL인 경우에는 새로운 노드를 생성함
-
-char	*get_env(char *key)
-{
-	t_env	*tmp;
-	char	*key_tmp;
-
-	tmp = g_env;
-	key_tmp = ft_strjoin(key, "=");
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->str, key, ft_strlen(key)))
-		{
-			free(key_tmp);
-			return ((tmp->str) + ft_strlen(key) + 1);
-		}
-		tmp = tmp->next;
-	}
-	free(key_tmp);
-	return (NULL);
-}
-// 환경변수 list에서 key에 해당하는 값을 찾으면 해당 환경변수 반환
-// 존재하지 않을경우 NULL 반환
-
-char	**env_to_array(void)
-{
-	t_env	*tmp;
-	char	**envp;
-	int		env_cnt;
-
-	tmp = g_env;
-	env_cnt = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		env_cnt++;
-	}
-	envp = malloc(sizeof(char *) * (env_cnt + 1));
-	envp[env_cnt] = NULL;
-	tmp = g_env;
-	env_cnt = 0;
-	while (tmp)
-	{
-		envp[env_cnt++] = tmp->str;
-		tmp = tmp->next;
-	}
-	return (envp);
-}
-// list 형태의 환경변수를 char ** 형태로 바꾸어 반환
-// execve 함수의 인자로 char **envp 가 필요하여 사용
-// ***str은 리스트의 str을 그대로 사용하므로 해제는 envp 자체만 하면 됨***
+// 리스트 마지막에 환경변수를 추가함
 
 static int	cnt_key_length(char *env)
 {
