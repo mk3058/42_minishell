@@ -34,6 +34,7 @@ typedef struct s_cmd
 	int				type;
 	int				pipe_cnt;
 	int				unit_cnt;
+	int				*exit_stat;
 	struct s_cmd	*next;
 }	t_cmd;
 
