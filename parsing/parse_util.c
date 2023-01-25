@@ -61,6 +61,25 @@ int	is_in_quote(char *line, int idx)
 	return (quote_flag);
 }
 
+/*
+ * check if line[idx] is command or not (> >> < << |)
+ * @parameters	: line(tokened line), idx(index to check)
+ * @when		: Check is redirection, doubled redir, pipe
+ * @return		: NONE(0) PIPE(1) REDIR(2) DOUBLED_REDIR(3)
+ */
+int	is_cmd(char *line, int idx)
+{
+	if (!ft_strncmp(line + idx, ">>", 2) || !ft_strncmp(line + idx, "<<", 2))
+		return (DOUBLED_REDIR);
+	else if (line[idx] == '>' || line[idx] == '<')
+		return (REDIR);
+	else if (line[idx] == '|')
+		return (PIPE);
+	else
+		return (NONE);
+}
+
+// make substr without quotes 
 char	*get_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
@@ -86,4 +105,31 @@ char	*get_substr(char const *s, unsigned int start, size_t len)
 	}
 	str[idx] = '\0';
 	return (str);
+}
+
+/*
+ * Error 처리 구현중...
+ * @when	:1. Check sequence commands and no parameter case
+			 2. Check unspecified special characters like \ or ;
+			 3. Check smth occurs errors
+ * @return	: Error(-1), Pass(0)
+*/
+int	check_error(char **token)
+{
+	while (*token)
+	{
+		if (is_cmd(*token, 0))
+		{
+			printf("\nchecking...\n");
+			printf("token[i] = %s\n", *token);
+			token++;
+			if (is_cmd(*token, 0) || *token == NULL)
+			{
+				printf("parse error\n");
+				return (-1);
+			}
+		}
+		token++;
+	}
+	return (0);
 }

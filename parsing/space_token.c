@@ -49,7 +49,7 @@ char	**get_space_token(char *line)
 	{
 		if (!is_in_quote(line, i) && line[i] == ' ')
 		{
-			token[idx] = get_substr(line, start, i - start);
+			token[idx] = ft_substr(line, start, i - start);
 			while (line[i] == ' ')
 			{
 				i++;
@@ -62,7 +62,7 @@ char	**get_space_token(char *line)
 		i++;
 	}
 	if (i > 0)
-		token[idx++] = get_substr(line, start, i - start);
+		token[idx++] = ft_substr(line, start, i - start);
 	token[idx] = NULL;
 	return (token);
 }

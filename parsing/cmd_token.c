@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/parser.h"
+
 // redirection, pipe를 추가로 나눈 토큰의 개수를 반환
 int	cnt_cmd(char **line)
 {
@@ -60,23 +62,27 @@ char	**get_cmd_token(char **line)
 		i = -1;
 		while ((*line)[++i] != '\0')
 		{
-			if(!ft_strncmp(*(line) + i, ">>", 2) || !ft_strncmp(*(line) + i, "<<", 2))
+			if (!is_in_quote(*line, i))
 			{
-				if (i > 0) // 이전 문자가 존재하면
-					token[idx++] = ft_substr(*line, start, i - start);
-				token[idx++] = ft_substr(*line, i, 2);
-				i++;
-				start = i + 1;
-			}
-			else if ((*line)[i] == '>' || (*line)[i] == '<' || (*line)[i] == '|')
-			{
-				if (i > 0) // 이전 문자가 존재하면
-					token[idx++] = ft_substr(*line, start, i - start);
-				token[idx++] = ft_substr(*line, i, 1);
-				start = i + 1;
+				if(is_cmd(*line, i) == DOUBLED_REDIR)
+				{
+					if (i > 0 && !is_cmd(*line, i - 1)) // 이전 문자가 존재하면
+						token[idx++] = ft_substr(*line, start, i - start);
+					token[idx++] = ft_substr(*line, i, 2);
+					i++;
+					start = i + 1;
+				}
+				else if (is_cmd(*line, i) == PIPE || is_cmd(*line, i) == REDIR)
+				{
+					if (i > 0 && !is_cmd(*line, i - 1)) // 이전 문자가 존재하면
+						token[idx++] = ft_substr(*line, start, i - start);
+					token[idx++] = ft_substr(*line, i, 1);
+					start = i + 1;
+				}
 			}
 		}
-		token[idx++] = ft_substr(*line, start, ft_strlen(*line) - start);
+		if ((*line)[start] != '\0')
+			token[idx++] = ft_substr(*line, start, ft_strlen(*line) - start);
 		line++;
 	}
 	return (token);

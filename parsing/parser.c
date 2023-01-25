@@ -37,22 +37,23 @@ char	**get_unit_token(char *line)
 {
 	char	**token;
 	char	**temp;
-	int	i = 0;
 
-	// test용 임시 코드
+
 	while (*line == ' ')
 		line++;
-	// space 기준 토큰화
-	token = get_space_token(line);
+	token = get_space_token(line); // parse based on SPACE
 	temp = token;
-
-	// redir, | 기준 토큰화
-	token = get_cmd_token(temp);
+	token = get_cmd_token(temp); // redir, | 기준 토큰화
 	//free_2d_arr(temp);
+
+	// test용 임시 코드
+	int	i = 0;
 	while (token[i])
 	{
 		printf("token[%d] = %s\n", i, token[i]);
 		i++;
 	}
+	check_error(token);
+
 	return (0);
 }
