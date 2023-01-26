@@ -79,7 +79,7 @@ int	is_cmd(char *line, int idx)
 		return (NONE);
 }
 
-// make substr without quotes 
+// make substr without quotes
 char	*get_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
@@ -105,31 +105,4 @@ char	*get_substr(char const *s, unsigned int start, size_t len)
 	}
 	str[idx] = '\0';
 	return (str);
-}
-
-/*
- * Error 처리 구현중...
- * @when	:1. Check sequence commands and no parameter case
-			 2. Check unspecified special characters like \ or ;
-			 3. Check smth occurs errors
- * @return	: Error(-1), Pass(0)
-*/
-int	check_error(char **token)
-{
-	while (*token)
-	{
-		if (is_cmd(*token, 0))
-		{
-			printf("\nchecking...\n");
-			printf("token[i] = %s\n", *token);
-			token++;
-			if (is_cmd(*token, 0) || *token == NULL)
-			{
-				printf("parse error\n");
-				return (-1);
-			}
-		}
-		token++;
-	}
-	return (0);
 }

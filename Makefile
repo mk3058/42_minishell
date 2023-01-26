@@ -27,7 +27,7 @@ SRCDIR		= ./srcs
 SRCFILES	= signal.c
 
 PARSE_SRCDIR	= ./parsing
-PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c
+PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c parse_err.c
 
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES)) \
 			$(addprefix $(PARSE_SRCDIR)/, $(PARSE_SRCFILES))

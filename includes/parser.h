@@ -44,6 +44,10 @@ char	**get_unit_token(char *line);
 int		is_in_quote(char *line, int idx);
 int		is_cmd(char *line, int idx);
 char	*get_substr(char const *s, unsigned int start, size_t len);
+
+//parse_err.c
 int		check_error(char **token);
+int		err_special_char(char *token);
+int		print_err(char *str);
 
 #endif
