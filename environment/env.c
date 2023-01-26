@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/24 13:56:41 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:28:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	add_env(char *env)
 	int		key_length;
 
 	tmp = g_env;
-	key_length = cnt_key_length(env);
-	if (key_length == 0)
+	if (!ft_isalpha(env[0]))
 		return (-1);
-	else if (key_length > 0)
+	key_length = cnt_key_length(env);
+	if (key_length > 0)
 		env[key_length] = '\0';
 	while (tmp)
 	{

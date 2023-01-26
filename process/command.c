@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 16:40:34 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 14:34:45 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,16 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 {
 	char	*path;
 	t_cmd	*cur_cmd;
-	int		stdout_backup;
+	int		*std_fd;
 
 	cur_cmd = find_cur_cmd(cmd, child_num);
 	path = find_path(cur_cmd);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
-	stdout_backup = set_fd(fd, cmd->pipe_cnt + 1, child_num);
+	std_fd = set_fd(fd, cmd->pipe_cnt + 1, child_num);
+	free(std_fd);
 	if (execve(path, cur_cmd->input, env_to_array()) == -1)
-	{
-		dup2(stdout_backup, STDOUT_FILENO);
 		exit_err(NULL, NULL, NULL);
-	}
 }
 // 명령어의 위치를 찾고 execve 함수를 호출하여 실행합니다
 

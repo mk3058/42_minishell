@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:50:47 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/24 14:11:47 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:26:36 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	export(t_cmd *cmd)
 	{
 		if (add_env(str) < 0)
 		{
-			printf("export: '%s': not a valid identifier\n", str);
+			builtin_err("export: '", str, "': not a valid identifier\n", 1);
 			return (1);
 		}
 	}
@@ -33,7 +33,7 @@ int	export(t_cmd *cmd)
 	return (0);
 }
 // 잘못된 option 이 주어지는 경우를 제외하면 반환값은 0
-//	key가 없는 인자가 주어질경우 오류 -> 1반환
+//	env 첫글자가 영어가 아닐경우 오류
 // 인자 없이 export만 입력할 경우 환경변수 내용 출력
 
 static void	print_env(void)

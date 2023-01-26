@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 17:10:25 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 14:05:27 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,17 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 }
 // 해당 프로세스에서 사용하는 fd를 제외한 불필요한 fd를 close 합니다
 
-int	set_fd(int **fd, int proc_cnt, int child_num)
+int	*set_fd(int **fd, int proc_cnt, int child_num)
 {
-	int	stdout_backup;
+	int	*std_fd;
 
-	stdout_backup = dup(STDOUT_FILENO);
+	std_fd = malloc(sizeof(int) * 2);
+	std_fd[0] = dup(STDIN_FILENO);
+	std_fd[1] = dup(STDOUT_FILENO);
 	close_fd(fd, proc_cnt, child_num);
 	dup2(fd[child_num][0], STDIN_FILENO);
 	dup2(fd[child_num + 1][1], STDOUT_FILENO);
-	return (stdout_backup);
+	return (std_fd);
 }
 // 해당 프로세스의 입출력 fd를 설정합니다
-// STDOUT을 반환합니다
+// STDIN, STDOUT을 반환합니다

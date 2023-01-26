@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:43:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/25 12:56:35 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:22:17 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,13 @@ static int	arg_check(t_cmd *cmd, int cnt)
 	{
 		if (!ft_isdigit(cmd->input[1][i]) && cmd->input[1][i] != '-')
 		{
-			ft_putstr_fd("exit\nbash: exit: ", STDERR_FILENO);
-			ft_putstr_fd(cmd->input[1], STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
+			builtin_err(0, cmd->input[1], ": numeric argument required\n", 0);
 			*(cmd->exit_stat) = 255;
 			exit(*(cmd->exit_stat));
 		}
 	}
 	if (cnt > 2)
-	{
-		ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
-		return (1);
-	}
+		return (builtin_err("exit: ", "too many arguments\n", NULL, 1));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:01:30 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/18 16:29:50 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:59:17 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int	is_equal(char *str1, char *str2)
 void	exit_err(char *err_message, char *prefix, char *postfix)
 {
 	if (prefix)
-		ft_printf("%s: ", prefix);
+		ft_putstr_fd(prefix, STDERR_FILENO);
 	if (err_message)
-		ft_printf("%s", err_message);
+		ft_putstr_fd(err_message, STDERR_FILENO);
 	else
-		ft_printf("%s", strerror(errno));
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	if (postfix)
-		ft_printf(": %s", postfix);
-	ft_printf("\n");
+		ft_putstr_fd(postfix, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 // error 상황에서 호출하는 함수입니다.

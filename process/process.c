@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 17:59:32 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 14:37:11 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ static void	wait_proc(int proc_cnt, int *pid, int *statloc);
 static void	dealloc(int **fd, t_cmd *cmd);
 static void	unlink_file(t_cmd *cmd);
 
-int	process(t_cmd *cmd)
+void	process(t_cmd *cmd)
 {
 	int		**fd;
+	int		*std_fd;
 	int		child_num;
 	int		statloc;
 	pid_t	*pid;
@@ -27,17 +28,19 @@ int	process(t_cmd *cmd)
 	child_num = -1;
 	heredoc(cmd);
 	fd = make_pipe(cmd);
+	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
+		return ;
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
 	{
 		close_fd(fd, cmd->pipe_cnt + 1, -1);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
-		dealloc(fd, cmd);
-		return (WEXITSTATUS(statloc));
+//		dealloc(fd, cmd);
+		*(cmd->exit_stat) = (WEXITSTATUS(statloc));
 	}
 	else
 		execute_cmd(cmd, child_num, fd);
-	return (0);
+	return ;
 }
 // 인자로 주어진 cmd 리스트와 환경변수를 바탕으로 프로세스를 분기하여 실행합니다
 // builtin 함수가 아닌경우에 호출해서 사용합니다
