@@ -26,35 +26,120 @@
 
 #include "../includes/parser.h"
 
+void	ss()
+{
+	system("leaks minishell");
+}
+
 /* 
  * 먼저 따옴표를 확인하며 공백으로 토큰을 나누고 <<, <, >, | 등을 라인별로 확인 후 처리
  * 1. 따옴표를 고려한 공백 기준 토큰화 ok
  * 2. redirect, pipe 기준 토큰화 ok
  * 3. 파싱한 문자들 타입, 유닛, 파이프개수(?) 구조체 리스트에 저장
- * @return	: **unit_token (final)
+ * @return	: t_cmd *unit_token (final)
  * 개발중
 */
 char	**get_unit_token(char *line)
 {
+	//atexit(ss);
+	t_cmd	*cmd;
 	char	**token;
 	char	**temp;
-
 
 	while (*line == ' ')
 		line++;
 	token = get_space_token(line); // parse based on SPACE
 	temp = token;
 	token = get_cmd_token(temp); // redir, | 기준 토큰화
-	//free_2d_arr(temp);
+	free_2d_arr(temp);
+	if (check_error(token) < 0)
+		return (0);
+	cmd = get_cmd_info(token);
+	free_2d_arr(token);
 
 	// test용 임시 코드
-	int	i = 0;
-	while (token[i])
+	while (cmd)
 	{
-		printf("token[%d] = %s\n", i, token[i]);
-		i++;
+		int i = 0;
+		while (cmd->input[i])
+		{
+			printf("[%d] : %s\n", i, cmd->input[i]);
+			i++;
+		}
+		printf("* type %d | unit_cnt %d | pipe_cnt %d\n", cmd->type, cmd->unit_cnt, cmd->pipe_cnt);
+		printf("-----------\n");
+		cmd = cmd->next;
 	}
-	check_error(token);
-
 	return (0);
+}
+
+t_cmd	*get_cmd_info(char **token)
+{
+	t_cmd	*cmd;
+	t_cmd	*head;
+	int		p_cnt;
+
+	cmd = cmd_lstinit();
+	head = cmd;
+	p_cnt = cnt_pipe(token);
+	printf("pcnt = %d\n", p_cnt);
+	init_input(cmd, token);
+	while (cmd)
+	{
+		init_type(cmd);
+		cmd->pipe_cnt = p_cnt;
+		cmd = cmd->next;
+	}
+	return (head);
+}
+
+void	init_input(t_cmd *cmd, char **token)
+{
+	int		i;
+	int		unit;
+
+	i = -1;
+	unit = 0;
+	while (token[++i])
+	{
+		cmd->unit_cnt = unit;
+		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
+		{
+			cmd->input = ft_2d_strndup(token, i);
+			cmd_lstadd(cmd);
+			cmd = cmd->next;
+			if (is_cmd(token[i], 0) == 1)
+			{	
+				cmd->input = ft_2d_strndup(token + i, 1);
+				cmd_lstadd(cmd);
+				cmd = cmd->next;
+				unit++;
+				i++;
+			}
+			token += i;
+			i = 0;
+		}
+	}
+	cmd->unit_cnt = unit;
+	cmd->input = ft_2d_strndup(token, i);
+}
+
+void	init_type(t_cmd *cmd)
+{
+	int		cmd_flag;
+
+	while(cmd)
+	{
+		cmd_flag = is_cmd(cmd->input[0], 0);
+		if (cmd_flag > 0) // type 초기화
+		{
+			if (cmd_flag == 1)
+				cmd->type = pipeline;
+			else if (cmd_flag > 1)
+				cmd->type = redirect;
+			else
+				cmd->type = word;
+		}
+		cmd = cmd->next;
+	}
 }

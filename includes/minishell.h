@@ -32,7 +32,6 @@ char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);
 void	signal_handler(int sig);
 
-
 enum	e_str_type {word, pipeline, redirect};
 
 typedef struct s_cmd
@@ -41,6 +40,7 @@ typedef struct s_cmd
 	int				type;
 	int				pipe_cnt;
 	int				unit_cnt;
+	int				*exit_stat;
 	struct s_cmd	*next;
 }	t_cmd;
 

@@ -106,3 +106,39 @@ char	*get_substr(char const *s, unsigned int start, size_t len)
 	str[idx] = '\0';
 	return (str);
 }
+
+char	**ft_2d_strndup(char **arr, int	len)
+{
+	char	**new;
+	int		i;
+
+	i = 0;
+	new = (char **)malloc(sizeof(char *) * (len + 1));
+	while (i < len)
+	{
+		new[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
+
+int		cnt_pipe(char **token)
+{
+	int	i;
+	int	cnt;
+
+	cnt = 0;
+	while (*token)
+	{
+		i = 0;
+		while ((*token)[i])
+		{
+			if ((*token)[i] == '|')
+				cnt++;
+			i++;
+		}
+		token++;
+	}
+	return (cnt);
+}
