@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 19:36:05 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/26 14:30:01 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:56:14 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 int		builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num);
 
 int		echo(t_cmd *cmd);
-int		env(void);
+int		env(t_cmd *cmd);
 int		export(t_cmd *cmd);
 int		pwd(void);
 int		cd(t_cmd *cmd);

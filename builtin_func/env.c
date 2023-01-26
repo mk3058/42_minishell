@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:46:24 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/26 16:47:59 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:59:23 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	env(t_cmd *cmd)
 		env_print();
 	else
 	{
-		cmd_path = find_path(cmd->input[util_index]);
-		cmd->input[util_index] = ft_strdup(cmd_path);
-		if (execve(cmd_path, cmd->input[util_index], env_to_array()) == -1)
+		cmd->input = &cmd->input[util_index];
+		cmd_path = find_path(cmd);
+		*(cmd->input) = ft_strdup(cmd_path);
+		if (execve(cmd_path, cmd->input, env_to_array()) == -1)
 			exit_err(NULL, NULL, NULL);
 	}
 	return (0);

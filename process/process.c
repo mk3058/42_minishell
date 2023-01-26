@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 16:34:25 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:13:51 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	process(t_cmd *cmd)
 	{
 		close_fd(fd, cmd->pipe_cnt + 1, -1);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
-//		dealloc(fd, cmd);
 		*(cmd->exit_stat) = (WEXITSTATUS(statloc));
+		dealloc(fd, cmd);
 	}
 	else
 		execute_cmd(cmd, child_num, fd);
@@ -79,7 +79,7 @@ static void	dealloc(int **fd, t_cmd *cmd)
 		free(fd[i]);
 	free(fd);
 	i = -1;
-	while (cmd->input[i])
+	while (cmd->input[++i])
 		free(cmd->input[i]);
 	free(cmd->input);
 	while (cmd)

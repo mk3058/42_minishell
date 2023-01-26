@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 16:35:37 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:59:39 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	exec_builtin(t_cmd *cmd)
 	else if (is_equal(cmd_input, "echo"))
 		*(cmd->exit_stat) = echo(cmd);
 	else if (is_equal(cmd_input, "env"))
-		*(cmd->exit_stat) = env();
+		*(cmd->exit_stat) = env(cmd);
 	else if (is_equal(cmd_input, "exit"))
 		*(cmd->exit_stat) = ft_exit(cmd);
 	else if (is_equal(cmd_input, "export"))
