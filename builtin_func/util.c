@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 14:34:56 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:35:37 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 	int	is_builtin;
 	int	*std_fd;
 
+	if (cmd->pipe_cnt == 0 && is_equal(cmd->input[0], "env"))
+		return (0);
 	if (cmd->pipe_cnt == 0)
 		std_fd = set_fd(fd, proc_cnt, child_num);
 	is_builtin = exec_builtin(cmd);

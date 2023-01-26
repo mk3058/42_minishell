@@ -6,13 +6,12 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 14:34:45 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:46:02 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/process.h"
 
-static char		*find_path(t_cmd *cmd);
 static char		**parse_path(void);
 static t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num);
 static void		dealloc(char **env_path);
@@ -29,12 +28,14 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	cur_cmd->input[0] = ft_strdup(path);
 	std_fd = set_fd(fd, cmd->pipe_cnt + 1, child_num);
 	free(std_fd);
-	if (execve(path, cur_cmd->input, env_to_array()) == -1)
+	if (builtin_controller(cmd, fd, cmd->pipe_cnt + 1, child_num))
+		return ;
+	else if (execve(path, cur_cmd->input, env_to_array()) == -1)
 		exit_err(NULL, NULL, NULL);
 }
 // 명령어의 위치를 찾고 execve 함수를 호출하여 실행합니다
 
-static char	*find_path(t_cmd *cmd)
+char	*find_path(t_cmd *cmd)
 {
 	char	**env_path;
 	char	*file_path;

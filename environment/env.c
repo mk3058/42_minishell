@@ -6,11 +6,12 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 13:28:15 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:21:25 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/environment.h"
+#include "../includes/builtin.h"
 
 static int	cnt_key_length(char *env);
 static void	env_add_back(char *env, int key_length);
@@ -36,9 +37,9 @@ int	add_env(char *env)
 	int		key_length;
 
 	tmp = g_env;
-	if (!ft_isalpha(env[0]))
-		return (-1);
 	key_length = cnt_key_length(env);
+	if (key_length == 0)
+		return (builtin_err("setenv ", env, ": Invalid argument", -1));
 	if (key_length > 0)
 		env[key_length] = '\0';
 	while (tmp)
