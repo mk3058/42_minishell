@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:35:21 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 17:59:14 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 18:34:18 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_cmd *test_parse(char *line)
 	}
 
 	//print_node(head);
-	system("leaks minishell");
+	//system("leaks minishell");
 	return (head);
 }
 

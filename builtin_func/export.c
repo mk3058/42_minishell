@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:50:47 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 10:53:55 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:09:19 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	export(t_cmd *cmd)
 	{
 		if (!ft_isalpha(str[0]))
 		{
-			print_err("export: '", str, "': not a valid identifier\n", 1);
+			print_err("export: '", str, "': not a valid identifier", 1);
 			return (1);
 		}
 		if (add_env(str) < 0)

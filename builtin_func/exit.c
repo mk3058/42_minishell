@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:43:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 11:01:38 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:08:37 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static int	arg_check(t_cmd *cmd, int cnt)
 		if (!ft_isdigit(cmd->input[1][i]) && cmd->input[1][i] != '-')
 		{
 			ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
-			print_err(0, cmd->input[1], ": numeric argument required\n", 0);
+			print_err(0, cmd->input[1], ": numeric argument required", 0);
 			*(cmd->exit_stat) = 255;
 			exit(*(cmd->exit_stat));
 		}
 	}
 	if (cnt > 2)
-		return (print_err("exit: ", "too many arguments\n", NULL, 1));
+		return (print_err("exit: ", "too many arguments", NULL, 1));
 	return (0);
 }
