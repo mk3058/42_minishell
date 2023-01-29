@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:43:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 13:22:17 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/29 09:26:40 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static int	arg_check(t_cmd *cmd, int cnt)
 		if (!ft_isdigit(cmd->input[1][i]) && cmd->input[1][i] != '-')
 		{
 			ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
-			builtin_err(0, cmd->input[1], ": numeric argument required\n", 0);
+			print_err(0, cmd->input[1], ": numeric argument required\n", 0);
 			*(cmd->exit_stat) = 255;
 			exit(*(cmd->exit_stat));
 		}
 	}
 	if (cnt > 2)
-		return (builtin_err("exit: ", "too many arguments\n", NULL, 1));
+		return (print_err("exit: ", "too many arguments\n", NULL, 1));
 	return (0);
 }

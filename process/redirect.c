@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:48:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 17:20:05 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/29 10:23:44 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 		{
 			set_input(cmd, fd, unit_cnt);
 			set_output(cmd, fd, unit_cnt);
+			if (fd[0] < 0 || fd[1] < 0)
+			{
+				print_err(cmd->input[1], ": ", strerror(errno), 1);
+				*(cmd->exit_stat) = 1;
+				return (NULL);
+			}
 		}
 		else if (cmd->unit_cnt > unit_cnt)
 			break ;
@@ -47,17 +53,11 @@ static void	set_input(t_cmd *cmd, int *fd, int unit_cnt)
 		unit_cnt_tmp = ft_itoa(cmd->unit_cnt);
 		file_name = ft_strjoin(".heredoc_tmp", unit_cnt_tmp);
 		fd[0] = open(file_name, O_RDONLY);
-		if (fd[0] < 0)
-			exit_err(NULL, file_name, NULL);
 		free(unit_cnt_tmp);
 		free(file_name);
 	}
 	else if (is_equal(cmd->input[0], "<"))
-	{
 		fd[0] = open(cmd->input[1], O_RDONLY);
-		if (fd[0] < 0)
-			exit_err(NULL, cmd->input[1], NULL);
-	}
 }
 
 static void	set_output(t_cmd *cmd, int *fd, int unit_cnt)
@@ -66,6 +66,4 @@ static void	set_output(t_cmd *cmd, int *fd, int unit_cnt)
 		fd[1] = open(cmd->input[1], O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (is_equal(cmd->input[0], ">"))
 		fd[1] = open(cmd->input[1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd[1] < 0)
-		exit_err(NULL, cmd->input[1], NULL);
 }

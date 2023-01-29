@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 16:46:02 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/29 09:54:49 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 {
 	char	*path;
 	t_cmd	*cur_cmd;
-	int		*std_fd;
 
 	cur_cmd = find_cur_cmd(cmd, child_num);
+	if (builtin_controller(cur_cmd, fd, cmd->pipe_cnt + 1, child_num))
+		exit(0);
 	path = find_path(cur_cmd);
 	free(cur_cmd->input[0]);
 	cur_cmd->input[0] = ft_strdup(path);
-	std_fd = set_fd(fd, cmd->pipe_cnt + 1, child_num);
-	free(std_fd);
-	if (builtin_controller(cmd, fd, cmd->pipe_cnt + 1, child_num))
-		return ;
-	else if (execve(path, cur_cmd->input, env_to_array()) == -1)
-		exit_err(NULL, NULL, NULL);
+	if (execve(path, cur_cmd->input, env_to_array()) == -1)
+	{
+		*(cmd->exit_stat) = print_err(path, ": ", strerror(errno), 1);
+		exit(EXIT_FAILURE);
+	}
 }
 // 명령어의 위치를 찾고 execve 함수를 호출하여 실행합니다
 
@@ -57,8 +57,8 @@ char	*find_path(t_cmd *cmd)
 			free(file_path);
 	}
 	dealloc(env_path);
-	exit_err("command not found", NULL, cmd->input[0]);
-	return (NULL);
+	*cmd->exit_stat = print_err(cmd->input[0], ": command not found\n", 0, 127);
+	exit(EXIT_FAILURE);
 }
 // 환경변수 경로에 해당 파일이 존재하는지 확인하고 존재하면 경로를 반환합니다
 // 경로에서 실행파일을 찾지 못한경우 오류를 출력하고 프로그램을 종료합니다

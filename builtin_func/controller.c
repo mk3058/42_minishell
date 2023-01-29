@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   controller.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/26 16:59:39 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/29 09:56:58 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 	int	is_builtin;
 	int	*std_fd;
 
-	if (cmd->pipe_cnt == 0 && is_equal(cmd->input[0], "env"))
-		return (0);
-	if (cmd->pipe_cnt == 0)
-		std_fd = set_fd(fd, proc_cnt, child_num);
+	std_fd = set_fd(fd, proc_cnt, child_num);
 	is_builtin = exec_builtin(cmd);
 	if (cmd->pipe_cnt == 0)
 	{
 		dup2(std_fd[0], STDIN_FILENO);
 		dup2(std_fd[1], STDOUT_FILENO);
-		free(std_fd);
 	}
+	free(std_fd);
 	return (is_builtin);
 }
 
@@ -49,7 +46,7 @@ static int	exec_builtin(t_cmd *cmd)
 	else if (is_equal(cmd_input, "echo"))
 		*(cmd->exit_stat) = echo(cmd);
 	else if (is_equal(cmd_input, "env"))
-		*(cmd->exit_stat) = env(cmd);
+		*(cmd->exit_stat) = env();
 	else if (is_equal(cmd_input, "exit"))
 		*(cmd->exit_stat) = ft_exit(cmd);
 	else if (is_equal(cmd_input, "export"))
@@ -61,18 +58,4 @@ static int	exec_builtin(t_cmd *cmd)
 	else
 		return (0);
 	return (1);
-}
-
-int	builtin_err(char *prefix, char *errmsg, char *postfix, int return_val)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	if (prefix)
-		ft_putstr_fd(prefix, STDERR_FILENO);
-	if (errmsg)
-		ft_putstr_fd(errmsg, STDERR_FILENO);
-	else
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	if (postfix)
-		ft_putstr_fd(postfix, STDERR_FILENO);
-	return (return_val);
 }
