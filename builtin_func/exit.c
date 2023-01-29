@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:43:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 19:08:37 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:50:35 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_exit(t_cmd *cmd)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
 		*(cmd->exit_stat) = (unsigned char)ft_atoi(cmd->input[1]);
-	exit(*(cmd->exit_stat));
+	exit(EXIT_SUCCESS);
 }
 
 static int	arg_check(t_cmd *cmd, int cnt)

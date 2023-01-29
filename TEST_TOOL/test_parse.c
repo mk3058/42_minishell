@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:35:21 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 18:34:18 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 19:58:10 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char 	**pre_split(char *line);
 
 t_env *g_env;
 
-t_cmd *test_parse(char *line)
+t_cmd *test_parse(char *line, int *exit_stat)
 {
 	t_cmd	*head = NULL;
-	int		*exit_stat = malloc(sizeof(int));
 	char	**tokenize = pre_split(line);
 	int		i = 0;
 	int		pipe_cnt = 0;
+	
 	set_envlist(environ);
 
 	while (line[i])
