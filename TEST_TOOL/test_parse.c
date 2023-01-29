@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:35:21 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 14:11:27 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 15:09:23 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmd *test_parse(char *line)
 		i++;
 	}
 	
-	//print_node(head);
+	print_node(head);
 	//system("leaks minishell");
 	return (head);
 }
@@ -70,6 +70,10 @@ char **pre_split(char *line)
 		}
 	}
 	result[res_ind] = NULL;
+	
+	for (int j = 0; splited[j]; j++)
+		free(splited[j]);
+	free(splited);
 	
 	return (result);
 }

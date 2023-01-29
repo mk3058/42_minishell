@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 11:07:14 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 15:14:28 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ static void	unlink_file(t_cmd *cmd)
 	{
 		unit_cnt = ft_itoa(cmd->unit_cnt);
 		file_name = ft_strjoin(".heredoc_tmp", unit_cnt);
-		unlink(file_name);
+		if (access(file_name, F_OK) == 0)
+			unlink(file_name);
 		free(unit_cnt);
 		free(file_name);
 	}
