@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/13 16:17:34 by bojung            #+#    #+#              #
-#    Updated: 2023/01/29 10:51:26 by minkyu           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC			= cc
 CCFLAGS		= -Wall -Wextra -Werror
 RLFLAG		= -lreadline -L/opt/homebrew/opt/readline/lib
@@ -34,11 +22,15 @@ ENVFILES	= env_util.c env.c
 BUILTINDIR	= ./builtin_func
 BUILTINFILES= cd.c controller.c echo.c env.c exit.c export.c pwd.c unset.c
 
+TESTTOOLDIR	= ./TEST_TOOL
+TESTTOOLFILES = split.c test_parse.c
+
 SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES)) $(addprefix $(UTILDIR)/, $(UTILFILES))\
-$(addprefix $(PROCESSDIR)/, $(PROCESSFILES)) $(addprefix $(ENVDIR)/, $(ENVFILES)) $(addprefix $(BUILTINDIR)/, $(BUILTINFILES))
+$(addprefix $(PROCESSDIR)/, $(PROCESSFILES)) $(addprefix $(ENVDIR)/, $(ENVFILES)) $(addprefix $(BUILTINDIR)/, $(BUILTINFILES))\
+$(addprefix $(TESTTOOLDIR)/, $(TESTTOOLFILES))
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_MAIN		= main.c signal.c test_parse.c
+SRCS_MAIN		= main.c signal.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c

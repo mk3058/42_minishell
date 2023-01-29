@@ -1,6 +1,6 @@
 #include "includes/minishell.h"
 
-t_cmd *test_parse(void); //////////////////////////
+t_cmd *test_parse(char *line); //////////////////////////
 #include "includes/process.h"
 
 t_env *g_env;
@@ -18,7 +18,7 @@ int main()
 		{
 			if (line[0] != '\0')
 				add_history(line);
-			cmd = test_parse();
+			cmd = test_parse(line);
 			free(line);
 			line = NULL;
 			process(cmd);
