@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 12:55:22 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 18:28:44 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*find_path(t_cmd *cmd)
 	if (access(cmd->input[0], R_OK | X_OK) == 0)
 		return (ft_strdup(cmd->input[0]));
 	env_path = parse_path();
-	while (env_path[++i])
+	while (env_path && env_path[++i])
 	{
 		file_path = ft_strjoin(env_path[i], cmd->input[0]);
 		if (access(file_path, R_OK | X_OK) == 0)
@@ -56,7 +56,8 @@ char	*find_path(t_cmd *cmd)
 		else
 			free(file_path);
 	}
-	dealloc(env_path);
+	if (env_path)
+		dealloc(env_path);
 	*cmd->exit_stat = print_err(cmd->input[0], ": command not found", 0, 127);
 	exit(EXIT_FAILURE);
 }
@@ -69,7 +70,10 @@ static char	**parse_path(void)
 	char	*tmp;
 	int		i;
 
-	parsed_path = ft_split(get_env("PATH"), ':');
+	tmp = get_env("PATH");
+	if (tmp == NULL)
+		return (NULL);
+	parsed_path = ft_split(tmp, ':');
 	i = -1;
 	while (parsed_path[++i])
 	{

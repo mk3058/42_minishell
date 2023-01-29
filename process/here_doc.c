@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:06:11 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 17:49:34 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	get_input(int fd, char *limiter)
 	limiter_tmp = ft_strjoin(limiter, "\n");
 	while (1)
 	{
-		ft_putstr_fd("heredoc> ", STDOUT_FILENO);
+		ft_putstr_fd("> ", STDOUT_FILENO);
 		input = get_next_line(STDIN_FILENO);
 		if (is_equal(limiter_tmp, input))
 		{

@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 15:14:28 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 15:23:57 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd);
 static void	wait_proc(int proc_cnt, int *pid, int *statloc);
-static void	dealloc(int **fd, t_cmd *cmd);
+static void	dealloc(int **fd, t_cmd *cmd, int *pid);
 static void	unlink_file(t_cmd *cmd);
 
 void	process(t_cmd *cmd)
@@ -33,12 +33,14 @@ void	process(t_cmd *cmd)
 	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
 		return ;
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
+	set_signal(DFL, DFL);
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
 	{
+		set_signal(HAN, IGN);
 		close_fd(fd, cmd->pipe_cnt + 1, -1);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
 		*(cmd->exit_stat) = (WEXITSTATUS(statloc));
-		dealloc(fd, cmd);
+		dealloc(fd, cmd, pid);
 	}
 	else
 		execute_cmd(cmd, child_num, fd);
@@ -67,7 +69,7 @@ static void	wait_proc(int proc_cnt, int *pid, int *statloc)
 }
 // 프로세스의 종료상태를 회수하고 마지막 프로세스의 반환값을 인자로 주어진 statloc에 저장합니다
 
-static void	dealloc(int **fd, t_cmd *cmd)
+static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 {
 	int		i;
 	int		cnt;
@@ -76,6 +78,7 @@ static void	dealloc(int **fd, t_cmd *cmd)
 	cnt = cmd->pipe_cnt + 1;
 	i = -1;
 	unlink_file(cmd);
+	free(pid);
 	while (++i < cnt + 1)
 		free(fd[i]);
 	free(fd);
