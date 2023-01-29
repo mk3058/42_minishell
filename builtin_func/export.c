@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:50:47 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 09:26:43 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 10:53:55 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	print_env(void);
 
 int	export(t_cmd *cmd)
 {
-	t_env	*tmp;
 	char	*str;
 
 	str = cmd->input[1];

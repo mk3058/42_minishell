@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:25:19 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 10:52:46 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ int	**make_pipe(t_cmd *cmd)
 {
 	int		**fd;
 	int		i;
-	t_cmd	*tmp;
 
 	i = -1;
-	tmp = cmd;
 	fd = malloc(sizeof(int *) * ((cmd->pipe_cnt) + 2));
 	while (++i < (cmd->pipe_cnt) + 2)
 	{

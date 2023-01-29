@@ -6,14 +6,14 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:48:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:23:44 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 10:52:34 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/process.h"
 
-static void	set_input(t_cmd *cmd, int *fd, int unit_cnt);
-static void	set_output(t_cmd *cmd, int *fd, int unit_cnt);
+static void	set_input(t_cmd *cmd, int *fd);
+static void	set_output(t_cmd *cmd, int *fd);
 
 int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 {
@@ -24,8 +24,8 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 	{
 		if (cmd->unit_cnt == unit_cnt && cmd->type == redirect)
 		{
-			set_input(cmd, fd, unit_cnt);
-			set_output(cmd, fd, unit_cnt);
+			set_input(cmd, fd);
+			set_output(cmd, fd);
 			if (fd[0] < 0 || fd[1] < 0)
 			{
 				print_err(cmd->input[1], ": ", strerror(errno), 1);
@@ -43,7 +43,7 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 // redirection 이 설정되어있지 않으면 fd로 0을 반환합니다
 // (프로세스 기준으로 반환하므로 pipe에 적용시 인덱스 처리 주의)
 
-static void	set_input(t_cmd *cmd, int *fd, int unit_cnt)
+static void	set_input(t_cmd *cmd, int *fd)
 {
 	char	*file_name;
 	char	*unit_cnt_tmp;
@@ -60,7 +60,7 @@ static void	set_input(t_cmd *cmd, int *fd, int unit_cnt)
 		fd[0] = open(cmd->input[1], O_RDONLY);
 }
 
-static void	set_output(t_cmd *cmd, int *fd, int unit_cnt)
+static void	set_output(t_cmd *cmd, int *fd)
 {
 	if (is_equal(cmd->input[0], ">>"))
 		fd[1] = open(cmd->input[1], O_RDWR | O_CREAT | O_APPEND, 0644);

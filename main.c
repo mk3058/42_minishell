@@ -1,10 +1,14 @@
 #include "includes/minishell.h"
 
+t_cmd *test_parse(void); //////////////////////////
+#include "includes/process.h"
+
 t_env *g_env;
 
 int main()
 {
 	char	*line;
+	t_cmd	*cmd;
 
 	set_signal(HAN, IGN);
 	while (1)
@@ -14,9 +18,10 @@ int main()
 		{
 			if (line[0] != '\0')
 				add_history(line);
-			//파싱?
+			cmd = test_parse();
 			free(line);
 			line = NULL;
+			process(cmd);
 		}
 		else
 		{

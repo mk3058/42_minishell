@@ -6,16 +6,12 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:46:24 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 09:56:33 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 10:53:35 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtin.h"
 #include "../includes/process.h"
-
-static int	is_key_value_format(char *input);
-static int	modify_env(t_cmd *cmd);
-static void	env_print(void);
 
 int	env(void)
 {

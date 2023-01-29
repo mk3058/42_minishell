@@ -6,7 +6,7 @@
 /*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:25:39 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/29 11:07:14 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	unlink_file(t_cmd *cmd);
 void	process(t_cmd *cmd)
 {
 	int		**fd;
-	int		*std_fd;
 	int		child_num;
 	int		statloc;
 	pid_t	*pid;
@@ -72,7 +71,6 @@ static void	dealloc(int **fd, t_cmd *cmd)
 {
 	int		i;
 	int		cnt;
-	char	*file_name;
 	t_cmd	*next;
 
 	cnt = cmd->pipe_cnt + 1;
