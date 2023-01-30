@@ -35,12 +35,14 @@
 */
 t_cmd	*get_unit_token(char *line)
 {
-	t_cmd	*cmd;
+	t_cmd	*cmd = NULL;
 	char	**token;
 	char	**temp;
 
 	while (*line == ' ')
 		line++;
+	if (!*line)
+		return (0);
 	token = get_space_token(line); // parse based on SPACE
 	temp = token;
 	token = get_cmd_token(temp); // redir, | 기준 토큰화

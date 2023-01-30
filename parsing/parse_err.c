@@ -23,7 +23,7 @@
 */
 int	check_error(char **token)
 {
-	while (*token)
+	while (*token != NULL)
 	{
 		if (is_in_quote(*token, ft_strlen(*token)))
 			return (print_err("parse error near quote"));

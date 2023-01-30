@@ -85,5 +85,6 @@ char	**get_cmd_token(char **line)
 			token[idx++] = ft_substr(*line, start, ft_strlen(*line) - start);
 		line++;
 	}
+	token[idx] = NULL;
 	return (token);
 }
