@@ -25,7 +25,7 @@ void	free_all(t_garbage *head)
 	while (tmp)
 	{
 		free(tmp->ptr);
-		tmp = tmp ->next;
+		tmp = tmp->next;
 	}
 	free(head);
 }

@@ -49,6 +49,9 @@ static void	set_input(t_cmd *cmd, int *fd)
 	char	*file_name;
 	char	*unit_cnt_tmp;
 
+	//*****!! unused variable !!*****
+	(void)unit_cnt;
+
 	if (is_equal(cmd->input[0], "<<"))
 	{
 		unit_cnt_tmp = ft_itoa(cmd->unit_cnt);
@@ -63,6 +66,8 @@ static void	set_input(t_cmd *cmd, int *fd)
 
 static void	set_output(t_cmd *cmd, int *fd)
 {
+	//*****!! unused variable !!*****
+	(void)unit_cnt;
 	if (is_equal(cmd->input[0], ">>"))
 		fd[1] = open(cmd->input[1], O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (is_equal(cmd->input[0], ">"))

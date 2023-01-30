@@ -12,25 +12,32 @@ LIBNAME		= libft.a
 HEADDIR		= ./includes
 
 SRCDIR		= ./srcs
-SRCFILES	= get_next_line.c
-UTILDIR		= ./util
-UTILFILES	= malloc_ctl.c util.c
-PROCESSDIR	= ./process
-PROCESSFILES= command.c here_doc.c process.c redirect.c set_fd.c
-ENVDIR		= ./environment
-ENVFILES	= env_util.c env.c
-BUILTINDIR	= ./builtin_func
-BUILTINFILES= cd.c controller.c echo.c env.c exit.c export.c pwd.c unset.c
+SRCFILES	= signal.c
 
-TESTTOOLDIR	= ./TEST_TOOL
-TESTTOOLFILES = split.c test_parse.c
+PROC_SRCDIR		= ./process
+PROC_SRCFILES	= util.c
 
-SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES)) $(addprefix $(UTILDIR)/, $(UTILFILES))\
-$(addprefix $(PROCESSDIR)/, $(PROCESSFILES)) $(addprefix $(ENVDIR)/, $(ENVFILES)) $(addprefix $(BUILTINDIR)/, $(BUILTINFILES))\
-$(addprefix $(TESTTOOLDIR)/, $(TESTTOOLFILES))
+ENVP_SRCDIR		= ./environment
+ENVP_SRCFILES	= env_util.c env.c
+
+UTIL_DIR		= ./util
+UTIL_FILES	= malloc_ctl.c util.c
+
+PARSE_SRCDIR	= ./parsing
+PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c parse_err.c init_cmd.c
+
+BUILTIN_DIR	= ./builtin_func
+BUILTIN_FILES= cd.c controller.c echo.c env.c exit.c export.c pwd.c unset.c
+
+SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES)) \
+			$(addprefix $(PARSE_SRCDIR)/, $(PARSE_SRCFILES))\
+			$(addprefix $(ENVP_SRCDIR)/, $(ENVP_SRCFILES))\
+			$(addprefix $(PROC_SRCDIR)/, $(PROC_SRCFILES))\
+			$(addprefix $(UTIL_DIR)/, $(UTIL_FILES))\
+			$(addprefix $(BUILTIN_DIR)/, $(BUILTIN_FILES))
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_MAIN		= main.c signal.c
+SRCS_MAIN		= main.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c
@@ -54,7 +61,5 @@ fclean:
 	$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all
-
-bonus: $(NAME) $(NAME2)
 
 .PHONY : all clean fclean re

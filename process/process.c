@@ -73,6 +73,8 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 	int		cnt;
 	t_cmd	*next;
 
+	//*****!! unused variable !!*****
+	(void)file_name;
 	cnt = cmd->pipe_cnt + 1;
 	i = -1;
 	unlink_file(cmd);
