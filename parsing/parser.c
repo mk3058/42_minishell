@@ -26,22 +26,15 @@
 
 #include "../includes/parser.h"
 
-void	ss()
-{
-	system("leaks minishell");
-}
-
 /* 
  * 먼저 따옴표를 확인하며 공백으로 토큰을 나누고 <<, <, >, | 등을 라인별로 확인 후 처리
  * 1. 따옴표를 고려한 공백 기준 토큰화 ok
  * 2. redirect, pipe 기준 토큰화 ok
  * 3. 파싱한 문자들 타입, 유닛, 파이프개수(?) 구조체 리스트에 저장
  * @return	: t_cmd *unit_token (final)
- * 개발중
 */
-char	**get_unit_token(char *line)
+t_cmd	*get_unit_token(char *line)
 {
-	//atexit(ss);
 	t_cmd	*cmd;
 	char	**token;
 	char	**temp;
@@ -53,26 +46,30 @@ char	**get_unit_token(char *line)
 	token = get_cmd_token(temp); // redir, | 기준 토큰화
 	free_2d_arr(temp);
 	if (check_error(token) < 0)
+	{
+		free_2d_arr(token);
 		return (0);
+	}
 	cmd = get_cmd_info(token);
 	free_2d_arr(token);
 
 	// test용 임시 코드
-	while (cmd)
-	{
-		int i = 0;
-		while (cmd->input[i])
-		{
-			printf("[%d] : %s\n", i, cmd->input[i]);
-			i++;
-		}
-		printf("* type %d | unit_cnt %d | pipe_cnt %d\n", cmd->type, cmd->unit_cnt, cmd->pipe_cnt);
-		printf("-----------\n");
-		cmd = cmd->next;
-	}
-	return (0);
+	// while (cmd)
+	// {
+	// 	int i = 0;
+	// 	while (cmd->input[i])
+	// 	{
+	// 		printf("[%d] : %s\n", i, cmd->input[i]);
+	// 		i++;
+	// 	}
+	// 	printf("* type %d | unit_cnt %d | pipe_cnt %d | exit_stat %p\n", cmd->type, cmd->unit_cnt, cmd->pipe_cnt, cmd->exit_stat);
+	// 	printf("-------------------------------\n");
+	// 	cmd = cmd->next;
+	// }
+	return (cmd);
 }
 
+// initialize cmd list
 t_cmd	*get_cmd_info(char **token)
 {
 	t_cmd	*cmd;
@@ -82,7 +79,6 @@ t_cmd	*get_cmd_info(char **token)
 	cmd = cmd_lstinit();
 	head = cmd;
 	p_cnt = cnt_pipe(token);
-	printf("pcnt = %d\n", p_cnt);
 	init_input(cmd, token);
 	while (cmd)
 	{

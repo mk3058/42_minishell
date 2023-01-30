@@ -21,7 +21,7 @@ t_cmd	*cmd_lstinit(void)
 		return (0);
 	new->input = NULL;
 	new->type = 0;
-	new->pipe_cnt = 
+	new->pipe_cnt = 0;
 	new->unit_cnt = 0;
 	new->exit_stat = 0;
 	new->next = NULL;
@@ -37,20 +37,22 @@ void	cmd_lstadd(t_cmd *head)
 	node->next = NULL;
 }
 
-// void	cmd_clear(t_cmd *head)
-// {
-// 	t_cmd	*tmp;
+void	cmd_clear(t_cmd *head)
+{
+	t_cmd	*tmp;
 
-// 	if (!head)
-// 	{
-// 		printf("free_all Err: head node is null!\n");
-// 		return ;
-// 	}
-// 	tmp = head;
-// 	while (tmp)
-// 	{
-// 		free(tmp->ptr);
-// 		tmp = tmp->next;
-// 	}
-// 	free(head);
-// }
+	if (!head)
+	{
+		printf("free_all Err: head node is null!\n");
+		return ;
+	}
+	tmp = head;
+	//전부 free 해줘야 함.
+	while (tmp)
+	{
+		head = tmp;
+		free_2d_arr(tmp->input);
+		tmp = tmp->next;
+		free(head);
+	}
+}

@@ -36,11 +36,10 @@ char	**get_cmd_token(char **line);
 int		cnt_cmd(char **line);
 
 //parser.c
-char	**get_unit_token(char *line);
+t_cmd	*get_unit_token(char *line);
 t_cmd	*get_cmd_info(char **token);
 void	init_type(t_cmd *cmd);
 void	init_input(t_cmd *cmd, char **token);
-void	init_pipe_cnt(t_cmd cmd, char **token);
 
 
 //parse_util.c
@@ -59,5 +58,6 @@ int		print_err(char *str);
 //init_cnd.c
 t_cmd	*cmd_lstinit(void);
 void	cmd_lstadd(t_cmd *head);
+void	cmd_clear(t_cmd *head);
 
 #endif
