@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:54:26 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:49:03 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 {
 	int		i;
 	int		cnt;
-	t_cmd	*next;
+	t_cmd	*tmp;
 
 	cnt = cmd->pipe_cnt + 1;
 	i = -1;
@@ -80,15 +80,15 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 	while (++i < cnt + 1)
 		free(fd[i]);
 	free(fd);
-	i = -1;
-	while (cmd->input[++i])
-		free(cmd->input[i]);
-	free(cmd->input);
 	while (cmd)
 	{
-		next = cmd->next;
+		i = -1;
+		tmp = cmd->next;
+		while (cmd->input[++i])
+			free(cmd->input[i]);
+		free(cmd->input);
 		free(cmd);
-		cmd = next;
+		cmd = tmp;
 	}
 }
 // 사용한 메모리를 정리하고 임시파일을 unlink 합니다

@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			printf("\x1b[1A\033[11Cexit\n");
+			printf("\x1b[1A\033[1Cexit\n");
 			break ;
 		}
 	}
