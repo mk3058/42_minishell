@@ -32,6 +32,8 @@
 char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);
 void	signal_handler(int sig);
+void	signal_handler2(int sig);
+void	child_handler(int sig);
 
 enum	e_str_type {word, pipeline, redirect};
 

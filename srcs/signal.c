@@ -29,3 +29,31 @@ void	signal_handler(int sig)
 	rl_replace_line("", 1);
 	rl_redisplay();
 }
+
+void	signal_handler2(int sig)
+{
+	struct termios	term;
+
+	(void)sig;
+	tcgetattr(STDIN, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN, TCSANOW, &term);
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	//rl_redisplay();
+}
+
+void	child_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 1);
+	}
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 1);
+	}
+}

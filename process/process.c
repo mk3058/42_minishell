@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 18:49:03 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/31 06:39:38 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	process(t_cmd *cmd)
 	int		statloc;
 	pid_t	*pid;
 
+	signal(SIGINT, signal_handler2);
+	signal(SIGQUIT, signal_handler2);
 	child_num = -1;
 	if (heredoc(cmd))
 		return ;
@@ -35,6 +37,8 @@ void	process(t_cmd *cmd)
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
 	{
+		signal(SIGINT, child_handler);
+		signal(SIGQUIT, child_handler);
 		close_fd(fd, cmd->pipe_cnt + 1, -1);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
 		*(cmd->exit_stat) = (WEXITSTATUS(statloc));

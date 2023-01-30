@@ -14,9 +14,9 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	set_envlist(envp);
-	set_signal(HAN, IGN);
 	while (1)
 	{
+		set_signal(HAN, IGN);
 		line = readline("minishell> ");
 		if (line)
 		{
@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			printf("\x1b[1A\033[1Cexit\n");
+			printf("\x1b[1A\033[11Cexit\n");
 			break ;
 		}
 	}

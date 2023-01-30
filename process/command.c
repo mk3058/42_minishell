@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:18 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/31 06:37:17 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	char	*path;
 	t_cmd	*cur_cmd;
 
+	signal(SIGINT, child_handler);
+	signal(SIGQUIT, child_handler);
 	cur_cmd = find_cur_cmd(cmd, child_num);
 	if (builtin_controller(cur_cmd, fd, cmd->pipe_cnt + 1, child_num))
 		exit(0);
