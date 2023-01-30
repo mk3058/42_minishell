@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 17:49:34 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:21 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	heredoc(t_cmd *cmd)
 			fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0777);
 			if (fd < 0)
 			{
-				print_err(file_name, ": ", strerror(errno), 1);
+				err_print(file_name, ": ", strerror(errno), 1);
 				*(cmd->exit_stat) = 1;
 				return (1);
 			}

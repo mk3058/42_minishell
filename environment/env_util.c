@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:49:27 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:53:15 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:51:55 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ char	**env_to_array(void)
 	char	**envp;
 	int		env_idx;
 
-	//*****!! unused variable !!*****
-	(void)line;
 	tmp = g_env;
 	env_idx = 0;
 	envp = malloc(sizeof(char *) * (env_len() + 1));

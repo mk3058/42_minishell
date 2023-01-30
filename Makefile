@@ -12,10 +12,10 @@ LIBNAME		= libft.a
 HEADDIR		= ./includes
 
 SRCDIR		= ./srcs
-SRCFILES	= signal.c
+SRCFILES	= signal.c get_next_line.c
 
 PROC_SRCDIR		= ./process
-PROC_SRCFILES	= util.c
+PROC_SRCFILES	= command.c here_doc.c process.c redirect.c set_fd.c
 
 ENVP_SRCDIR		= ./environment
 ENVP_SRCFILES	= env_util.c env.c

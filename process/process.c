@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 13:37:50 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:54:26 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 	int		cnt;
 	t_cmd	*next;
 
-	//*****!! unused variable !!*****
-	(void)file_name;
 	cnt = cmd->pipe_cnt + 1;
 	i = -1;
 	unlink_file(cmd);

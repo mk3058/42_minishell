@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 09:22:32 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 10:02:33 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:49:50 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/util.h"
 
-int	print_err(char *prefix, char *errmsg, char *postfix, int return_val)
+int	err_print(char *prefix, char *errmsg, char *postfix, int return_val)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (prefix)

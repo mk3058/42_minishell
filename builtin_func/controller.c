@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controller.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 19:56:39 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 18:07:59 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "../includes/process.h"
 
 static int	exec_builtin(t_cmd *cmd);
-// builtin 함수 오류 발생 -> stderr로 에러 메시지 출력(파이프라인 사이에서도 fd 바꿔서 출력해야함)
-// 	-> std_fd 백업해서 구조체에 넣어야 할듯?
-// process 부모 프로세스에서 fd 세팅 오류 발생시 exit 호출돼서 minishell이 종료되는부분 수정 필요
-// process 오류 메시지 출력 fd stdout->stderr로 수정 필요
-// malloc_ctl 사용안하면 삭제
 
 int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 {

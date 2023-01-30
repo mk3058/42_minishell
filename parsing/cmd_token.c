@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:59:52 by bojung            #+#    #+#             */
-/*   Updated: 2023/01/24 16:59:53 by bojung           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:57:03 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**get_cmd_token(char **line)
 	int		start;
 
 	idx = 0;
-	token = (char **)malloc(sizeof(char *) * cnt_cmd(line) + 1);
+	token = (char **)malloc(sizeof(char *) * (cnt_cmd(line) + 1));
 	while (*line)
 	{
 		start = 0;

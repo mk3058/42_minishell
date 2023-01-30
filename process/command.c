@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 13:30:03 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:18 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	cur_cmd->input[0] = ft_strdup(path);
 	if (execve(path, cur_cmd->input, env_to_array()) == -1)
 	{
-		*(cmd->exit_stat) = print_err(path, ": ", strerror(errno), 1);
+		*(cmd->exit_stat) = err_print(path, ": ", strerror(errno), 1);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -58,7 +58,7 @@ char	*find_path(t_cmd *cmd)
 	}
 	if (env_path)
 		dealloc(env_path);
-	*cmd->exit_stat = print_err(cmd->input[0], ": command not found", 0, 127);
+	*cmd->exit_stat = err_print(cmd->input[0], ": command not found", 0, 127);
 	exit(EXIT_FAILURE);
 }
 // 환경변수 경로에 해당 파일이 존재하는지 확인하고 존재하면 경로를 반환합니다

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 13:37:06 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:09 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_env(char *env)
 	tmp = g_env;
 	key_length = cnt_key_length(env);
 	if (key_length == 0)
-		return (print_err("setenv ", env, ": Invalid argument", -1));
+		return (err_print("setenv ", env, ": Invalid argument", -1));
 	if (key_length > 0)
 		env[key_length] = '\0';
 	while (tmp)
