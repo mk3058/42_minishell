@@ -1,7 +1,7 @@
 CC			= cc
 CCFLAGS		= -Wall -Wextra -Werror
-RLFLAG		= -lreadline -L/Users/minkyuki/.brew/opt/readline/lib
-COMPILEFLAG	= -I/Users/minkyuki/.brew/opt/readline/include
+RLFLAG		= -lreadline -L${HOME}/.brew/opt/readline/lib
+COMPILEFLAG	= -I${HOME}/.brew/opt/readline/include
 NAME		= minishell
 
 RM			= rm -rf
