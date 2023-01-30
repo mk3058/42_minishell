@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_ctl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:35:20 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/17 14:51:07 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/29 09:58:18 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/malloc_ctl.h"
+#include "../includes/util.h"
 
 void	free_all(t_garbage *head)
 {

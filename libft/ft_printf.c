@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <bojung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 15:00:14 by bojung            #+#    #+#             */
-/*   Updated: 2022/07/28 15:30:08 by bojung           ###   ########.fr       */
+/*   Updated: 2023/01/29 10:54:56 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,6 @@ int	ft_printf(const char *format, ...)
 
 void	format_print(char sp, va_list ap, int *ret)
 {
-	int	i;
-
-	i = 0;
 	if (sp == 'c')
 		*ret = *ret + ft_printchar(va_arg(ap, int));
 	else if (sp == 's')

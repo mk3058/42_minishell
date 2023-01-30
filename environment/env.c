@@ -6,11 +6,12 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/24 13:25:27 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:09 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/environment.h"
+#include "../includes/builtin.h"
 
 static int	cnt_key_length(char *env);
 static void	env_add_back(char *env, int key_length);
@@ -38,8 +39,8 @@ int	add_env(char *env)
 	tmp = g_env;
 	key_length = cnt_key_length(env);
 	if (key_length == 0)
-		return (-1);
-	else if (key_length > 0)
+		return (err_print("setenv ", env, ": Invalid argument", -1));
+	if (key_length > 0)
 		env[key_length] = '\0';
 	while (tmp)
 	{
@@ -70,7 +71,12 @@ static void	env_add_back(char *env, int key_length)
 	new = ft_calloc(1, sizeof(t_env));
 	new->key = ft_strdup(env);
 	if (key_length > 0)
-		new->value = ft_strdup(env + key_length + 1);
+	{
+		if (!is_equal("SHLVL", new->key))
+			new->value = ft_strdup(env + key_length + 1);
+		else
+			new->value = ft_itoa((ft_atoi(env + key_length + 1) + 1));
+	}
 	tmp = g_env;
 	if (tmp)
 	{

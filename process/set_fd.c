@@ -6,23 +6,21 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/19 17:10:25 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 12:03:33 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/process.h"
 
-static void	set_redirect(t_cmd *cmd, int **fd);
+static int	set_redirect(t_cmd *cmd, int **fd);
 
 int	**make_pipe(t_cmd *cmd)
 {
 	int		**fd;
 	int		i;
-	t_cmd	*tmp;
 
 	i = -1;
-	tmp = cmd;
 	fd = malloc(sizeof(int *) * ((cmd->pipe_cnt) + 2));
 	while (++i < (cmd->pipe_cnt) + 2)
 	{
@@ -39,7 +37,8 @@ int	**make_pipe(t_cmd *cmd)
 			fd[i][1] = STDOUT_FILENO;
 		}
 	}
-	set_redirect(cmd, fd);
+	if (set_redirect(cmd, fd))
+		return (NULL);
 	return (fd);
 }
 // 프로세스간 통신을 위한 pipe를 개설합니다
@@ -47,7 +46,7 @@ int	**make_pipe(t_cmd *cmd)
 // fd 배열의 첫번째와 마지막번째는 첫번째와 마지막 프로세스의 입력, 출력을 저장하기 위해서 사용하므로
 // fd[0][0], fd[last_ind][1] 만 사용합니다.
 
-static void	set_redirect(t_cmd *cmd, int **fd)
+static int	set_redirect(t_cmd *cmd, int **fd)
 {
 	int	i;
 	int	*redir_fd;
@@ -56,6 +55,8 @@ static void	set_redirect(t_cmd *cmd, int **fd)
 	while (++i < cmd->pipe_cnt + 1)
 	{
 		redir_fd = get_redirect_fd(cmd, i);
+		if (redir_fd == NULL)
+			return (1);
 		if (redir_fd[0] > 0)
 		{
 			if (fd[i][0] != STDIN_FILENO)
@@ -70,6 +71,7 @@ static void	set_redirect(t_cmd *cmd, int **fd)
 		}
 		free(redir_fd);
 	}
+	return (0);
 }
 // 각 프로세스(unit)에 redirection이 존재하는 경우
 // pipe에 존재하는 기존 fd를 close하고 redir_fd로 변경합니다
@@ -85,9 +87,13 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 		if (fd[i][1] == STDOUT_FILENO || fd[i][0] == STDIN_FILENO)
 			continue ;
 		if (i == child_num)
+		{
 			close(fd[i][1]);
+		}
 		else if (i == child_num + 1)
+		{
 			close(fd[i][0]);
+		}
 		else
 		{
 			close(fd[i][1]);
@@ -97,15 +103,17 @@ void	close_fd(int **fd, int proc_cnt, int child_num)
 }
 // 해당 프로세스에서 사용하는 fd를 제외한 불필요한 fd를 close 합니다
 
-int	set_fd(int **fd, int proc_cnt, int child_num)
+int	*set_fd(int **fd, int proc_cnt, int child_num)
 {
-	int	stdout_backup;
+	int	*std_fd;
 
-	stdout_backup = dup(STDOUT_FILENO);
+	std_fd = malloc(sizeof(int) * 2);
+	std_fd[0] = dup(STDIN_FILENO);
+	std_fd[1] = dup(STDOUT_FILENO);
 	close_fd(fd, proc_cnt, child_num);
 	dup2(fd[child_num][0], STDIN_FILENO);
 	dup2(fd[child_num + 1][1], STDOUT_FILENO);
-	return (stdout_backup);
+	return (std_fd);
 }
 // 해당 프로세스의 입출력 fd를 설정합니다
-// STDOUT을 반환합니다
+// STDIN, STDOUT을 반환합니다

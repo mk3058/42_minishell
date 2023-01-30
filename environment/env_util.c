@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:49:27 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/24 13:25:54 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:51:55 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ char	**env_to_array(void)
 {
 	t_env	*tmp;
 	char	**envp;
-	char	*line;
 	int		env_idx;
 
-	//*****!! unused variable !!*****
-	(void)line;
 	tmp = g_env;
 	env_idx = 0;
 	envp = malloc(sizeof(char *) * (env_len() + 1));
@@ -60,10 +57,8 @@ char	**env_to_array(void)
 static char	*node_to_line(t_env *node)
 {
 	char	*line;
-	int		i;
 	int		size;
 
-	i = -1;
 	size = ft_strlen(node->key) + ft_strlen(node->value) + 1;
 	line = malloc(sizeof(char) * (size + 1));
 	line[0] = '\0';
