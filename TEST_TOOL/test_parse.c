@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:35:21 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/29 19:58:10 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 12:55:24 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	**my_split(char *str, char **charset);
 char 	**pre_split(char *line);
 
 t_env *g_env;
+int	unit_cnt;
 
 t_cmd *test_parse(char *line, int *exit_stat)
 {
@@ -30,6 +31,7 @@ t_cmd *test_parse(char *line, int *exit_stat)
 	int		pipe_cnt = 0;
 	
 	set_envlist(environ);
+	unit_cnt = 0;
 
 	while (line[i])
 		if (line[i++] == '|')
@@ -103,7 +105,6 @@ void	print_node(t_cmd *head)
 
 void	add_newnode(t_cmd **head, char **input, int pipe_cnt, int *exit_stat)
 {
-	static int	unit_cnt;
 	t_cmd		*new;
 	t_cmd		*tmp;
 

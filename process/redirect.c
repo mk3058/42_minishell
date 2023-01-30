@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:48:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 20:08:58 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 12:04:56 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 			{
 				print_err(cmd->input[1], ": ", strerror(errno), 1);
 				*(cmd->exit_stat) = 1;
+				free(fd);
 				return (NULL);
 			}
 		}

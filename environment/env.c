@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 09:55:39 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 13:37:06 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ static void	env_add_back(char *env, int key_length)
 	new = ft_calloc(1, sizeof(t_env));
 	new->key = ft_strdup(env);
 	if (key_length > 0)
-		new->value = ft_strdup(env + key_length + 1);
+	{
+		if (!is_equal("SHLVL", new->key))
+			new->value = ft_strdup(env + key_length + 1);
+		else
+			new->value = ft_itoa((ft_atoi(env + key_length + 1) + 1));
+	}
 	tmp = g_env;
 	if (tmp)
 	{

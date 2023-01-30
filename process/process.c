@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 15:23:57 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/01/30 13:37:50 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	process(t_cmd *cmd)
 	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
 		return ;
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
-	set_signal(DFL, DFL);
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
 	{
-		set_signal(HAN, IGN);
 		close_fd(fd, cmd->pipe_cnt + 1, -1);
 		wait_proc(cmd->pipe_cnt + 1, pid, &statloc);
 		*(cmd->exit_stat) = (WEXITSTATUS(statloc));
