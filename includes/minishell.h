@@ -9,10 +9,16 @@
 # include <string.h>
 # include <errno.h>
 # include <unistd.h>
-# include <fcntl.h> //open close
+# include <fcntl.h>
 # include <termios.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 # include "../libft/libft.h"
+# include "../includes/parser.h"
+# include "../includes/environment.h"
 
 # define STDIN 0
 # define STDOUT 1
@@ -34,6 +40,7 @@ typedef struct s_cmd
 	int				type;
 	int				pipe_cnt;
 	int				unit_cnt;
+	int				*exit_stat;
 	struct s_cmd	*next;
 }	t_cmd;
 

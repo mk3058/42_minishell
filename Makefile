@@ -24,12 +24,25 @@ LIBNAME		= libft.a
 HEADDIR		= ./includes
 
 SRCDIR		= ./srcs
-SRCFILES	= get_next_line.c
+SRCFILES	= signal.c
 
-SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES))
+PROC_SRCDIR		= ./process
+PROC_SRCFILES	= util.c
+
+ENVP_SRCDIR		= ./environment
+ENVP_SRCFILES	= env_util.c env.c
+
+PARSE_SRCDIR	= ./parsing
+PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c parse_err.c init_cmd.c
+
+SRCS	= $(addprefix $(SRCDIR)/, $(SRCFILES)) \
+			$(addprefix $(PARSE_SRCDIR)/, $(PARSE_SRCFILES))\
+			$(addprefix $(ENVP_SRCDIR)/, $(ENVP_SRCFILES))\
+			$(addprefix $(PROC_SRCDIR)/, $(PROC_SRCFILES))
+
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_MAIN		= main.c signal.c
+SRCS_MAIN		= main.c
 OBJS_MAIN		= $(SRCS_MAIN:.c=.o)
 
 %.o: %.c
@@ -53,7 +66,5 @@ fclean:
 	$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all
-
-bonus: $(NAME) $(NAME2)
 
 .PHONY : all clean fclean re

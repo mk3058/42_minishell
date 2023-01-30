@@ -39,6 +39,8 @@ char	**env_to_array(void)
 	char	*line;
 	int		env_idx;
 
+	//*****!! unused variable !!*****
+	(void)line;
 	tmp = g_env;
 	env_idx = 0;
 	envp = malloc(sizeof(char *) * (env_len() + 1));
