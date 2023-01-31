@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:47:03 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/31 14:16:14 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:15:58 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	echo(t_cmd *cmd)
 			printf(" ");
 	}
 	if (!flag)
-		sleep(20);
-		//printf("\n");
+		printf("\n");
 	return (0);
 }
 
