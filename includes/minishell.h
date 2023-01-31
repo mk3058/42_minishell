@@ -2,7 +2,6 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
@@ -20,14 +19,9 @@
 # include "../libft/libft.h"
 # include "../includes/parser.h"
 # include "../includes/environment.h"
+# include "../includes/signal.h"
 
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
 
-# define DFL 0
-# define IGN 1
-# define HAN 2
 
 char	*get_next_line(int fd);
 void	set_signal(int sigint, int sigquit);

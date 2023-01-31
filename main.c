@@ -16,7 +16,8 @@ int main(int argc, char **argv, char **envp)
 	set_envlist(envp);
 	while (1)
 	{
-		set_signal(HAN, IGN);
+		set_echoctl(0);
+		set_handler(print_prompt, NULL);
 		line = readline("minishell> ");
 		if (line)
 		{

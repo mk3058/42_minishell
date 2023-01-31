@@ -1,4 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/31 13:53:26 by minkyuki          #+#    #+#             */
+/*   Updated: 2023/01/31 14:31:18 by minkyuki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
+
+/**
+ * 반향, prompt, 개행 
+ **/
+
+void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s))
+{
+	if (sint_handler)
+		signal(SIGINT, sint_handler);
+	else
+		signal(SIGINT, SIG_IGN);
+	if (squit_handler)
+		signal(SIGQUIT, squit_handler);
+	else
+		signal(SIGQUIT, SIG_IGN);
+}
 
 void	set_signal(int sigint, int sigquit)
 {
@@ -6,54 +34,34 @@ void	set_signal(int sigint, int sigquit)
 		signal(SIGINT, SIG_DFL);
 	else if (sigint == IGN)
 		signal(SIGINT, SIG_IGN);
-	else if (sigint == HAN)
-		signal(SIGINT, signal_handler);
 	if (sigquit == DFL)
 		signal(SIGQUIT, SIG_DFL);
 	else if (sigquit == IGN)
 		signal(SIGQUIT, SIG_IGN);
-	else if (sigquit == HAN)
-		signal(SIGQUIT, signal_handler);
 }
 
-void	signal_handler(int sig)
+void	print_prompt(int sig)
 {
-	struct termios	term;
-
 	(void)sig;
-	tcgetattr(STDIN, &term);
-	term.c_lflag &= ~(ECHOCTL);
-	tcsetattr(STDIN, TCSANOW, &term);
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	rl_redisplay();
 }
 
-void	signal_handler2(int sig)
+void	print_newline_e(int sig)
 {
-	struct termios	term;
-
 	(void)sig;
-	tcgetattr(STDIN, &term);
-	term.c_lflag &= ~(ECHOCTL);
-	tcsetattr(STDIN, TCSANOW, &term);
+	rl_on_new_line();
+	rl_replace_line("", 1);
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 1);
-	//rl_redisplay();
 }
 
-void	child_handler(int sig)
+void	quite(int sig)
 {
-	if (sig == SIGINT)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 1);
-	}
-	else if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 1);
-	}
+	(void)sig;
+	rl_on_new_line();
+	rl_replace_line("", 1);
 }
