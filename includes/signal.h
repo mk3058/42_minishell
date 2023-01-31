@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:50:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/31 14:30:27 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:19:49 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s));
 void	set_signal(int sigint, int sigquit);
 
 void	print_prompt(int sig);
-void	print_newline_e(int sig);
+void	print_newline(int sig);
 void	quite(int sig);
 void	set_echoctl(int mode);
 

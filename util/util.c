@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 09:22:32 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/30 17:49:50 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:48:45 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,18 @@ int	is_equal(char *str1, char *str2)
 	return (1);
 }
 // 두 string이 동일한지 확인하는 함수입니다
+
+int	is_minishell(char *input)
+{
+	int	length;
+
+	length = ft_strlen(input);
+	if (length >= 9)
+	{
+		return (ft_memcmp(input + length - 10, "minishell", 10));
+	}
+	return (0);
+}
+// 입력된 명령어가 minishell인지 확인하는 함수입니다
+// memcmp를 이용해서 가장 마지막 단어가 minishell인지 확인합니다
+// (널문자까지 확인)
