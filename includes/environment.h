@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:56:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/24 12:59:37 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:55:25 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				*exit_stat;
 	struct s_env	*next;
 }	t_env;
 

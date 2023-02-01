@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:18 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:47:58 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	t_cmd	*cur_cmd;
 
 	cur_cmd = find_cur_cmd(cmd, child_num);
+	if (cur_cmd == NULL)
+		exit(EXIT_SUCCESS);
 	if (builtin_controller(cur_cmd, fd, cmd->pipe_cnt + 1, child_num))
 		exit(0);
 	path = find_path(cur_cmd);
@@ -29,7 +31,7 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	cur_cmd->input[0] = ft_strdup(path);
 	if (execve(path, cur_cmd->input, env_to_array()) == -1)
 	{
-		*(cmd->exit_stat) = err_print(path, ": ", strerror(errno), 1);
+		*(g_env->exit_stat) = err_print(path, ": ", strerror(errno), 1);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -58,7 +60,7 @@ char	*find_path(t_cmd *cmd)
 	}
 	if (env_path)
 		dealloc(env_path);
-	*cmd->exit_stat = err_print(cmd->input[0], ": command not found", 0, 127);
+	*(g_env->exit_stat) = err_print(cmd->input[0], ": command not found", 0, 127);
 	exit(EXIT_FAILURE);
 }
 // 환경변수 경로에 해당 파일이 존재하는지 확인하고 존재하면 경로를 반환합니다

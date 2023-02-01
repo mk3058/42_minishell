@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/31 20:24:56 by minkyu            #+#    #+#             */
+/*   Updated: 2023/02/01 11:55:16 by minkyuki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <stdio.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
@@ -20,18 +31,9 @@
 # include "../libft/libft.h"
 # include "../includes/parser.h"
 # include "../includes/environment.h"
-
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
-
-# define DFL 0
-# define IGN 1
-# define HAN 2
+# include "../includes/signal.h"
 
 char	*get_next_line(int fd);
-void	set_signal(int sigint, int sigquit);
-void	signal_handler(int sig);
 
 enum	e_str_type {word, pipeline, redirect};
 
@@ -41,7 +43,6 @@ typedef struct s_cmd
 	int				type;
 	int				pipe_cnt;
 	int				unit_cnt;
-	int				*exit_stat;
 	struct s_cmd	*next;
 }	t_cmd;
 

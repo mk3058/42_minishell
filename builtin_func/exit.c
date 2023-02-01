@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:43:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:02 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:59:27 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_exit(t_cmd *cmd)
 	if (cmd->pipe_cnt == 0)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
-		*(cmd->exit_stat) = (unsigned char)ft_atoi(cmd->input[1]);
+		*(g_env->exit_stat) = (unsigned char)ft_atoi(cmd->input[1]);
 	exit(EXIT_SUCCESS);
 }
 
@@ -41,8 +41,8 @@ static int	arg_check(t_cmd *cmd, int cnt)
 		{
 			ft_putstr_fd("exit\nexit: ", STDERR_FILENO);
 			err_print(0, cmd->input[1], ": numeric argument required", 0);
-			*(cmd->exit_stat) = 255;
-			exit(*(cmd->exit_stat));
+			*(g_env->exit_stat) = 255;
+			exit(*(g_env->exit_stat));
 		}
 	}
 	if (cnt > 2)

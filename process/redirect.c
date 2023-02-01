@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:48:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:54:39 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:59:41 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 			if (fd[0] < 0 || fd[1] < 0)
 			{
 				err_print(cmd->input[1], ": ", strerror(errno), 1);
-				*(cmd->exit_stat) = 1;
+				*(g_env->exit_stat) = 1;
 				free(fd);
 				return (NULL);
 			}

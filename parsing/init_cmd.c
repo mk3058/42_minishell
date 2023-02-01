@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 13:28:02 by bojung            #+#    #+#             */
-/*   Updated: 2023/01/26 13:28:03 by bojung           ###   ########.fr       */
+/*   Updated: 2023/02/01 12:00:57 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_cmd	*cmd_lstinit(void)
 	new->type = 0;
 	new->pipe_cnt = 0;
 	new->unit_cnt = 0;
-	new->exit_stat = 0;
 	new->next = NULL;
 	return (new);
 }

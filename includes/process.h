@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:17:07 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 15:20:00 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../includes/util.h"
 
 //here_doc.c
-int		heredoc(t_cmd *cmd);
+void	heredoc(t_cmd *cmd);
 
 //redirect.c
 int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
