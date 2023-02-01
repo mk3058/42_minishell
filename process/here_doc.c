@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 15:24:23 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:32:13 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	get_input(int fd, char *limiter)
 	{
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		input = get_next_line(STDIN_FILENO);
-		if (is_equal(limiter_tmp, input))
+		if (!input || is_equal(limiter_tmp, input))
 		{
 			free(input);
 			free(limiter_tmp);
