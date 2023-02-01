@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 12:01:28 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:47:58 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	t_cmd	*cur_cmd;
 
 	cur_cmd = find_cur_cmd(cmd, child_num);
+	if (cur_cmd == NULL)
+		exit(EXIT_SUCCESS);
 	if (builtin_controller(cur_cmd, fd, cmd->pipe_cnt + 1, child_num))
 		exit(0);
 	path = find_path(cur_cmd);
