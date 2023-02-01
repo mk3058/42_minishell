@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:25:17 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 13:00:21 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:46:10 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int	set_redirect(t_cmd *cmd, int **fd, int child_num)
 	int	*redir_fd;
 
 	redir_fd = get_redirect_fd(cmd, child_num);
-	if (redir_fd == NULL)
+	if (redir_fd == NULL && cmd -> pipe_cnt > 0)
 		exit(EXIT_FAILURE);
+	else if (redir_fd == NULL && cmd->pipe_cnt == 0)
+		return (1);
 	if (redir_fd[0] != 0)
 	{
 		if (fd[child_num][0] != STDIN_FILENO)
