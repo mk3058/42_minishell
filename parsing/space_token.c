@@ -40,6 +40,7 @@ char	**get_space_token(char *line)
 	int		i;
 	int		start;
 	int		idx;
+	int		space;
 
 	start = 0;
 	i = 0;
@@ -49,20 +50,19 @@ char	**get_space_token(char *line)
 	{
 		if (!is_in_quote(line, i) && line[i] == ' ')
 		{
+			space = 0;
 			token[idx] = ft_substr(line, start, i - start);
-			while (line[i] == ' ')
-			{
-				i++;
-				if (line[i] == '\0')
-					break ;
-			}
+			while (line[i + space] == ' ')
+				space++;
+			if (!line[i + space])
+				break ;
+			i += space;
 			start = i;
 			idx++;
 		}
 		i++;
 	}
-	if (i > 0)
-		token[idx++] = ft_substr(line, start, i - start);
-	token[idx] = NULL;
+	token[idx] = ft_substr(line, start, i - start);
+	token[idx + 1] = NULL;
 	return (token);
 }

@@ -24,7 +24,8 @@ UTIL_DIR		= ./util
 UTIL_FILES	= malloc_ctl.c util.c
 
 PARSE_SRCDIR	= ./parsing
-PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c parse_err.c init_cmd.c
+PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c parse_err.c init_cmd.c\
+					parse_path.c
 
 BUILTIN_DIR	= ./builtin_func
 BUILTIN_FILES= cd.c controller.c echo.c env.c exit.c export.c pwd.c unset.c
@@ -50,14 +51,11 @@ $(NAME): $(OBJS_MAIN) $(OBJS)
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJS_MAIN)
-	$(RM) $(OBJS)
+	$(RM) $(OBJS_MAIN) $(OBJS)
 	$(MAKE) -C $(LIBFTDIR) clean
 
 fclean:
-	$(RM) $(OBJS_MAIN)
-	$(RM) $(OBJS)
-	$(RM) $(NAME)
+	$(RM) $(OBJS_MAIN) $(OBJS) $(NAME)
 	$(MAKE) -C $(LIBFTDIR) fclean
 
 re: fclean all

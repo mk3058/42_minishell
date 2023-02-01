@@ -41,20 +41,20 @@ int	is_in_quote(char *line, int idx)
 
 	quote_flag = NONE;
 	i = -1;
-	while (++i < idx)
+	while (++i < idx + 1)
 	{
 		if (line[i] == '"')
 		{
 			if (quote_flag == NONE)
 				quote_flag = DQUOTE;
-			else
+			else if (quote_flag == DQUOTE)
 				quote_flag = NONE;
 		}
-		if (line[i] == '\'')
+		else if (line[i] == '\'')
 		{
 			if (quote_flag == NONE)
 				quote_flag = SQUOTE;
-			else
+			else if (quote_flag == SQUOTE)
 				quote_flag = NONE;
 		}
 	}
@@ -80,31 +80,33 @@ int	is_cmd(char *line, int idx)
 }
 
 // make substr without quotes
-char	*get_substr(char const *s, unsigned int start, size_t len)
+char	*no_quote_strdup(char *s1)
 {
-	char	*str;
-	size_t	idx;
-	size_t	i;
-	int		cnt_quote;
+	char	*dup;
+	int		len;
+	int		i;
+	int		dup_idx;
 
+	len = ft_strlen(s1);
 	i = -1;
-	idx = -1;
-	cnt_quote = 0;
-	while (++i < len)
-	{
-		if (s[start + i] == '\'' || s[start + i] == '"')
-			cnt_quote++;
-	}
-	str = (char *)malloc(sizeof(char) * (len - cnt_quote + 1));
+	while (s1[++i])
+		if (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE)
+			|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
+			len--;
+	dup = malloc(sizeof(char) * (len + 1));
 	i = 0;
-	while (++idx < len - cnt_quote)
+	dup_idx = 0;
+	while (s1[i])
 	{
-		while (s[start + idx + i] == '\'' || s[start + idx + i] == '"')
+		while (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE) 
+			|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			i++;
-		str[idx] = (unsigned char)s[start + (unsigned int)idx + i];
+		dup[dup_idx] = s1[i];
+		i++;
+		dup_idx++;
 	}
-	str[idx] = '\0';
-	return (str);
+	dup[dup_idx] = '\0';
+	return (dup);
 }
 
 char	**ft_2d_strndup(char **arr, int	len)

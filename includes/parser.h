@@ -46,7 +46,7 @@ void	init_input(t_cmd *cmd, char **token);
 void	free_2d_arr(char **arr);
 int		is_in_quote(char *line, int idx);
 int		is_cmd(char *line, int idx);
-char	*get_saubstr(char const *s, unsigned int start, size_t len);
+char	*no_quote_strdup(char *s1);
 char	**ft_2d_strndup(char **arr, int	len);
 int		cnt_pipe(char **token);
 
@@ -59,5 +59,10 @@ int		print_err(char *str);
 t_cmd	*cmd_lstinit(void);
 void	cmd_lstadd(t_cmd *head);
 void	cmd_clear(t_cmd *head);
+
+//parse_path.c
+char	**check_path(char	**token);
+char	*join_path(char *str, int i);
+char	**cp_create_arr(char **arr);
 
 #endif

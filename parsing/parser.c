@@ -52,22 +52,11 @@ t_cmd	*get_unit_token(char *line)
 		free_2d_arr(token);
 		return (0);
 	}
+	temp = token;
+	token = check_path(temp);
+	free_2d_arr(temp);
 	cmd = get_cmd_info(token);
 	free_2d_arr(token);
-
-	// test용 임시 코드
-	// while (cmd)
-	// {
-	// 	int i = 0;
-	// 	while (cmd->input[i])
-	// 	{
-	// 		printf("[%d] : %s\n", i, cmd->input[i]);
-	// 		i++;
-	// 	}
-	// 	printf("* type %d | unit_cnt %d | pipe_cnt %d | exit_stat %p\n", cmd->type, cmd->unit_cnt, cmd->pipe_cnt, cmd->exit_stat);
-	// 	printf("-------------------------------\n");
-	// 	cmd = cmd->next;
-	// }
 	return (cmd);
 }
 
