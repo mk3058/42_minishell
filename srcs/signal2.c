@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:28:58 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 12:41:07 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:26:02 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	heredoc_sigint(int sig)
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 1);
-	exit(0);
+	exit(1);
 }
 
 void	heredoc_quiet(int sig)

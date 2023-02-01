@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 12:57:58 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:20:16 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	process(t_cmd *cmd)
 	*(g_env->exit_stat) = 0;
 	set_echoctl(1);
 	child_num = -1;
-	if (heredoc(cmd))
-		return ;
+	heredoc(cmd);
 	fd = make_pipe(cmd);
+	if (fd == NULL)
+		return ;
 	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
 		return ;
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));

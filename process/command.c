@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 12:58:18 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:47:58 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	char	*path;
 	t_cmd	*cur_cmd;
 
-	set_redirect(cmd, fd, child_num);
 	cur_cmd = find_cur_cmd(cmd, child_num);
 	if (cur_cmd == NULL)
 		exit(EXIT_SUCCESS);
