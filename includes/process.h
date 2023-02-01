@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/29 10:17:07 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 12:57:42 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
 
 //set_fd.c
 int		**make_pipe(t_cmd *cmd);
+int		set_redirect(t_cmd *cmd, int **fd, int child_num);
 int		*set_fd(int **fd, int proc_cnt, int child_num);
 void	close_fd(int **fd, int proc_cnt, int child_num);
 

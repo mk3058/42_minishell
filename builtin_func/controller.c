@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 11:59:17 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:03:22 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 	int	is_builtin;
 	int	*std_fd;
 
-	std_fd = set_fd(fd, proc_cnt, child_num);
 	if (cmd->pipe_cnt == 0)
+	{
 		set_handler(print_newline, print_newline);
+		set_redirect(cmd, fd, child_num);
+	}
+	std_fd = set_fd(fd, proc_cnt, child_num);
 	is_builtin = exec_builtin(cmd);
 	if (cmd->pipe_cnt == 0)
 	{
