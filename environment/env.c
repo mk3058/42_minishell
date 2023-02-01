@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:58:21 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:09 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:01:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,21 @@ int			is_equal(char *str1, char *str2);
 int	set_envlist(char **envp)
 {
 	int			i;
+	int			*exit_stat;
+	t_env		*tmp;
 
 	i = 0;
+	exit_stat = ft_calloc(1, sizeof(int));
 	while (envp[i])
 	{
 		add_env(envp[i]);
 		i++;
+	}
+	tmp = g_env;
+	while (tmp)
+	{
+		tmp->exit_stat = exit_stat;
+		tmp = tmp -> next;
 	}
 	return (0);
 }

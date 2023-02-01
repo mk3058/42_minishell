@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:21 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:59:46 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	heredoc(t_cmd *cmd)
 			if (fd < 0)
 			{
 				err_print(file_name, ": ", strerror(errno), 1);
-				*(cmd->exit_stat) = 1;
+				*(g_env->exit_stat) = 1;
 				return (1);
 			}
 			get_input(fd, cmd->input[1]);

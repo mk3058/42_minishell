@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/31 21:55:38 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 12:02:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "includes/process.h"
-
-static void	set_exit_stat(t_cmd *cmd, int *exit_stat);
 
 t_env *g_env;
 
@@ -32,8 +30,7 @@ int main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmd;
 	char	*line;
-	int		exit_stat;
-
+	
 	(void)argc;
 	(void)argv;
 	set_envlist(envp);
@@ -49,7 +46,6 @@ int main(int argc, char **argv, char **envp)
 			cmd = get_unit_token(line);
 			if (!cmd)
 				continue ;
-			set_exit_stat(cmd, &exit_stat);
 			free(line);
 			line = NULL;
 			process(cmd);
@@ -59,14 +55,5 @@ int main(int argc, char **argv, char **envp)
 			printf("exit\n");
 			break ;
 		}
-	}
-}
-
-static void	set_exit_stat(t_cmd *cmd, int *exit_stat)
-{
-	while (cmd)
-	{
-		cmd->exit_stat = exit_stat;
-		cmd = cmd->next;
 	}
 }

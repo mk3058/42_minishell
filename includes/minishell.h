@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:24:56 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/31 20:24:57 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 11:55:16 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_cmd
 	int				type;
 	int				pipe_cnt;
 	int				unit_cnt;
-	int				*exit_stat;
 	struct s_cmd	*next;
 }	t_cmd;
 

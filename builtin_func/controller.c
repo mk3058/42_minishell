@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controller.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/31 19:38:45 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 11:59:17 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ static int	exec_builtin(t_cmd *cmd)
 
 	cmd_input = cmd->input[0];
 	if (is_equal(cmd_input, "cd"))
-		*(cmd->exit_stat) = cd(cmd);
+		*(g_env->exit_stat) = cd(cmd);
 	else if (is_equal(cmd_input, "echo"))
-		*(cmd->exit_stat) = echo(cmd);
+		*(g_env->exit_stat) = echo(cmd);
 	else if (is_equal(cmd_input, "env"))
-		*(cmd->exit_stat) = env();
+		*(g_env->exit_stat) = env();
 	else if (is_equal(cmd_input, "exit"))
-		*(cmd->exit_stat) = ft_exit(cmd);
+		*(g_env->exit_stat) = ft_exit(cmd);
 	else if (is_equal(cmd_input, "export"))
-		*(cmd->exit_stat) = export(cmd);
+		*(g_env->exit_stat) = export(cmd);
 	else if (is_equal(cmd_input, "pwd"))
-		*(cmd->exit_stat) = pwd();
+		*(g_env->exit_stat) = pwd();
 	else if (is_equal(cmd_input, "unset"))
-		*(cmd->exit_stat) = unset(cmd);
+		*(g_env->exit_stat) = unset(cmd);
 	else
 		return (0);
 	return (1);

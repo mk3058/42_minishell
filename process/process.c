@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/31 19:49:30 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 11:59:37 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 	close_fd(fd, cmd->pipe_cnt + 1, -1);
 	while (++i < cmd->pipe_cnt + 1)
 		waitpid(pid[i], &statloc, 0);
-	*(cmd->exit_stat) = (WEXITSTATUS(statloc));
+	*(g_env->exit_stat) = (WEXITSTATUS(statloc));
 	dealloc(fd, cmd, pid);
 }
 
