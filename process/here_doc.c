@@ -6,13 +6,14 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 11:59:46 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:42:43 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/process.h"
 
 static void	get_input(int fd, char *limiter);
+static void	heredoc_child(int fd, char *limiter);
 
 int	heredoc(t_cmd *cmd)
 {
@@ -46,6 +47,28 @@ int	heredoc(t_cmd *cmd)
 // unit별로 heredoc 임시파일을 만들어 사용하며 하나의 유닛에서 여러개의 heredoc 입력을 받을경우 가장 마지막 입력만 처리됩니다
 
 static void	get_input(int fd, char *limiter)
+{
+	pid_t	pid;
+	int		statloc;
+
+	set_echoctl(0);
+	pid = fork();
+	if (pid != 0)
+	{
+		set_handler(heredoc_quiet, heredoc_quiet);
+		waitpid(pid, &statloc, 0);
+		if (*(g_env->exit_stat) == 0)
+			*(g_env->exit_stat) = WEXITSTATUS(statloc);
+		set_handler(print_prompt, NULL);
+	}	
+	else
+	{
+		set_handler(heredoc_sigint, NULL);
+		heredoc_child(fd, limiter);
+	}
+}
+
+static void	heredoc_child(int fd, char *limiter)
 {
 	char	*input;
 	char	*limiter_tmp;

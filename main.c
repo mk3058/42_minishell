@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/01 12:02:15 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:20:59 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmd;
 	char	*line;
-	
+
 	(void)argc;
 	(void)argv;
 	set_envlist(envp);
@@ -49,6 +49,7 @@ int main(int argc, char **argv, char **envp)
 			free(line);
 			line = NULL;
 			process(cmd);
+			printf("== exit_code : %d ==\n", *(g_env->exit_stat));
 		}
 		else
 		{

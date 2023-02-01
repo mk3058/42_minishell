@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 11:59:37 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:37:33 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	process(t_cmd *cmd)
 	int		child_num;
 	pid_t	*pid;
 
+	*(g_env->exit_stat) = 0;
 	set_echoctl(1);
 	child_num = -1;
 	if (heredoc(cmd))
@@ -33,7 +34,7 @@ void	process(t_cmd *cmd)
 	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
 		return ;
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
-	set_handler(quite, quite);
+	set_handler(quiet, quiet);
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
 		parent(cmd, fd, pid);
 	else
@@ -61,7 +62,8 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 	close_fd(fd, cmd->pipe_cnt + 1, -1);
 	while (++i < cmd->pipe_cnt + 1)
 		waitpid(pid[i], &statloc, 0);
-	*(g_env->exit_stat) = (WEXITSTATUS(statloc));
+	if (*(g_env->exit_stat) == 0)
+		*(g_env->exit_stat) += (WEXITSTATUS(statloc));
 	dealloc(fd, cmd, pid);
 }
 

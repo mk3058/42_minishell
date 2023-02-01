@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:53:26 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/01/31 20:10:07 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/01 12:37:22 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,26 @@ void	print_prompt(int sig)
 void	print_newline(int sig)
 {
 	if (sig == SIGINT)
+	{
 		printf("\n");
+		*(g_env->exit_stat) = 130;
+	}
 	else if (sig == SIGQUIT)
+	{
 		printf("Quit: 3\n");
+		*(g_env->exit_stat) = 131;
+	}
 	rl_on_new_line();
 	rl_replace_line("", 1);
 }
 // 시그널 입력시 개행과 메시지를 출력합니다
 
-void	quite(int sig)
+void	quiet(int sig)
 {
-	(void)sig;
+	if (sig == SIGINT)
+		*(g_env->exit_stat) = 130;
+	else if (sig == SIGQUIT)
+		*(g_env->exit_stat) = 131;
 	rl_replace_line("", 1);
 }
 // 시그널을 무시합니다
