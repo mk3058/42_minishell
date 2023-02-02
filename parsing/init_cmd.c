@@ -36,22 +36,21 @@ void	cmd_lstadd(t_cmd *head)
 	node->next = NULL;
 }
 
-void	cmd_clear(t_cmd *head)
-{
-	t_cmd	*tmp;
+// void	cmd_clear(t_cmd *head)
+// {
+// 	t_cmd	*tmp;
 
-	if (!head)
-	{
-		printf("free_all Err: head node is null!\n");
-		return ;
-	}
-	tmp = head;
-	//전부 free 해줘야 함.
-	while (tmp)
-	{
-		head = tmp;
-		free_2d_arr(tmp->input);
-		tmp = tmp->next;
-		free(head);
-	}
-}
+// 	if (!head)
+// 	{
+// 		printf("free_all Err: head node is null!\n");
+// 		return ;
+// 	}
+// 	tmp = head;
+// 	while (tmp)
+// 	{
+// 		head = tmp;
+// 		free_2d_arr(tmp->input);
+// 		tmp = tmp->next;
+// 		free(head);
+// 	}
+// }

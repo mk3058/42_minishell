@@ -31,11 +31,11 @@
  * 1. 따옴표를 고려한 공백 기준 토큰화 ok
  * 2. redirect, pipe 기준 토큰화 ok
  * 3. 파싱한 문자들 타입, 유닛, 파이프개수(?) 구조체 리스트에 저장
- * @return	: t_cmd *unit_token (final)
+ * @return	: t_cmd *unit_token (final) 
 */
 t_cmd	*get_unit_token(char *line)
 {
-	t_cmd	*cmd = NULL;
+	t_cmd	*cmd;
 	char	**token;
 	char	**temp;
 
@@ -52,22 +52,11 @@ t_cmd	*get_unit_token(char *line)
 		free_2d_arr(token);
 		return (0);
 	}
+	temp = token;
+	token = check_path(temp);
+	free_2d_arr(temp);
 	cmd = get_cmd_info(token);
 	free_2d_arr(token);
-
-	// test용 임시 코드
-	// while (cmd)
-	// {
-	// 	int i = 0;
-	// 	while (cmd->input[i])
-	// 	{
-	// 		printf("[%d] : %s\n", i, cmd->input[i]);
-	// 		i++;
-	// 	}
-	// 	printf("* type %d | unit_cnt %d | pipe_cnt %d | exit_stat %p\n", cmd->type, cmd->unit_cnt, cmd->pipe_cnt, cmd->exit_stat);
-	// 	printf("-------------------------------\n");
-	// 	cmd = cmd->next;
-	// }
 	return (cmd);
 }
 
@@ -77,11 +66,13 @@ t_cmd	*get_cmd_info(char **token)
 	t_cmd	*cmd;
 	t_cmd	*head;
 	int		p_cnt;
+	int		unit;
 
+	unit = 0;
 	cmd = cmd_lstinit();
 	head = cmd;
 	p_cnt = cnt_pipe(token);
-	init_input(cmd, token);
+	init_input(cmd, token, unit);
 	while (cmd)
 	{
 		init_type(cmd);
@@ -91,13 +82,11 @@ t_cmd	*get_cmd_info(char **token)
 	return (head);
 }
 
-void	init_input(t_cmd *cmd, char **token)
+void	init_input(t_cmd *cmd, char **token, int unit)
 {
 	int		i;
-	int		unit;
 
 	i = -1;
-	unit = 0;
 	while (token[++i])
 	{
 		cmd->unit_cnt = unit;
@@ -126,7 +115,7 @@ void	init_type(t_cmd *cmd)
 {
 	int		cmd_flag;
 
-	while(cmd)
+	while (cmd)
 	{
 		cmd_flag = is_cmd(cmd->input[0], 0);
 		if (cmd_flag > 0) // type 초기화
@@ -140,4 +129,24 @@ void	init_type(t_cmd *cmd)
 		}
 		cmd = cmd->next;
 	}
+}
+
+int	cnt_pipe(char **token)
+{
+	int	i;
+	int	cnt;
+
+	cnt = 0;
+	while (*token)
+	{
+		i = 0;
+		while ((*token)[i])
+		{
+			if ((*token)[i] == '|')
+				cnt++;
+			i++;
+		}
+		token++;
+	}
+	return (cnt);
 }

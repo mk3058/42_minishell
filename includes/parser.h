@@ -29,35 +29,44 @@
 
 typedef struct s_cmd t_cmd;
 
-//get_token.c
+//space_token.c
 char	**get_space_token(char *line);
+int		tokenize_space(char **token, char *line, int *idx, int *start);
 int		cnt_space(char *line);
+
+//cmd_token.c
 char	**get_cmd_token(char **line);
+int		tokenize_cmd(char **token, char *line, int i, int *idx);
 int		cnt_cmd(char **line);
+void	check_cmd_cnt(char *line, int *i, int *cnt);
 
 //parser.c
 t_cmd	*get_unit_token(char *line);
 t_cmd	*get_cmd_info(char **token);
 void	init_type(t_cmd *cmd);
-void	init_input(t_cmd *cmd, char **token);
-
+void	init_input(t_cmd *cmd, char **token, int unit);
+int		cnt_pipe(char **token);
 
 //parse_util.c
 void	free_2d_arr(char **arr);
 int		is_in_quote(char *line, int idx);
 int		is_cmd(char *line, int idx);
-char	*get_saubstr(char const *s, unsigned int start, size_t len);
+char	*no_quote_strdup(char *s1);
 char	**ft_2d_strndup(char **arr, int	len);
-int		cnt_pipe(char **token);
 
 //parse_err.c
 int		check_error(char **token);
 int		err_special_char(char *token);
 int		print_err(char *str);
 
-//init_cnd.c
+//init_cmd.c
 t_cmd	*cmd_lstinit(void);
 void	cmd_lstadd(t_cmd *head);
-void	cmd_clear(t_cmd *head);
+//void	cmd_clear(t_cmd *head);
+
+//parse_path.c
+char	**check_path(char	**token);
+char	*join_path(char *str, int i);
+char	**cp_create_arr(char **arr);
 
 #endif
