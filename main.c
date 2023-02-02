@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/02 15:04:31 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:56:10 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,28 @@
 
 t_env	*g_env;
 static void	run_minishell(void);
+
+// void	print_cmd(t_cmd *cmd)
+// {
+// 	char **input;
+
+// 	while (cmd)
+// 	{ 
+// 		printf("================\n");
+// 		input= cmd->input;
+// 		printf("input : \n");
+// 		while (*input)
+// 		{
+// 			printf("%s\n", *input);
+// 			input++;
+// 		}
+// 		printf("type : %d\n", cmd->type);
+// 		printf("pipe_cnt : %d\n", cmd->pipe_cnt);
+// 		printf("unit_cnt : %d\n", cmd->unit_cnt);
+// 		cmd = cmd->next;
+// 		printf("================\n");
+// 	}
+// }
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 15:51:26 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:58:43 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_builtin(t_cmd *cmd, int child_num)
 
 	cmd = find_cur_cmd(cmd, child_num);
 	if (cmd == NULL)
-		return (1);
+		return (0);
 	cmd_input = cmd->input[0];
 	if (is_equal(cmd_input, "cd"))
 		return (1);

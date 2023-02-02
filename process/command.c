@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 15:29:08 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:45:40 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 {
 	while (cmd->unit_cnt < child_num)
 		cmd = cmd->next;
-	while (cmd->type != word)
+	while (cmd && cmd->type != word)
 	{
 		if (cmd->unit_cnt > child_num)
 			return (NULL);
