@@ -6,14 +6,13 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 13:39:55 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:29:08 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/process.h"
 
 static char		**parse_path(void);
-static t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num);
 static void		dealloc(char **env_path);
 
 void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
@@ -92,7 +91,7 @@ static char	**parse_path(void)
 // 환경변수 리스트에서 주소에 해당하는 부분을 가져와서 콜론 기준으로 분리합니다
 // 이후 경로 뒤에 '/' 를 추가합니다
 
-static t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
+t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 {
 	while (cmd->unit_cnt < child_num)
 		cmd = cmd->next;

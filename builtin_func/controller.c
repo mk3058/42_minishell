@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:47:54 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:51:26 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,36 @@ static void	exec_builtin(t_cmd *cmd);
 
 int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 {
-	int	*std_fd;
+	int		*std_fd;
+	t_cmd	*cur_cmd;
 
-	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
+	cur_cmd = find_cur_cmd(cmd, child_num);
+	if (cur_cmd == NULL)
+		return (1);
+	if (cmd->pipe_cnt == 0 && is_builtin(cur_cmd, child_num))
 	{
 		if (set_redirect(cmd, fd, child_num))
 			return (1);
 		std_fd = set_fd(fd, proc_cnt, child_num);
 		set_handler(print_newline, print_newline);
 	}
-	exec_builtin(cmd);
-	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
+	exec_builtin(cur_cmd);
+	if (cmd->pipe_cnt == 0 && is_builtin(cur_cmd, child_num))
 	{
 		dup2(std_fd[0], STDIN_FILENO);
 		dup2(std_fd[1], STDOUT_FILENO);
 		free(std_fd);
 	}
-	return (is_builtin(cmd));
+	return (is_builtin(cur_cmd, child_num));
 }
 
-int	is_builtin(t_cmd *cmd)
+int	is_builtin(t_cmd *cmd, int child_num)
 {
 	char	*cmd_input;
 
+	cmd = find_cur_cmd(cmd, child_num);
+	if (cmd == NULL)
+		return (1);
 	cmd_input = cmd->input[0];
 	if (is_equal(cmd_input, "cd"))
 		return (1);

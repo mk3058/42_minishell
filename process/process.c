@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 13:23:48 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:47:54 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	process(t_cmd *cmd)
 	if (heredoc(cmd))
 		return ;
 	fd = make_pipe(cmd);
-	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
+	if (cmd->pipe_cnt == 0 && is_builtin(cmd, 0))
 	{
 		builtin_controller(cmd, fd, 1, 0);
 		return ;
