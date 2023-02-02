@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 15:20:00 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:02:25 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../includes/util.h"
 
 //here_doc.c
-void	heredoc(t_cmd *cmd);
+int	heredoc(t_cmd *cmd);
 
 //redirect.c
 int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
@@ -38,5 +38,6 @@ char	*find_path(t_cmd *cmd);
 
 //process.c
 void	process(t_cmd *cmd);
+void	unlink_file(t_cmd *cmd);
 
 #endif
