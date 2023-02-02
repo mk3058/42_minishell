@@ -6,23 +6,31 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/01 16:41:52 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:38:48 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 #include "includes/process.h"
 
-t_env *g_env;
+t_env	*g_env;
+static void	run_minishell(void);
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmd;
-	char	*line;
 
 	(void)argc;
 	(void)argv;
 	set_envlist(envp);
+	run_minishell();
+}
+
+static void	run_minishell(void)
+{
+	char	*line;
+	t_cmd	*cmd;
+
 	while (1)
 	{
 		set_echoctl(0);

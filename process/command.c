@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:45:55 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:39:55 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ char	*find_path(t_cmd *cmd)
 	}
 	if (env_path)
 		dealloc(env_path);
-	*(g_env->exit_stat) = err_print(cmd->input[0], ": command not found", 0, 127);
+	err_print(cmd->input[0], ": command not found", 0, 127);
+	*(g_env->exit_stat) = 127;
 	exit(EXIT_FAILURE);
 }
 // 환경변수 경로에 해당 파일이 존재하는지 확인하고 존재하면 경로를 반환합니다
