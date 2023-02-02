@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:50:47 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:05 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:08:16 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ static void	print_env(void)
 		{
 			ft_putstr_fd("=\"", 1);
 			ft_putstr_fd(tmp->value, 1);
-			ft_putstr_fd("\"\n", 1);
+			ft_putstr_fd("\"", 1);
 		}
+		ft_putstr_fd("\n", 1);
 		tmp = tmp->next;
 	}
 }
