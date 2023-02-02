@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/02 13:38:48 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:04:31 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	run_minishell(void);
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmd;
-
 	(void)argc;
 	(void)argv;
 	set_envlist(envp);
