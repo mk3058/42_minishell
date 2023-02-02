@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:02:36 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:32:45 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ void	process(t_cmd *cmd)
 	if (heredoc(cmd))
 		return ;
 	fd = make_pipe(cmd);
-	if (fd == NULL)
+	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
+	{
+		builtin_controller(cmd, fd, 1, 0);
 		return ;
-	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
-		return ;
+	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
 	set_handler(quiet, quiet);
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)

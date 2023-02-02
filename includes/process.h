@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:02:25 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:15:18 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@
 # include "../includes/util.h"
 
 //here_doc.c
-int	heredoc(t_cmd *cmd);
+int		heredoc(t_cmd *cmd);
 
 //redirect.c
 int		*get_redirect_fd(t_cmd *cmd, int unit_cnt);
 
 //set_fd.c
 int		**make_pipe(t_cmd *cmd);
+int		set_redirect(t_cmd *cmd, int **fd, int child_num);
 int		*set_fd(int **fd, int proc_cnt, int child_num);
 void	close_fd(int **fd, int proc_cnt, int child_num);
 
