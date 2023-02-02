@@ -31,7 +31,7 @@
  * 1. 따옴표를 고려한 공백 기준 토큰화 ok
  * 2. redirect, pipe 기준 토큰화 ok
  * 3. 파싱한 문자들 타입, 유닛, 파이프개수(?) 구조체 리스트에 저장
- * @return	: t_cmd *unit_token (final)
+ * @return	: t_cmd *unit_token (final) 
 */
 t_cmd	*get_unit_token(char *line)
 {
