@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 17:01:00 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:22:29 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	process(t_cmd *cmd)
 		execute_cmd(cmd, child_num, fd);
 }
 // 인자로 주어진 cmd 리스트와 환경변수를 바탕으로 프로세스를 분기하여 실행합니다
-// builtin 함수가 아닌경우에 호출해서 사용합니다
+// builtin 함수만 입력으로 주어진 경우, heredoc 입력중 sigint가 입력된 경우 얼리리턴하여 이후 명령을 실행하지 않습니다
 
 static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 {
@@ -66,6 +66,7 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 		*(g_env->exit_stat) += (WEXITSTATUS(statloc));
 	dealloc(fd, cmd, pid);
 }
+// 부모 프로세스에서 실행하는 동작들 입니다
 
 static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
 {
