@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 16:45:40 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:18:33 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*find_path(t_cmd *cmd)
 	if (access(cmd->input[0], R_OK | X_OK) == 0)
 		return (ft_strdup(cmd->input[0]));
 	env_path = parse_path();
-	while (env_path && env_path[++i])
+	while (ft_strlen(cmd->input[0]) && env_path && env_path[++i])
 	{
 		file_path = ft_strjoin(env_path[i], cmd->input[0]);
 		if (access(file_path, R_OK | X_OK) == 0)
