@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 15:20:16 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:23:48 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd);
 static void	parent(t_cmd *cmd, int **fd, pid_t *pid);
 static void	dealloc(int **fd, t_cmd *cmd, int *pid);
-static void	unlink_file(t_cmd *cmd);
 
 void	process(t_cmd *cmd)
 {
@@ -26,12 +25,14 @@ void	process(t_cmd *cmd)
 	*(g_env->exit_stat) = 0;
 	set_echoctl(1);
 	child_num = -1;
-	heredoc(cmd);
+	if (heredoc(cmd))
+		return ;
 	fd = make_pipe(cmd);
-	if (fd == NULL)
+	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
+	{
+		builtin_controller(cmd, fd, 1, 0);
 		return ;
-	if (cmd->pipe_cnt == 0 && builtin_controller(cmd, fd, 1, 0))
-		return ;
+	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
 	set_handler(quiet, quiet);
 	if (fork_proc((cmd->pipe_cnt) + 1, &child_num, pid, fd) != 0)
@@ -102,7 +103,7 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 }
 // 사용한 메모리를 정리하고 임시파일을 unlink 합니다
 
-static void	unlink_file(t_cmd *cmd)
+void	unlink_file(t_cmd *cmd)
 {
 	int		cnt;
 	int		i;
@@ -113,7 +114,7 @@ static void	unlink_file(t_cmd *cmd)
 	i = -1;
 	while (++i < cnt)
 	{
-		unit_cnt = ft_itoa(cmd->unit_cnt);
+		unit_cnt = ft_itoa(i);
 		file_name = ft_strjoin(".heredoc_tmp", unit_cnt);
 		if (access(file_name, F_OK) == 0)
 			unlink(file_name);

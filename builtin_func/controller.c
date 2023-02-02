@@ -6,34 +6,60 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 11:59:17 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:47:54 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtin.h"
 #include "../includes/process.h"
 
-static int	exec_builtin(t_cmd *cmd);
+static void	exec_builtin(t_cmd *cmd);
 
 int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 {
-	int	is_builtin;
 	int	*std_fd;
 
-	std_fd = set_fd(fd, proc_cnt, child_num);
-	if (cmd->pipe_cnt == 0)
+	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
+	{
+		if (set_redirect(cmd, fd, child_num))
+			return (1);
+		std_fd = set_fd(fd, proc_cnt, child_num);
 		set_handler(print_newline, print_newline);
-	is_builtin = exec_builtin(cmd);
-	if (cmd->pipe_cnt == 0)
+	}
+	exec_builtin(cmd);
+	if (cmd->pipe_cnt == 0 && is_builtin(cmd))
 	{
 		dup2(std_fd[0], STDIN_FILENO);
 		dup2(std_fd[1], STDOUT_FILENO);
+		free(std_fd);
 	}
-	free(std_fd);
-	return (is_builtin);
+	return (is_builtin(cmd));
 }
 
-static int	exec_builtin(t_cmd *cmd)
+int	is_builtin(t_cmd *cmd)
+{
+	char	*cmd_input;
+
+	cmd_input = cmd->input[0];
+	if (is_equal(cmd_input, "cd"))
+		return (1);
+	else if (is_equal(cmd_input, "echo"))
+		return (1);
+	else if (is_equal(cmd_input, "env"))
+		return (1);
+	else if (is_equal(cmd_input, "exit"))
+		return (1);
+	else if (is_equal(cmd_input, "export"))
+		return (1);
+	else if (is_equal(cmd_input, "pwd"))
+		return (1);
+	else if (is_equal(cmd_input, "unset"))
+		return (1);
+	else
+		return (0);
+}
+
+static void	exec_builtin(t_cmd *cmd)
 {
 	char	*cmd_input;
 
@@ -52,7 +78,4 @@ static int	exec_builtin(t_cmd *cmd)
 		*(g_env->exit_stat) = pwd();
 	else if (is_equal(cmd_input, "unset"))
 		*(g_env->exit_stat) = unset(cmd);
-	else
-		return (0);
-	return (1);
 }

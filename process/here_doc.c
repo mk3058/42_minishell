@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 16:32:13 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:03:31 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	heredoc_unit(t_cmd *cmd);
 static void	get_input(int fd, char *limiter);
 
-void	heredoc(t_cmd *cmd)
+int	heredoc(t_cmd *cmd)
 {
 	pid_t	pid;
 	int		statloc;
@@ -26,8 +26,8 @@ void	heredoc(t_cmd *cmd)
 	{
 		set_handler(heredoc_quiet, NULL);
 		waitpid(pid, &statloc, 0);
-		if (g_env->exit_stat == 0)
-			*(g_env->exit_stat) = WEXITSTATUS(statloc);
+		if (WEXITSTATUS(statloc) != 0)
+			unlink_file(cmd);
 		set_echoctl(1);
 	}
 	else
@@ -35,6 +35,9 @@ void	heredoc(t_cmd *cmd)
 		set_handler(heredoc_sigint, NULL);
 		heredoc_unit(cmd);
 	}
+	if (g_env->exit_stat == 0)
+			*(g_env->exit_stat) = WEXITSTATUS(statloc);
+	return (WEXITSTATUS(statloc));
 }
 
 static void	heredoc_unit(t_cmd *cmd)
