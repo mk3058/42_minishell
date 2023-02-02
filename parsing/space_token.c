@@ -42,27 +42,35 @@ char	**get_space_token(char *line)
 	int		idx;
 
 	start = 0;
-	i = 0;
 	idx = 0;
 	token = (char **)malloc(sizeof(char *) * (cnt_space(line) + 2));
+	i = tokenize_space(token, line, &idx, &start);
+	token[idx] = ft_substr(line, start, i - start);
+	token[idx + 1] = NULL;
+	return (token);
+}
+
+int	tokenize_space(char **token, char *line, int *idx, int *start)
+{
+	int	i;
+	int	space;
+
+	i = 0;
 	while (line[i])
 	{
 		if (!is_in_quote(line, i) && line[i] == ' ')
 		{
-			token[idx] = ft_substr(line, start, i - start);
-			while (line[i] == ' ')
-			{
-				i++;
-				if (line[i] == '\0')
-					break ;
-			}
-			start = i;
-			idx++;
+			space = 0;
+			token[*idx] = ft_substr(line, *start, i - *start);
+			while (line[i + space] == ' ')
+				space++;
+			if (!line[i + space])
+				break ;
+			i += space;
+			*start = i;
+			(*idx)++;
 		}
 		i++;
 	}
-	if (i > 0)
-		token[idx++] = ft_substr(line, start, i - start);
-	token[idx] = NULL;
-	return (token);
+	return (i);
 }
