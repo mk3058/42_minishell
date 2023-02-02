@@ -23,20 +23,17 @@
 */
 int	check_error(char **token)
 {
-	if (ft_strncmp(*token, "|", 1) == 0)
+	if (is_cmd(*token, 0) == PIPE)
 		return (print_err("parse error near command"));
 	while (*token)
 	{
 		if (is_cmd(*token, 0))
-		{
-			if (is_cmd(*(token + 1), 0) || *(token + 1) == NULL)
+			if (*(token + 1) == NULL || is_cmd(*(token + 1), 0))
 				return (print_err("parse error near command"));
-		}
 		if (is_in_quote(*token, ft_strlen(*token)))
 			return (print_err("parse error near quote"));
 		if (err_special_char(*token) == -1)
 			return (print_err("parse error"));
-		
 		token++;
 	}
 	return (0);

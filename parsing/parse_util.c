@@ -69,6 +69,8 @@ int	is_in_quote(char *line, int idx)
  */
 int	is_cmd(char *line, int idx)
 {
+	if (!line)
+		return (-1);
 	if (!ft_strncmp(line + idx, ">>", 2) || !ft_strncmp(line + idx, "<<", 2))
 		return (DOUBLED_REDIR);
 	else if (line[idx] == '>' || line[idx] == '<')
@@ -91,15 +93,15 @@ char	*no_quote_strdup(char *s1)
 	i = -1;
 	while (s1[++i])
 		if (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE)
-			|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
+				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			len--;
 	dup = malloc(sizeof(char) * (len + 1));
 	i = 0;
 	dup_idx = 0;
 	while (s1[i])
 	{
-		while (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE) 
-			|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
+		while (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE)
+				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			i++;
 		dup[dup_idx] = s1[i];
 		i++;
@@ -109,7 +111,7 @@ char	*no_quote_strdup(char *s1)
 	return (dup);
 }
 
-char	**ft_2d_strndup(char **arr, int	len)
+char	**ft_2d_strndup(char **arr, int len)
 {
 	char	**new;
 	int		i;
@@ -123,24 +125,4 @@ char	**ft_2d_strndup(char **arr, int	len)
 	}
 	new[i] = NULL;
 	return (new);
-}
-
-int		cnt_pipe(char **token)
-{
-	int	i;
-	int	cnt;
-
-	cnt = 0;
-	while (*token)
-	{
-		i = 0;
-		while ((*token)[i])
-		{
-			if ((*token)[i] == '|')
-				cnt++;
-			i++;
-		}
-		token++;
-	}
-	return (cnt);
 }

@@ -35,7 +35,7 @@
 */
 t_cmd	*get_unit_token(char *line)
 {
-	t_cmd	*cmd = NULL;
+	t_cmd	*cmd;
 	char	**token;
 	char	**temp;
 
@@ -66,11 +66,13 @@ t_cmd	*get_cmd_info(char **token)
 	t_cmd	*cmd;
 	t_cmd	*head;
 	int		p_cnt;
+	int		unit;
 
+	unit = 0;
 	cmd = cmd_lstinit();
 	head = cmd;
 	p_cnt = cnt_pipe(token);
-	init_input(cmd, token);
+	init_input(cmd, token, unit);
 	while (cmd)
 	{
 		init_type(cmd);
@@ -80,13 +82,11 @@ t_cmd	*get_cmd_info(char **token)
 	return (head);
 }
 
-void	init_input(t_cmd *cmd, char **token)
+void	init_input(t_cmd *cmd, char **token, int unit)
 {
 	int		i;
-	int		unit;
 
 	i = -1;
-	unit = 0;
 	while (token[++i])
 	{
 		cmd->unit_cnt = unit;
@@ -115,7 +115,7 @@ void	init_type(t_cmd *cmd)
 {
 	int		cmd_flag;
 
-	while(cmd)
+	while (cmd)
 	{
 		cmd_flag = is_cmd(cmd->input[0], 0);
 		if (cmd_flag > 0) // type 초기화
@@ -129,4 +129,24 @@ void	init_type(t_cmd *cmd)
 		}
 		cmd = cmd->next;
 	}
+}
+
+int	cnt_pipe(char **token)
+{
+	int	i;
+	int	cnt;
+
+	cnt = 0;
+	while (*token)
+	{
+		i = 0;
+		while ((*token)[i])
+		{
+			if ((*token)[i] == '|')
+				cnt++;
+			i++;
+		}
+		token++;
+	}
+	return (cnt);
 }

@@ -34,7 +34,6 @@ char	**check_path(char	**token)
 		idx++;
 		token++;
 	}
-	//free_2d_arr(token);
 	return (ret);
 }
 
@@ -50,6 +49,7 @@ char	**cp_create_arr(char **arr)
 	ret[len] = NULL;
 	return (ret);
 }
+
 char	*join_path(char *str, int i)
 {
 	char	*path;
@@ -57,9 +57,9 @@ char	*join_path(char *str, int i)
 	int		quote_idx;
 
 	quote_idx = i;
+	str[i++] = '\0';
 	if (is_in_quote(str, i) == DQUOTE)
 	{
-		str[i++] = '\0';
 		while (str[quote_idx] != '"' && str[quote_idx] != '\'')
 			quote_idx++;
 		temp = ft_substr(str + quote_idx, 0, ft_strlen(str + quote_idx));
@@ -72,8 +72,6 @@ char	*join_path(char *str, int i)
 	}
 	else
 	{
-		str[i] = '\0';
-		//free 필요
 		path = get_env(str + i);
 		if (path != NULL)
 			str = ft_strjoin(str, path);
