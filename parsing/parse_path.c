@@ -26,7 +26,9 @@ char	**check_path(char	**token)
 		i = 0;
 		while ((*token)[i])
 		{
-			if ((*token)[i] == '$' && is_in_quote(*token, i) != SQUOTE)
+			if ((*token)[i] == '$' && is_in_quote(*token, i) != SQUOTE
+				&& (*token)[i + 1] != '\0' && (*token)[i + 1] != ' '
+				&& (*token)[i + 1] != '"' && (*token)[i + 1] != '\'')
 				*token = join_path(*token, i);
 			i++;
 		}
@@ -56,11 +58,11 @@ char	*join_path(char *str, int i)
 	char	*temp;
 	int		quote_idx;
 
-	quote_idx = i;
+	quote_idx = i + 1;
 	str[i++] = '\0';
 	if (is_in_quote(str, i) == DQUOTE)
 	{
-		while (str[quote_idx] != '"' && str[quote_idx] != '\'')
+		while (str[quote_idx] != '\'' && str[quote_idx] != '"')
 			quote_idx++;
 		temp = ft_substr(str + quote_idx, 0, ft_strlen(str + quote_idx));
 		str[quote_idx] = '\0';
