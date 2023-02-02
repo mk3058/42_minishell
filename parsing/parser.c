@@ -86,17 +86,17 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 {
 	int		i;
 
-	i = -1;
+	i = -1;		
 	while (token[++i])
 	{
 		cmd->unit_cnt = unit;
-		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
+		if (is_cmd(token[i], 0) > 0 && i > 0) //redirection이 분기가 된다
 		{
 			cmd->input = ft_2d_strndup(token, i);
 			cmd_lstadd(cmd);
 			cmd = cmd->next;
 			if (is_cmd(token[i], 0) == 1)
-			{	
+			{
 				cmd->input = ft_2d_strndup(token + i, 1);
 				cmd_lstadd(cmd);
 				cmd = cmd->next;
