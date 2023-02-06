@@ -62,6 +62,7 @@ int		print_err(char *str);
 //init_cmd.c
 t_cmd	*cmd_lstinit(void);
 void	cmd_lstadd(t_cmd *head);
+void	remove_quotes(char **input);
 //void	cmd_clear(t_cmd *head);
 
 //parse_path.c
