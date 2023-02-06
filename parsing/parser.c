@@ -61,6 +61,7 @@ t_cmd	*get_unit_token(char *line)
 }
 
 // initialize cmd list
+// 여전히 quote가 남아있음
 t_cmd	*get_cmd_info(char **token)
 {
 	t_cmd	*cmd;
@@ -77,6 +78,7 @@ t_cmd	*get_cmd_info(char **token)
 	{
 		init_type(cmd);
 		cmd->pipe_cnt = p_cnt;
+		remove_quotes(cmd->input);
 		cmd = cmd->next;
 	}
 	return (head);
@@ -84,14 +86,16 @@ t_cmd	*get_cmd_info(char **token)
 
 void	init_input(t_cmd *cmd, char **token, int unit)
 {
-	int		i;
+	int	i;
 
-	i = -1;		
+	i = -1;
 	while (token[++i])
 	{
 		cmd->unit_cnt = unit;
 		if (is_cmd(token[i], 0) > 0 && i > 0) //redirection이 분기가 된다
 		{
+			if (is_cmd(token[i], 0) >= 2 && i == 0)
+				i++;
 			cmd->input = ft_2d_strndup(token, i);
 			cmd_lstadd(cmd);
 			cmd = cmd->next;
@@ -127,6 +131,8 @@ void	init_type(t_cmd *cmd)
 			else
 				cmd->type = word;
 		}
+		else
+			cmd->type = word;
 		cmd = cmd->next;
 	}
 }
@@ -142,7 +148,7 @@ int	cnt_pipe(char **token)
 		i = 0;
 		while ((*token)[i])
 		{
-			if ((*token)[i] == '|')
+			if ((*token)[i] == '|' && is_in_quote(*token, i) == NONE)
 				cnt++;
 			i++;
 		}
