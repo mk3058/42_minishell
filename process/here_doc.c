@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 17:24:56 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:27:25 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	heredoc_unit(t_cmd *cmd);
 static void	get_input(int fd, char *limiter);
+int			expand_token(char **token, int dollor_ind);
+static void	heredoc_expander(char **line);
 
 int	heredoc(t_cmd *cmd)
 {
@@ -86,7 +88,24 @@ static void	get_input(int fd, char *limiter)
 			free(limiter_tmp);
 			return ;
 		}
+		heredoc_expander(&input);
 		ft_putstr_fd(input, fd);
 		free(input);
+	}
+}
+
+static void	heredoc_expander(char **line)
+{
+	int	i;
+
+	i = -1;
+	while ((*line)[++i])
+	{
+		if ((*line)[i] == '$')
+		{
+			i = expand_token(line, i);
+			if ((*line)[i] == '$')
+				i--;
+		}
 	}
 }
