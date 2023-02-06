@@ -6,14 +6,13 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 13:39:55 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:33:39 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/process.h"
 
-static char		**parse_path(void);
-static t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num);
+static char		**parse_path(char *cmd);
 static void		dealloc(char **env_path);
 
 void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
@@ -34,8 +33,8 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 	free(set_fd(fd, cmd->pipe_cnt + 1, child_num));
 	if (execve(path, cur_cmd->input, env_to_array()) == -1)
 	{
-		*(g_env->exit_stat) = err_print(path, ": ", strerror(errno), 1);
-		exit(EXIT_FAILURE);
+		*(g_env->exit_stat) = err_print(path, ": ", "is a directory", 126);
+		exit(*g_env->exit_stat);
 	}
 }
 // 명령어의 위치를 찾고 execve 함수를 호출하여 실행합니다
@@ -49,8 +48,8 @@ char	*find_path(t_cmd *cmd)
 	i = -1;
 	if (access(cmd->input[0], R_OK | X_OK) == 0)
 		return (ft_strdup(cmd->input[0]));
-	env_path = parse_path();
-	while (env_path && env_path[++i])
+	env_path = parse_path(cmd->input[0]);
+	while (ft_strlen(cmd->input[0]) && env_path && env_path[++i])
 	{
 		file_path = ft_strjoin(env_path[i], cmd->input[0]);
 		if (access(file_path, R_OK | X_OK) == 0)
@@ -70,7 +69,7 @@ char	*find_path(t_cmd *cmd)
 // 환경변수 경로에 해당 파일이 존재하는지 확인하고 존재하면 경로를 반환합니다
 // 경로에서 실행파일을 찾지 못한경우 오류를 출력하고 프로그램을 종료합니다
 
-static char	**parse_path(void)
+static char	**parse_path(char *cmd)
 {
 	char	**parsed_path;
 	char	*tmp;
@@ -78,7 +77,11 @@ static char	**parse_path(void)
 
 	tmp = get_env("PATH");
 	if (tmp == NULL)
-		return (NULL);
+	{
+		err_print(cmd, ": No such file or directory", 0, 127);
+		*g_env->exit_stat = 127;
+		exit(*g_env->exit_stat);
+	}
 	parsed_path = ft_split(tmp, ':');
 	i = -1;
 	while (parsed_path[++i])
@@ -92,11 +95,11 @@ static char	**parse_path(void)
 // 환경변수 리스트에서 주소에 해당하는 부분을 가져와서 콜론 기준으로 분리합니다
 // 이후 경로 뒤에 '/' 를 추가합니다
 
-static t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
+t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 {
 	while (cmd->unit_cnt < child_num)
 		cmd = cmd->next;
-	while (cmd->type != word)
+	while (cmd && cmd->type != word)
 	{
 		if (cmd->unit_cnt > child_num)
 			return (NULL);

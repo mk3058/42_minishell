@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:49:48 by bojung            #+#    #+#             */
-/*   Updated: 2023/01/24 14:49:54 by bojung           ###   ########.fr       */
+/*   Updated: 2023/02/06 15:09:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ t_cmd	*get_unit_token(char *line)
 		free_2d_arr(token);
 		return (0);
 	}
-	// temp = token;
-	// token = check_path(temp);
-	// free_2d_arr(temp);
+	token = check_path(token);
 	cmd = get_cmd_info(token);
 	free_2d_arr(token);
 	return (cmd);

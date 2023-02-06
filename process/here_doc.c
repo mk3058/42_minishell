@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:03:31 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:24:56 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	heredoc_unit(t_cmd *cmd)
 			fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0777);
 			if (fd < 0)
 			{
-				err_print(file_name, ": ", strerror(errno), 1);
-				exit(EXIT_FAILURE);
+				err_print("heredoc: tmp_err", ": ", strerror(errno), 1);
+				break ;
 			}
 			get_input(fd, cmd->input[1]);
 			close(fd);

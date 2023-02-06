@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:43:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 11:59:27 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:23:34 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_exit(t_cmd *cmd)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cnt == 2)
 		*(g_env->exit_stat) = (unsigned char)ft_atoi(cmd->input[1]);
-	exit(EXIT_SUCCESS);
+	exit(*(g_env->exit_stat));
 }
 
 static int	arg_check(t_cmd *cmd, int cnt)

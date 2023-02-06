@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 19:36:05 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/02 12:21:05 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:35:45 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "../includes/util.h"
 
 int		builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num);
-int		is_builtin(t_cmd *cmd);
+int		is_builtin(t_cmd *cmd, int child_num);
 
 int		echo(t_cmd *cmd);
 int		env(void);

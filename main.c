@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/02 15:04:31 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:12:01 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	run_minishell(void)
 		else
 		{
 			printf("exit\n");
+			clear_history();
 			break ;
 		}
 	}
