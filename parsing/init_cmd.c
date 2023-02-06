@@ -36,6 +36,19 @@ void	cmd_lstadd(t_cmd *head)
 	node->next = NULL;
 }
 
+void	remove_quotes(char **input)
+{
+	char	*temp;
+
+	while (*input)
+	{
+		temp = *input;
+		*input = no_quote_strdup(*input);
+		input++;
+		free(temp);
+	}
+}
+
 // void	cmd_clear(t_cmd *head)
 // {
 // 	t_cmd	*tmp;
