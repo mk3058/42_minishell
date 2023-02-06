@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 16:51:47 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:56:38 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ char	**check_path(char **token)
 	while (token[++i])
 	{
 		j = -1;
+		printf("=== %s\n", token[i]);
 		while (token[i][++j])
 		{
-			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE)
+			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE
+				&& (i > 0 && !is_equal(token[i - 1], "<<")))
 			{
 				j = expand_token(&token[i], j);
 				if (token[i][j - 1] == '$')
