@@ -29,8 +29,7 @@ int	check_error(char **token)
 	{
 		if (is_cmd(*token, 0) == REDIR || is_cmd(*token, 0) == DOUBLED_REDIR)
 		{
-			if (*(token + 1) == NULL || is_cmd(*(token + 1), 0) > 2
-				|| (is_cmd(*(token + 1), 0) != PIPE && !is_cmd(*(token + 2), 0)))
+			if (*(token + 1) == NULL || is_cmd(*(token + 1), 0) > 2)
 				return (print_err("parse error near command"));
 		}
 		if (is_in_quote(*token, ft_strlen(*token)))
