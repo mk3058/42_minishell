@@ -6,26 +6,16 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 16:03:15 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:13:34 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
 int	expand_token(char **token, int dollor_ind);
+int	find_key(char *start, char **key);
 
-int	find_key(char *start, char	**key)
-{
-	int		len;
-
-	len = 0;
-	while (ft_isalnum(start[len]))
-		len++;
-	*key = ft_substr(start, 0, len);
-	return (len);
-}
-
-char	**check_path(char	**token)
+char	**check_path(char **token)
 {
 	int	i;
 	int	j;
@@ -70,4 +60,15 @@ int	expand_token(char **token, int dollor_ind)
 	free(*token);
 	*token = res;
 	return (dollor_ind + ft_strlen(env) - 1);
+}
+
+int	find_key(char *start, char **key)
+{
+	int		len;
+
+	len = 0;
+	while (ft_isalnum(start[len]))
+		len++;
+	*key = ft_substr(start, 0, len);
+	return (len);
 }
