@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 17:48:16 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:15:08 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**check_path(char **token)
 				&& (i > 0 && !is_equal(token[i - 1], "<<")))
 			{
 				j = expand_token(&token[i], j);
-				if (j > 0 && token[i][j - 1] == '$')
+				if (token[i][j] == '$')
 					j--;
 			}
 		}
@@ -49,7 +49,7 @@ int	expand_token(char **token, int dollor_ind)
 
 	key_len = find_key((*token) + dollor_ind + 1, &key);
 	if (key_len == 0)
-		return (dollor_ind);
+		return (dollor_ind + 1);
 	if (is_equal(key, "?"))
 		env = ft_itoa(*g_env->exit_stat);
 	else
@@ -64,7 +64,7 @@ int	expand_token(char **token, int dollor_ind)
 	free(key);
 	free(*token);
 	*token = res;
-	return (dollor_ind + ft_strlen(env) - 1);
+	return (dollor_ind + ft_strlen(env));
 }
 
 int	find_key(char *start, char **key)
@@ -72,7 +72,7 @@ int	find_key(char *start, char **key)
 	int		len;
 
 	len = 0;
-	while (ft_isalnum(start[len]) || start[len] == '?')
+	while (ft_isalnum(start[len]) || start[len] == '?' || start[len] == '_')
 		len++;
 	if (len == 0)
 		return (0);
