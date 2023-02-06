@@ -57,12 +57,13 @@ char	*join_path(char *str, int i)
 	char	*path;
 	char	*temp;
 	int		quote_idx;
+	int		path_flag;
 
 	quote_idx = i + 1;
 	str[i++] = '\0';
 	if (is_in_quote(str, i) == DQUOTE)
 	{
-		while (str[quote_idx] != '\'' && str[quote_idx] != '"')
+		while (str[quote_idx] != '\'' && str[quote_idx] != '"' && str[quote_idx] != ' ')
 			quote_idx++;
 		temp = ft_substr(str + quote_idx, 0, ft_strlen(str + quote_idx));
 		str[quote_idx] = '\0';
@@ -74,9 +75,23 @@ char	*join_path(char *str, int i)
 	}
 	else
 	{
+		path_flag = 0;
+		while (str[quote_idx])
+		{
+			if (str[quote_idx] == '\'' || str[quote_idx] == '"' || str[quote_idx] == ' ')
+			{
+				temp = ft_substr(str + quote_idx, 0, ft_strlen(str + quote_idx));
+				str[quote_idx] = '\0';
+				path_flag = 1;
+				break ;
+			}
+			quote_idx++;
+		}
 		path = get_env(str + i);
 		if (path != NULL)
 			str = ft_strjoin(str, path);
+		if (path_flag == 1)
+			str = ft_strjoin(str, temp);
 	}
 	return (str);
 }
