@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 17:15:20 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:48:16 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**check_path(char **token)
 				&& (i > 0 && !is_equal(token[i - 1], "<<")))
 			{
 				j = expand_token(&token[i], j);
-				if (token[i][j - 1] == '$')
+				if (j > 0 && token[i][j - 1] == '$')
 					j--;
 			}
 		}
@@ -48,6 +48,8 @@ int	expand_token(char **token, int dollor_ind)
 	int		key_len;
 
 	key_len = find_key((*token) + dollor_ind + 1, &key);
+	if (key_len == 0)
+		return (dollor_ind);
 	if (is_equal(key, "?"))
 		env = ft_itoa(*g_env->exit_stat);
 	else
@@ -72,6 +74,8 @@ int	find_key(char *start, char **key)
 	len = 0;
 	while (ft_isalnum(start[len]) || start[len] == '?')
 		len++;
+	if (len == 0)
+		return (0);
 	*key = ft_substr(start, 0, len);
 	return (len);
 }

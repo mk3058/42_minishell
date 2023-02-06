@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/06 17:38:19 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:47:39 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static void	heredoc_expander(char **line)
 		if ((*line)[i] == '$')
 		{
 			i = expand_token(line, i);
-			if ((*line)[i] == '$')
+			if (i > 0 && (*line)[i] == '$')
 				i--;
 		}
 	}
