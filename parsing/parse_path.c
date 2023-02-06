@@ -6,11 +6,12 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 16:13:34 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:39:44 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
+#include "../includes/util.h"
 
 int	expand_token(char **token, int dollor_ind);
 int	find_key(char *start, char **key);
@@ -48,7 +49,10 @@ int	expand_token(char **token, int dollor_ind)
 	if (is_in_quote(*token, dollor_ind) == SQUOTE)
 		return (dollor_ind);
 	key_len = find_key((*token) + dollor_ind + 1, &key);
-	env = get_env(key);
+	if (is_equal(key, "?"))
+		env = ft_itoa(*g_env->exit_stat);
+	else
+		env = get_env(key);
 	if (env == NULL)
 		env = ft_strdup("");
 	(*token)[dollor_ind] = '\0';
@@ -67,7 +71,7 @@ int	find_key(char *start, char **key)
 	int		len;
 
 	len = 0;
-	while (ft_isalnum(start[len]))
+	while (ft_isalnum(start[len]) || start[len] == '?')
 		len++;
 	*key = ft_substr(start, 0, len);
 	return (len);
