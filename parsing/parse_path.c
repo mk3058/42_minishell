@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 18:15:08 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:21:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ char	**check_path(char **token)
 		j = -1;
 		while (token[i][++j])
 		{
-			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE
-				&& (i > 0 && !is_equal(token[i - 1], "<<")))
+			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE)
 			{
+				if (i > 0 && is_equal(token[i - 1], "<<"))
+					continue ;
 				j = expand_token(&token[i], j);
 				if (token[i][j] == '$')
 					j--;
