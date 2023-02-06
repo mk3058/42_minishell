@@ -3,80 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   parse_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/01 11:47:13 by bojung           ###   ########.fr       */
+/*   Updated: 2023/02/06 16:03:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-// 환경변수 목록을 체크하고 문자를 변환
-char	**check_path(char	**token)
-{
-	char	**ret;
-	int		i;
-	int		idx;
+int	expand_token(char **token, int dollor_ind);
 
-	idx = 0;
-	ret = cp_create_arr(token);
-	while (*token)
-	{
-		i = 0;
-		while ((*token)[i])
-		{
-			if ((*token)[i] == '$' && is_in_quote(*token, i) != SQUOTE
-				&& (*token)[i + 1] != '\0' && (*token)[i + 1] != ' '
-				&& (*token)[i + 1] != '"' && (*token)[i + 1] != '\'')
-				*token = join_path(*token, i);
-			i++;
-		}
-		ret[idx] = no_quote_strdup(*token);
-		idx++;
-		token++;
-	}
-	return (ret);
-}
-
-char	**cp_create_arr(char **arr)
+int	find_key(char *start, char	**key)
 {
 	int		len;
-	char	**ret;
 
 	len = 0;
-	while (arr[len])
+	while (ft_isalnum(start[len]))
 		len++;
-	ret = (char **)malloc(sizeof(char *) * (len + 1));
-	ret[len] = NULL;
-	return (ret);
+	*key = ft_substr(start, 0, len);
+	return (len);
 }
 
-char	*join_path(char *str, int i)
+char	**check_path(char	**token)
 {
-	char	*path;
-	char	*temp;
-	int		quote_idx;
+	int	i;
+	int	j;
 
-	quote_idx = i + 1;
-	str[i++] = '\0';
-	if (is_in_quote(str, i) == DQUOTE)
+	i = -1;
+	while (token[++i])
 	{
-		while (str[quote_idx] != '\'' && str[quote_idx] != '"')
-			quote_idx++;
-		temp = ft_substr(str + quote_idx, 0, ft_strlen(str + quote_idx));
-		str[quote_idx] = '\0';
-		path = get_env(str + i);
-		if (path != NULL)
-			str = ft_strjoin(str, path);
-		str = ft_strjoin(str, temp);
-		free(temp);
+		j = -1;
+		while (token[i][++j])
+		{
+			if (token[i][j] == '$')
+			{
+				j = expand_token(&token[i], j);
+				if (token[i][j - 1] == '$')
+					j--;
+			}
+		}
 	}
-	else
-	{
-		path = get_env(str + i);
-		if (path != NULL)
-			str = ft_strjoin(str, path);
-	}
-	return (str);
+	return (token);
+}
+
+int	expand_token(char **token, int dollor_ind)
+{
+	char	*key;
+	char	*env;
+	char	*res;
+	char	*tmp;
+	int		key_len;
+
+	if (is_in_quote(*token, dollor_ind) == SQUOTE)
+		return (dollor_ind);
+	key_len = find_key((*token) + dollor_ind + 1, &key);
+	env = get_env(key);
+	if (env == NULL)
+		env = ft_strdup("");
+	(*token)[dollor_ind] = '\0';
+	res = ft_strjoin(*token, env);
+	tmp = res;
+	res = ft_strjoin(res, &(*token)[dollor_ind + key_len + 1]);
+	free(tmp);
+	free(key);
+	free(*token);
+	*token = res;
+	return (dollor_ind + ft_strlen(env) - 1);
 }
