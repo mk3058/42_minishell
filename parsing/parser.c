@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:49:48 by bojung            #+#    #+#             */
-/*   Updated: 2023/01/24 14:49:54 by bojung           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:29:15 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 	while (token[++i])
 	{
 		cmd->unit_cnt = unit;
-		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
+		if (is_cmd(token[i], 0) > 0 && i > 0) //redirection이 분기가 된다
 		{
 			cmd->input = ft_2d_strndup(token, i);
 			cmd_lstadd(cmd);

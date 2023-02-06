@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:30:14 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:15:18 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:29:12 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	close_fd(int **fd, int proc_cnt, int child_num);
 //command.c
 void	execute_cmd(t_cmd *cmd, int child_num, int **fd);
 char	*find_path(t_cmd *cmd);
+t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num);
 
 //process.c
 void	process(t_cmd *cmd);
