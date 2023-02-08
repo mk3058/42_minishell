@@ -68,22 +68,3 @@ int	cnt_pipe(char **token)
 	}
 	return (cnt);
 }
-
-// void	cmd_clear(t_cmd *head)
-// {
-// 	t_cmd	*tmp;
-
-// 	if (!head)
-// 	{
-// 		printf("free_all Err: head node is null!\n");
-// 		return ;
-// 	}
-// 	tmp = head;
-// 	while (tmp)
-// 	{
-// 		head = tmp;
-// 		free_2d_arr(tmp->input);
-// 		tmp = tmp->next;
-// 		free(head);
-// 	}
-// }
