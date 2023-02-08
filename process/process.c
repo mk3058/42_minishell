@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 17:22:29 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:00:23 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	process(t_cmd *cmd)
 	if (cmd->pipe_cnt == 0 && is_builtin(cmd, 0))
 	{
 		builtin_controller(cmd, fd, 1, 0);
+		dealloc(fd, cmd, NULL);
 		return ;
 	}
 	pid = malloc(sizeof(pid_t) * ((cmd->pipe_cnt) + 1));
@@ -87,7 +88,8 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 	cnt = cmd->pipe_cnt + 1;
 	i = -1;
 	unlink_file(cmd);
-	free(pid);
+	if (pid)
+		free(pid);
 	while (++i < cnt + 1)
 		free(fd[i]);
 	free(fd);
