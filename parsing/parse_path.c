@@ -27,7 +27,8 @@ char	**check_path(char **token)
 		j = -1;
 		while (token[i][++j])
 		{
-			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE)
+			if (token[i][j] == '$' && is_in_quote(token[i], j) != SQUOTE
+				&& token[i][j + 1] != '\'')
 			{
 				if (i > 0 && is_equal(token[i - 1], "<<"))
 					continue ;
