@@ -28,23 +28,7 @@ int	check_error(char **token)
 				return (print_err("parse error near pipe"));
 		if (is_in_quote(*token, ft_strlen(*token)))
 			return (print_err("parse error near quote"));
-		if (err_special_char(*token) == -1)
-			return (print_err("parse error"));
 		token++;
-	}
-	return (0);
-}
-
-int	err_special_char(char *token)
-{
-	int	i;
-
-	i = 0;
-	while (token[i])
-	{
-		if (!is_in_quote(token, i) && (token[i] == '\\' || token[i] == ';'))
-			return (-1);
-		i++;
 	}
 	return (0);
 }
