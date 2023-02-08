@@ -45,6 +45,7 @@ t_cmd	*get_unit_token(char *line);
 t_cmd	*get_cmd_info(char **token);
 void	init_type(t_cmd *cmd);
 void	init_input(t_cmd *cmd, char **token, int unit);
+t_cmd	*init_input_util(t_cmd *cmd, char **token, int *i, int *unit);
 
 //parse_util.c
 void	free_2d_arr(char **arr);
@@ -63,7 +64,6 @@ t_cmd	*cmd_lstinit(void);
 void	cmd_lstadd(t_cmd *head);
 void	remove_quotes(char **input);
 int		cnt_pipe(char **token);
-//void	cmd_clear(t_cmd *head);
 
 //parse_path.c
 char	**check_path(char	**token);
