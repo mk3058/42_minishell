@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/08 16:16:29 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:45:11 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,23 @@ int	expand_token(char **token, int dollor_ind)
 	char	*env;
 	char	*res;
 	char	*tmp;
-	int		key_len;
+	int		len;
 
-	key_len = find_key((*token) + dollor_ind + 1, &key);
-	if (key_len == 0)
+	len = find_key((*token) + dollor_ind + 1, &key);
+	if (len == 0)
 		return (dollor_ind + 1);
 	env = find_env(key);
 	(*token)[dollor_ind] = '\0';
 	res = ft_strjoin(*token, env);
 	tmp = res;
-	res = ft_strjoin(res, &(*token)[dollor_ind + key_len + 1]);
+	res = ft_strjoin(res, &(*token)[dollor_ind + len + 1]);
 	free(tmp);
 	free(key);
 	free(*token);
+	len = ft_strlen(env);
 	free(env);
 	*token = res;
-	return (dollor_ind + ft_strlen(env));
+	return (dollor_ind + len);
 }
 
 static char	*find_env(char *key)
