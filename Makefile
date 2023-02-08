@@ -21,7 +21,7 @@ ENVP_SRCDIR		= ./environment
 ENVP_SRCFILES	= env_util.c env.c
 
 UTIL_DIR		= ./util
-UTIL_FILES	= malloc_ctl.c util.c
+UTIL_FILES	= util.c
 
 PARSE_SRCDIR	= ./parsing
 PARSE_SRCFILES	= parser.c parse_util.c space_token.c cmd_token.c parse_err.c init_cmd.c\
