@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/08 15:04:08 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:21:08 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ static void	heredoc_unit(t_cmd *cmd)
 	}
 	exit(EXIT_SUCCESS);
 }
-// here document 기능 구현부 입니다
-// unit별로 heredoc 임시파일을 만들어 사용하며 하나의 유닛에서 여러개의 heredoc 입력을 받을경우 가장 마지막 입력만 처리됩니다
 
 static void	get_input(int fd, char *limiter)
 {

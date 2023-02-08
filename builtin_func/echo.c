@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:47:03 by minkyu            #+#    #+#             */
-/*   Updated: 2023/01/31 20:15:58 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/08 17:19:50 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtin.h"
 
 static int	is_option(char *str);
-// echo -n test         => test%
-// echo -nnnnnnnnn test => test%
-// echo -nnnnnnnnm test => -nnnnnnnnm test
-// echo -m test         => -m test
 
 int	echo(t_cmd *cmd)
 {

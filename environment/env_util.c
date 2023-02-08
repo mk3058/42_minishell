@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:49:27 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/08 14:59:41 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:20:19 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ char	*get_env(char *key)
 	}
 	return (NULL);
 }
-// 환경변수 list에서 key에 해당하는 값을 찾으면 해당 환경변수 반환
-// 존재하지 않거나 value가 없을 경우 NULL 반환
 
 char	**env_to_array(void)
 {
@@ -50,9 +48,6 @@ char	**env_to_array(void)
 	envp[env_idx] = NULL;
 	return (envp);
 }
-// list 형태의 환경변수를 char ** 형태로 바꾸어 반환
-// execve 함수의 인자로 char **envp 가 필요하여 사용
-// key = value 형태가 갖춰진 부분만 추가함
 
 static char	*node_to_line(t_env *node)
 {
@@ -67,8 +62,6 @@ static char	*node_to_line(t_env *node)
 	ft_strlcat(line, node->value, size + 1);
 	return (line);
 }
-// node에 저장된 환경변수를 key = value 형태로 바꿔서 반환
-// value가 존재하는 경우에만 사용가능
 
 static int	env_len(void)
 {

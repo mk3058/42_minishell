@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/08 16:47:28 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:21:24 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	process(t_cmd *cmd)
 	else
 		execute_cmd(cmd, child_num, fd);
 }
-// 인자로 주어진 cmd 리스트와 환경변수를 바탕으로 프로세스를 분기하여 실행합니다
-// builtin 함수만 입력으로 주어진 경우, heredoc 입력중 sigint가 입력된 경우 얼리리턴하여 이후 명령을 실행하지 않습니다
 
 static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 {
@@ -70,7 +68,6 @@ static void	parent(t_cmd *cmd, int **fd, pid_t *pid)
 		*(g_env->exit_stat) += (WEXITSTATUS(statloc));
 	dealloc(fd, cmd, pid);
 }
-// 부모 프로세스에서 실행하는 동작들 입니다
 
 static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
 {
@@ -80,7 +77,6 @@ static int	fork_proc(int proc_cnt, int *child_num, pid_t *pid, int **fd)
 	pid[*child_num] = fork();
 	return (fork_proc(proc_cnt, child_num, pid, fd));
 }
-// 프로세스를 생성합니다.
 
 static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 {
@@ -108,7 +104,6 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 		cmd = tmp;
 	}
 }
-// 사용한 메모리를 정리하고 임시파일을 unlink 합니다
 
 void	unlink_file(t_cmd *cmd)
 {
@@ -129,4 +124,3 @@ void	unlink_file(t_cmd *cmd)
 		free(file_name);
 	}
 }
-// 생성한 임시파일을 unlink 합니다.
