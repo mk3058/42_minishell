@@ -59,7 +59,6 @@ t_cmd	*get_unit_token(char *line)
 }
 
 // initialize cmd list
-// 여전히 quote가 남아있음
 t_cmd	*get_cmd_info(char **token)
 {
 	t_cmd	*cmd;
