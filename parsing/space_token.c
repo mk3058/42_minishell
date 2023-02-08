@@ -25,7 +25,7 @@ int	cnt_space(char *line)
 		{
 			while (line[i] == ' ')
 				i++;
-			if (line[i] == '\0') //마지막에 space가 오는 경우 카운트하지 않음
+			if (line[i] == '\0')
 				return (cnt);
 			cnt++;
 		}
@@ -34,7 +34,6 @@ int	cnt_space(char *line)
 	return (cnt);
 }
 
-// space 단위로 자른 토큰을 2d arr로 반환
 char	**get_space_token(char *line)
 {
 	char	**token;

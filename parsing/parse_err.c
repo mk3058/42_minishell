@@ -12,15 +12,6 @@
 
 #include "../includes/parser.h"
 
-/*
- * Error 처리 함수
- * main function : check_error(char **token)
- * @when	:1. Check sequence commands and no parameter case
-			 2. Check unspecified special characters like \ or ;
-			 3. Check quote error case
-			 3. Check smth occurs errors
- * @return	: Error(-1), Pass(0)
-*/
 int	check_error(char **token)
 {
 	if (is_cmd(*token, 0) == PIPE)
@@ -43,7 +34,6 @@ int	check_error(char **token)
 	return (0);
 }
 
-// check special character case
 int	err_special_char(char *token)
 {
 	int	i;
