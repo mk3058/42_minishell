@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/07 18:47:45 by minkyu           ###   ########.fr       */
+/*   Updated: 2023/02/08 16:16:29 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 #include "../includes/util.h"
 
-int	expand_token(char **token, int dollor_ind);
-int	find_key(char *start, char **key);
+int			expand_token(char **token, int dollor_ind);
+static int	find_key(char *start, char **key);
+static char	*find_env(char *key);
 
 char	**check_path(char **token)
 {
@@ -52,12 +53,7 @@ int	expand_token(char **token, int dollor_ind)
 	key_len = find_key((*token) + dollor_ind + 1, &key);
 	if (key_len == 0)
 		return (dollor_ind + 1);
-	if (is_equal(key, "?"))
-		env = ft_itoa(*g_env->exit_stat);
-	else
-		env = get_env(key);
-	if (env == NULL)
-		env = ft_strdup("");
+	env = find_env(key);
 	(*token)[dollor_ind] = '\0';
 	res = ft_strjoin(*token, env);
 	tmp = res;
@@ -65,11 +61,28 @@ int	expand_token(char **token, int dollor_ind)
 	free(tmp);
 	free(key);
 	free(*token);
+	free(env);
 	*token = res;
 	return (dollor_ind + ft_strlen(env));
 }
 
-int	find_key(char *start, char **key)
+static char	*find_env(char *key)
+{
+	char	*env;
+
+	if (is_equal(key, "?"))
+		env = ft_itoa(*g_env->exit_stat);
+	else
+	{
+		if (get_env(key))
+			env = ft_strdup(get_env(key));
+		else
+			env = ft_strdup("");
+	}
+	return (env);
+}
+
+static int	find_key(char *start, char **key)
 {
 	int		len;
 
