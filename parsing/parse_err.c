@@ -32,6 +32,8 @@ int	check_error(char **token)
 			if (*(token + 1) == NULL || is_cmd(*(token + 1), 0) > 2)
 				return (print_err("parse error near command"));
 		}
+		if (is_cmd(*token, 0) == PIPE && is_cmd(*(token + 1), 0) == PIPE)
+			return (print_err("parse error near pipe"));
 		if (is_in_quote(*token, ft_strlen(*token)))
 			return (print_err("parse error near quote"));
 		if (err_special_char(*token) == -1)
