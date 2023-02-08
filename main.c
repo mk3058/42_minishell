@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:26:06 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/06 16:12:01 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 15:11:27 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	set_envlist(envp);
 	run_minishell();
+	clear_history();
+	destroy_env();
+	system("leaks minishell");
 }
 
 static void	run_minishell(void)
@@ -39,17 +42,16 @@ static void	run_minishell(void)
 			if (line[0] != '\0')
 				add_history(line);
 			cmd = get_unit_token(line);
-			if (!cmd)
-				continue ;
 			free(line);
 			line = NULL;
-			process(cmd);
+			if (cmd)
+				process(cmd);
 		}
 		else
 		{
 			printf("exit\n");
-			clear_history();
 			break ;
 		}
+		system("leaks minishell");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:53:41 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/06 18:27:25 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 15:04:08 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	heredoc(t_cmd *cmd)
 		heredoc_unit(cmd);
 	}
 	if (g_env->exit_stat == 0)
-			*(g_env->exit_stat) = WEXITSTATUS(statloc);
+		*(g_env->exit_stat) = WEXITSTATUS(statloc);
 	return (WEXITSTATUS(statloc));
 }
 
