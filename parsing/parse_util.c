@@ -12,7 +12,6 @@
 
 #include "../includes/parser.h"
 
-// 사용하고 남은 2차원 배열 처리
 void	free_2d_arr(char **arr)
 {
 	int	i;
@@ -27,13 +26,6 @@ void	free_2d_arr(char **arr)
 	free(arr);
 }
 
-/*
- * 큰 또는 작은 따옴표의 내부, 외부인지 확인하는 함수
- * @when	: Parsing, Error check
- * @return	: NONE(0) DQUOTE(1) SQUOTE(2)
-
- * 환경변수때문에 squote dquote 구분함
- */
 int	is_in_quote(char *line, int idx)
 {
 	int	i;
@@ -61,12 +53,6 @@ int	is_in_quote(char *line, int idx)
 	return (quote_flag);
 }
 
-/*
- * check if line[idx] is command or not (> >> < << |)
- * @parameters	: line(tokened line), idx(index to check)
- * @when		: Check is redirection, doubled redir, pipe
- * @return		: NONE(0) PIPE(1) REDIR(2) DOUBLED_REDIR(3)
- */
 int	is_cmd(char *line, int idx)
 {
 	if (!line)
@@ -81,7 +67,6 @@ int	is_cmd(char *line, int idx)
 		return (NONE);
 }
 
-// make substr without quotes
 char	*no_quote_strdup(char *s1)
 {
 	char	*dup;
