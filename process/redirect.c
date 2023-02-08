@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 13:48:39 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 12:25:34 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:21:28 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ int	*get_redirect_fd(t_cmd *cmd, int unit_cnt)
 	}
 	return (fd);
 }
-// 해당 프로세스의 redirection 정보에 따라 입력/출력 fd 를 반환합니다
-// redirection 이 설정되어있지 않으면 fd로 0을 반환합니다
-// (프로세스 기준으로 반환하므로 pipe에 적용시 인덱스 처리 주의)
 
 static void	set_input(t_cmd *cmd, int *fd)
 {

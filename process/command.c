@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:55:08 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/06 16:33:39 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:21:03 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	execute_cmd(t_cmd *cmd, int child_num, int **fd)
 		exit(*g_env->exit_stat);
 	}
 }
-// 명령어의 위치를 찾고 execve 함수를 호출하여 실행합니다
 
 char	*find_path(t_cmd *cmd)
 {
@@ -66,8 +65,6 @@ char	*find_path(t_cmd *cmd)
 	*(g_env->exit_stat) = 127;
 	exit(EXIT_FAILURE);
 }
-// 환경변수 경로에 해당 파일이 존재하는지 확인하고 존재하면 경로를 반환합니다
-// 경로에서 실행파일을 찾지 못한경우 오류를 출력하고 프로그램을 종료합니다
 
 static char	**parse_path(char *cmd)
 {
@@ -92,8 +89,6 @@ static char	**parse_path(char *cmd)
 	}
 	return (parsed_path);
 }
-// 환경변수 리스트에서 주소에 해당하는 부분을 가져와서 콜론 기준으로 분리합니다
-// 이후 경로 뒤에 '/' 를 추가합니다
 
 t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 {
@@ -107,8 +102,6 @@ t_cmd	*find_cur_cmd(t_cmd *cmd, int child_num)
 	}
 	return (cmd);
 }
-// cmd list에서 현재 프로세스에서 실행해야할 명령어 파트를 찾아 반환합니다
-// 명령어 파트가 없을경우 NULL을 반환합니다
 
 static void	dealloc(char **env_path)
 {

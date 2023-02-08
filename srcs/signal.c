@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:53:26 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/01 12:37:22 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:21:54 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	set_handler(void (*sint_handler)(int s), void (*squit_handler)(int s))
 	else
 		signal(SIGQUIT, SIG_IGN);
 }
-// 시그널 핸들러를 설정합니다. NULL이 주어진 경우 해당 시그널을 무시합니다
 
 void	set_signal(int sigint, int sigquit)
 {
@@ -45,7 +44,6 @@ void	print_prompt(int sig)
 	rl_replace_line("", 1);
 	rl_redisplay();
 }
-// 시그널 입력시 프롬포트를 출력합니다
 
 void	print_newline(int sig)
 {
@@ -62,7 +60,6 @@ void	print_newline(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 1);
 }
-// 시그널 입력시 개행과 메시지를 출력합니다
 
 void	quiet(int sig)
 {
@@ -72,4 +69,3 @@ void	quiet(int sig)
 		*(g_env->exit_stat) = 131;
 	rl_replace_line("", 1);
 }
-// 시그널을 무시합니다

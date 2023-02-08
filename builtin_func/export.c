@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:50:47 by minkyu            #+#    #+#             */
-/*   Updated: 2023/02/02 13:08:16 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:20:02 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int	export(t_cmd *cmd)
 		print_env();
 	return (0);
 }
-// 잘못된 option 이 주어지는 경우를 제외하면 반환값은 0
-//	env 첫글자가 영어가 아닐경우 오류
-// 인자 없이 export만 입력할 경우 환경변수 내용 출력
 
 static void	print_env(void)
 {
@@ -56,4 +53,3 @@ static void	print_env(void)
 		tmp = tmp->next;
 	}
 }
-// 환경변수를 export 형식에 맞게 출력합니다

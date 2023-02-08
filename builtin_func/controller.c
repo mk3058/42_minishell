@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 13:04:10 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/02 17:24:20 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:19:45 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	builtin_controller(t_cmd *cmd, int **fd, int proc_cnt, int child_num)
 	}
 	return (is_builtin(cur_cmd, child_num));
 }
-// 빌트인 함수 실행을 준비하고 입력된 명령이 빌트인 함수인 경우 실행합니다
-// 부모 프로세스에서 빌트인 함수가 실행되어야 하는 경우 fd를 먼저 설정합니다
-// 명령이 빌트인 함수이면 1 아니면 0을 반환합니다
 
 int	is_builtin(t_cmd *cmd, int child_num)
 {
