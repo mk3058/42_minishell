@@ -56,7 +56,6 @@ char	**ft_2d_strndup(char **arr, int len);
 
 //parse_err.c
 int		check_error(char **token);
-int		err_special_char(char *token);
 int		print_err(char *str);
 
 //init_cmd.c
