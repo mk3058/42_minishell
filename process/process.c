@@ -6,7 +6,7 @@
 /*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:58:56 by minkyuki          #+#    #+#             */
-/*   Updated: 2023/02/08 16:00:23 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:47:28 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	process(t_cmd *cmd)
 	set_echoctl(1);
 	child_num = -1;
 	if (heredoc(cmd))
+	{
+		dealloc(NULL, cmd, NULL);
 		return ;
+	}
 	fd = make_pipe(cmd);
 	if (cmd->pipe_cnt == 0 && is_builtin(cmd, 0))
 	{
@@ -90,9 +93,10 @@ static void	dealloc(int **fd, t_cmd *cmd, int *pid)
 	unlink_file(cmd);
 	if (pid)
 		free(pid);
-	while (++i < cnt + 1)
+	while (fd && ++i < cnt + 1)
 		free(fd[i]);
-	free(fd);
+	if (fd)
+		free(fd);
 	while (cmd)
 	{
 		i = -1;
