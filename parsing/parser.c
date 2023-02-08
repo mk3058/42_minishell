@@ -92,24 +92,7 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 		cmd->unit_cnt = unit;
 		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
 		{
-			if (i != 0)
-			{
-				cmd->input = ft_2d_strndup(token, i);
-				cmd_lstadd(cmd);
-				cmd = cmd->next;
-				cmd->unit_cnt = unit;
-			}
-			if (is_cmd(token[i], 0) >= 2)
-			{
-				cmd->input = ft_2d_strndup(token + i, 2);
-				i += 2;
-			}
-			else if (is_cmd(token[i], 0) == 1)
-			{
-				cmd->input = ft_2d_strndup(token + i, 1);
-				unit++;
-				i++;
-			}
+			init_input_util(cmd, token, &i, &unit);
 			token += i;
 			i = -1;
 			if (token[i + 1])
@@ -123,6 +106,31 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 	{
 		cmd->unit_cnt = unit;
 		cmd->input = ft_2d_strndup(token, i);
+	}
+}
+
+void	init_input_util(t_cmd *cmd, char **token, int *i, int *unit)
+{
+	if (*i != 0)
+	{
+		cmd->input = ft_2d_strndup(token, *i);
+		printf("COMMAND: %p\n", cmd->input);
+		cmd_lstadd(cmd);
+		cmd = cmd->next;
+		cmd->unit_cnt = *unit;
+	}
+	if (is_cmd(token[*i], 0) >= 2)
+	{
+		cmd->input = ft_2d_strndup(token + *i, 2);
+		printf("REDIR: %p\n", cmd->input);
+		*i += 2;
+	}
+	else if (is_cmd(token[*i], 0) == 1)
+	{
+		cmd->input = ft_2d_strndup(token + *i, 1);
+		printf("PIPE: %p\n", cmd->input);
+		(*unit)++;
+		(*i)++;
 	}
 }
 
