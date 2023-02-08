@@ -46,7 +46,8 @@ char	**get_space_token(char *line)
 	idx = 0;
 	token = (char **)malloc(sizeof(char *) * (cnt_space(line) + 2));
 	i = tokenize_space(token, line, &idx, &start);
-	token[idx] = ft_substr(line, start, i - start);
+	if (!line[i])
+		token[idx] = ft_substr(line, start, i - start);
 	token[idx + 1] = NULL;
 	return (token);
 }
