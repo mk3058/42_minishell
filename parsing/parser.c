@@ -72,19 +72,11 @@ t_cmd	*get_cmd_info(char **token)
 	head = cmd;
 	p_cnt = cnt_pipe(token);
 	init_input(cmd, token, unit);
-	int sss = 0;
 	while (cmd)
 	{
 		init_type(cmd);
 		cmd->pipe_cnt = p_cnt;
 		remove_quotes(cmd->input);
-		char **aaa = cmd->input;
-		while (*aaa)
-		{
-			printf("aaa[%d] : %s\n", sss, *aaa);
-			aaa++;
-		}
-		sss++;
 		cmd = cmd->next;
 	}
 	return (head);
@@ -101,7 +93,7 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
 		{
 			if (is_cmd(token[i], 0) >= 2 && i == 0)
-				i++;
+				i += 2;
 			cmd->input = ft_2d_strndup(token, i);
 			if (is_cmd(token[i], 0) == 1)
 			{
@@ -109,56 +101,21 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 				unit++;
 				i++;
 			}
-			cmd_lstadd(cmd);
-			cmd = cmd->next;
 			token += i;
-			i = 0;
+			i = -1;
+			if (token[i + 1])
+			{
+				cmd_lstadd(cmd);
+				cmd = cmd->next;
+			}
 		}
 	}
-	cmd->unit_cnt = unit;
-	cmd->input = ft_2d_strndup(token, i);
+	if (cmd->input == NULL)
+	{
+		cmd->unit_cnt = unit;
+		cmd->input = ft_2d_strndup(token, i);
+	}
 }
-
-// void	init_input(t_cmd *cmd, char **token, int unit)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (token[++i])
-// 	{
-// 		cmd->unit_cnt = unit;
-// 		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
-// 		{
-// 			if (i != 0)
-// 			{
-// 				cmd->input = ft_2d_strndup(token, i);
-// 				printf("cmd->inputtt : %s\n", cmd->input[1]);
-// 				cmd_lstadd(cmd);
-// 				cmd = cmd->next;
-// 			}
-// 			else if (is_cmd(token[i], 0) >= 2)
-// 			{
-// 				i += 1;
-// 				cmd->input = ft_2d_strndup(token, i + 1);
-// 				printf("cmd->inputtt : %s\n", cmd->input[1]);
-// 				cmd_lstadd(cmd);
-// 				cmd = cmd->next;
-// 			}
-// 			if (is_cmd(token[i], 0) == 1)
-// 			{
-// 				cmd->input = ft_2d_strndup(token + i, 1);
-// 				cmd_lstadd(cmd);
-// 				cmd = cmd->next;
-// 				unit++;
-// 				i++;
-// 			}
-// 			token += i;
-// 			i = 0;
-// 		}
-// 	}
-// 	cmd->unit_cnt = unit;
-// 	cmd->input = ft_2d_strndup(token, i);
-// }
 
 void	init_type(t_cmd *cmd)
 {
