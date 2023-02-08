@@ -49,6 +49,26 @@ void	remove_quotes(char **input)
 	}
 }
 
+int	cnt_pipe(char **token)
+{
+	int	i;
+	int	cnt;
+
+	cnt = 0;
+	while (*token)
+	{
+		i = 0;
+		while ((*token)[i])
+		{
+			if ((*token)[i] == '|' && is_in_quote(*token, i) == NONE)
+				cnt++;
+			i++;
+		}
+		token++;
+	}
+	return (cnt);
+}
+
 // void	cmd_clear(t_cmd *head)
 // {
 // 	t_cmd	*tmp;

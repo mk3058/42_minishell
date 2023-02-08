@@ -92,14 +92,20 @@ void	init_input(t_cmd *cmd, char **token, int unit)
 		cmd->unit_cnt = unit;
 		if (is_cmd(token[i], 0) > 0) //redirection이 분기가 된다
 		{
-			if (is_cmd(token[i], 0) >= 2)
-				i += 2;
-			cmd->input = ft_2d_strndup(token, i);
-			if (is_cmd(token[i], 0) == 1)
+			if (i != 0)
 			{
+				cmd->input = ft_2d_strndup(token, i);
 				cmd_lstadd(cmd);
 				cmd = cmd->next;
 				cmd->unit_cnt = unit;
+			}
+			if (is_cmd(token[i], 0) >= 2)
+			{
+				cmd->input = ft_2d_strndup(token + i, 2);
+				i += 2;
+			}
+			else if (is_cmd(token[i], 0) == 1)
+			{
 				cmd->input = ft_2d_strndup(token + i, 1);
 				unit++;
 				i++;
@@ -142,22 +148,3 @@ void	init_type(t_cmd *cmd)
 	}
 }
 
-int	cnt_pipe(char **token)
-{
-	int	i;
-	int	cnt;
-
-	cnt = 0;
-	while (*token)
-	{
-		i = 0;
-		while ((*token)[i])
-		{
-			if ((*token)[i] == '|' && is_in_quote(*token, i) == NONE)
-				cnt++;
-			i++;
-		}
-		token++;
-	}
-	return (cnt);
-}
