@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minkyu <minkyu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:47:12 by bojung            #+#    #+#             */
-/*   Updated: 2023/02/06 18:21:15 by minkyuki         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:47:45 by minkyu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**check_path(char **token)
 				if (i > 0 && is_equal(token[i - 1], "<<"))
 					continue ;
 				j = expand_token(&token[i], j);
-				if (token[i][j] == '$')
+				if (token[i][j] == '\0' || token[i][j] == '$')
 					j--;
 			}
 		}

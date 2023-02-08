@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_util.c                                      :+:      :+:    :+:   */
+/*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bojung <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: minkyuki <minkyuki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:12:16 by bojung            #+#    #+#             */
-/*   Updated: 2023/01/24 11:12:17 by bojung           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:24:35 by minkyuki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,16 @@ char	*no_quote_strdup(char *s1)
 				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			len--;
 	dup = malloc(sizeof(char) * (len + 1));
-	i = 0;
+	i = -1;
 	dup_idx = 0;
-	while (s1[i])
+	while (s1[++i])
 	{
 		while (((s1[i] == '"' && is_in_quote(s1, i) != SQUOTE)
 				|| (s1[i] == '\'' && is_in_quote(s1, i) != DQUOTE)))
 			i++;
-		dup[dup_idx] = s1[i];
-		i++;
-		dup_idx++;
+		if (s1[i] == '\0')
+			break ;
+		dup[dup_idx++] = s1[i];
 	}
 	dup[dup_idx] = '\0';
 	return (dup);
